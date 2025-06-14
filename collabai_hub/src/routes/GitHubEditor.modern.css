@@ -1,0 +1,260 @@
+:root {
+  --neon-editor-glow: 0 0 12px #00ffe8, 0 0 19px #39ff14, 0 0 28px #39ff1459;
+  --editor-shadow: 0 2px 30px 0 #00ff1aa5, 0 1.5px 10px 0 #00FF00a0;
+}
+
+@keyframes neonGlowPulse {
+  0% { filter: drop-shadow(0 0 0 #00ffb0); }
+  35% { filter: drop-shadow(0 0 12px #39ff14cc); }
+  74% { filter: drop-shadow(0 0 26px #00ffe6c0); }
+  100% { filter: drop-shadow(0 0 0 #00ffb0); }
+}
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px);}
+  100% { transform: translateY(0);}
+}
+@keyframes bounceBtn {
+  10% { transform: scale(1.03);}
+  20% { transform: scale(1.1);}
+  36%, 100% {transform: scale(1);}
+}
+@keyframes glassFadeIn {
+  0% { opacity: 0; filter: blur(5px);}
+  100% { opacity: 1; filter: blur(0);}
+}
+
+.github-editor-modern-dashboard {
+  font-family: 'Orbitron', 'Montserrat', 'Inter', 'Roboto', monospace, sans-serif;
+  color: #eafed4;
+}
+
+.github-editor-title {
+  font-family: 'Orbitron', 'Montserrat', 'Inter', 'Roboto', monospace, sans-serif;
+  letter-spacing: 0.055em;
+  color: #39ff14;
+  text-shadow:
+    0 0 15px #00ffe8b3,
+    0 0 17px #39ff14bb,
+    0 0 36px #00809a60;
+  font-size: 2.4rem;
+  animation: neonGlowPulse 2.55s infinite;
+  margin-bottom: 8px;
+}
+@media (max-width: 500px) {
+  .github-editor-title {
+    font-size: 1.5rem;
+  }
+}
+.github-editor-pane {
+  background: linear-gradient(118deg, #101820d8 55%, #162b1ea8 100%);
+  box-shadow: var(--editor-shadow), 0 0 10px #182025;
+  border-radius: 14px;
+  border-left: 4.5px solid #39ff14;
+  border-right: 2.5px solid #0fa;
+  display: flex;
+  animation: glassFadeIn .6s cubic-bezier(.44,1.53,.49,1.07);
+  position: relative;
+  min-height: 420px;
+}
+@media (max-width: 750px) {
+  .github-editor-pane {
+    flex-direction: column;
+    box-shadow: 0 0 27px #03fec34b;
+    min-width: 0;
+    padding: 0;
+  }
+}
+.ge-sidebar {
+  min-width: 210px;
+  max-width: 270px;
+  box-shadow: 0 0 13px #00ff2040;
+  background: linear-gradient(127deg, #182221e7 80%, #243c2e 110%);
+  border-right: 2px solid #00ffe44a;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  animation: floatY 2.2s linear infinite;
+  z-index: 3;
+}
+@media (max-width: 700px) {
+  .ge-sidebar { min-width: 0; max-width: none; }
+}
+.ge-sidebar label, .ge-sidebar span {
+  font-family: 'Orbitron', 'Inter', 'Montserrat', monospace;
+  font-weight: 700;
+  letter-spacing: .015em;
+  color: #acffe7;
+}
+.ge-sidebar select, .ge-sidebar input, .ge-sidebar button {
+  font-family: 'Fira Mono', 'Montserrat', monospace;
+}
+.ge-sidebar select {
+  animation: bounceBtn 1.5s 1;
+}
+.ge-sidebar .btn {
+  animation: bounceBtn 2.1s 1;
+}
+.ge-flash-glow {
+  animation: neonGlowPulse 4s cubic-bezier(.71,0,.9,.36) infinite;
+}
+.ge-tree-scroll {
+  max-height: 54vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.ge-sidebar .tree-btn.selected, .ge-sidebar button.selected {
+  background: linear-gradient(83deg,#00ff84 38%,#39ff14 100%);
+  color: #191c15 !important;
+  font-weight: 800;
+  border-radius: 8px;
+  filter: drop-shadow(0 0 8px #39ff148e);
+}
+.ge-filetree-folder {
+  color: #38ffa9;
+  font-weight: 800;
+  text-shadow: 0 0 5px #52ffc560;
+  cursor: pointer;
+  filter: drop-shadow(0 0 8px #0fa);
+}
+.ge-filetree-file {
+  color: #adffe0;
+  background: none;
+  border: 0;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: .01em;
+  padding: 4px 8px 2.5px 11px;
+  margin: 2px 0;
+  transition: background .14s, color .15s, box-shadow 0.16s;
+}
+.ge-filetree-file.selected {
+  background: linear-gradient(93deg,#00ffa9 25%,#2bff00ad 100%);
+  color: #182225 !important;
+  font-weight: 800;
+  filter: drop-shadow(0 0 11px #39ff1455);
+  outline: 2px solid #39ff14b2;
+  box-shadow: 0 0 11px #52ff8c80;
+}
+.github-editor-main {
+  flex: 1;
+  padding: 35px 13px 14px 30px;
+  position: relative;
+  min-height: 400px;
+  font-family: 'Jetbrains Mono', 'Fira Mono', 'Roboto Mono', monospace;
+}
+@media (max-width: 700px) {
+  .github-editor-main { padding: 19px 4vw 13px 5vw;}
+}
+@media (max-width: 400px) {
+  .github-editor-main { padding: 6px 2vw;}
+}
+.github-editor-action-btn {
+  background: linear-gradient(115deg, #39ff14 70%, #00FFE4 100%);
+  border: none;
+  color: #191e18;
+  padding: 10px 24px;
+  margin-right: 6px;
+  border-radius: 7px;
+  font-size: 1.04rem;
+  box-shadow: 0 0 19px #39ff14a9;
+  font-weight: 700;
+  letter-spacing: .045em;
+  cursor: pointer;
+  transition: background 0.18s, color 0.17s, box-shadow 0.16s;
+  animation: bounceBtn 1 .19s;
+}
+.github-editor-action-btn:focus, .github-editor-action-btn:hover {
+  background: linear-gradient(108deg, #5afe6d 70%, #b0fff8 100%);
+  color: #18282d;
+  outline: 2px solid #4effdb;
+  box-shadow: 0 0 24px #00ffe9ad;
+}
+
+.github-editor-action-btn.danger {
+  border: 2px solid #ff456c;
+  background: linear-gradient(85deg,#ff2e6bca 55%,#ffaee1 140%);
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 0 11px #ff2e6b65;
+}
+.github-editor-action-btn.danger:focus, .github-editor-action-btn.danger:hover {
+  background: #fff5ee;
+  color: #ff366d;
+  border: 2px solid #ff456c;
+  outline: 2.5px solid #ff94b4;
+}
+
+.github-editor-newfile-bar,
+.github-editor-commit-bar {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin: 15px 0 8px 0;
+}
+
+.github-editor-input,
+.github-editor-filename-input {
+  background: #151f1b;
+  border: 1.7px solid #39ff14;
+  border-radius: 7px;
+  color: #62ffca;
+  font-size: 15.3px;
+  padding: 8px 17px 7px 14px;
+  font-family: 'Fira Mono', 'Jetbrains Mono', monospace;
+  font-weight: 600;
+  margin-right: 7px;
+  transition: border .13s, background .17s;
+}
+.github-editor-input:focus, .github-editor-filename-input:focus {
+  border-color: #62ffea;
+  background: #1b2a21;
+  outline: 2px solid #39ff14a0;
+}
+.github-editor-label {
+  color: #cfffec;
+  letter-spacing: .01em;
+  font-weight: 600;
+  font-size: 15.5px;
+}
+.github-editor-file-status {
+  font-size: 13.8px;
+  font-family: 'Montserrat', 'Inter', monospace;
+  background: #333;
+  color: #39ff14;
+  border-radius: 11px;
+  padding: 2px 12px;
+  margin-left: 14px;
+  font-weight: 800;
+  filter: drop-shadow(0 0 3px #00ffb6);
+  text-shadow: 0 0 7px #39ff1444;
+  letter-spacing: .028em;
+  border: 1.2px solid #39ff1459;
+  animation: glassFadeIn .7s;
+}
+.github-editor-main .monaco-editor,
+.github-editor-main .monaco-editor-background {
+  background: #131f18 !important;
+}
+.github-editor-monaco-blink {
+  animation: glassFadeIn .7s, floatY 1.9s infinite;
+}
+.ge-anim-glow-row {
+  animation: neonGlowPulse 2.2s infinite;
+}
+.ge-section-fade {
+  animation: glassFadeIn .9s cubic-bezier(.33,1.26,.38,.83);
+}
+
+.ge-scrollbar::-webkit-scrollbar-thumb {
+  background: #0fc;
+  border-radius: 7px;
+  box-shadow: 0 0 11px #39ff14;
+}
+.ge-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  background: #151f1a;
+}
+.github-editor-blink {
+  animation: neonGlowPulse 2.7s infinite;
+}

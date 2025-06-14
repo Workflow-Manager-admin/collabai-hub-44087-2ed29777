@@ -1,11 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
+import "./GitHubEditor.modern.css";
+
+// Import Orbitron from Google Fonts for neon/modern effect (inject once if not present)
+if (typeof window !== 'undefined' && !document.getElementById('orbitron-font')) {
+  const fontLink = document.createElement('link');
+  fontLink.id = 'orbitron-font';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@400;700&family=Fira+Mono:wght@500;700&display=swap';
+  fontLink.rel = 'stylesheet';
+  document.head.appendChild(fontLink);
+}
 
 /*
   PUBLIC_INTERFACE
   GitHub Repository File Editor/Browser (Enhanced Functionality)
   - Fast file fetching and file tree navigation.
   - View, edit, add, delete files, and save changes via push to GitHub.
-  - Enhanced modern, dark, neon-accented UI/UX for professional appearance.
+  - Refactored for modern creative neon UI: vibrant neon-glow accents, bouncing/fading animations, subtle glassmorphism,
+    cool fonts, and stylish transitions. All GitHub operations fully preserved.
 */
 
 const MONACO_CDN = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs";
@@ -218,10 +229,10 @@ function flattenGitHubTree(tree) {
   return structure;
 }
 
-// Recursively renders a file tree
+/* -- FileTreeView with modern neon/creative style -- */
 function FileTreeView({ tree, path, onFileClick, selectedFile }) {
   return (
-    <ul style={{ listStyle: "none", margin: 0, padding: "0 0 0 15px" }}>
+    <ul style={{ listStyle: "none", margin: 0, padding: "0 0 0 17px" }}>
       {Object.entries(tree).map(([key, item]) => {
         const fullPath = path ? `${path}/${key}` : key;
         if (item.type === "tree" || typeof item.sha === "undefined") {
@@ -229,17 +240,20 @@ function FileTreeView({ tree, path, onFileClick, selectedFile }) {
           return (
             <li key={fullPath}>
               <span
+                className="ge-filetree-folder ge-blink-text"
                 style={{
-                  color: "#00FF00",
-                  fontWeight: 700,
-                  fontSize: 15.5,
-                  cursor: "pointer",
-                  textShadow: "0 0 4px #00FF0044",
-                  padding: "2px 0",
-                  letterSpacing: ".01em"
+                  fontSize: 16.5,
+                  display: "inline-block",
+                  animation: "floatY 2.2s infinite",
+                  cursor: "pointer"
                 }}
+                tabIndex={0}
+                aria-label={`Folder ${key}`}
               >
-                📂 {key}
+                <span role="img" aria-label="folder" style={{filter:"drop-shadow(0 0 9px #00ff62)"}}>
+                  📁
+                </span>{" "}
+                {key}
               </span>
               <FileTreeView
                 tree={item}
@@ -254,25 +268,17 @@ function FileTreeView({ tree, path, onFileClick, selectedFile }) {
           return (
             <li key={fullPath}>
               <button
+                className={`ge-filetree-file${fullPath === selectedFile ? " selected" : ""} ge-flash-glow`}
                 style={{
-                  color: fullPath === selectedFile ? "#11161e" : "#b0ffbc",
-                  background: fullPath === selectedFile ? "#00FF00" : "transparent",
-                  border: "none",
-                  fontWeight: fullPath === selectedFile ? 700 : 500,
-                  fontSize: 15.1,
-                  textAlign: "left",
-                  width: "100%",
-                  borderRadius: 5,
-                  margin: "1px 0",
-                  cursor: "pointer",
-                  letterSpacing: ".01em",
-                  padding: "4.5px 5px 3.7px 12px",
-                  outline: fullPath === selectedFile ? "2px solid #00FF00" : "none",
-                  boxShadow: fullPath === selectedFile ? "0 0 8px #00FF0088" : "none"
+                  fontFamily: "'Fira Mono', 'Jetbrains Mono', monospace",
+                  fontWeight: fullPath === selectedFile ? 700 : 500
                 }}
                 onClick={() => onFileClick(fullPath)}
                 aria-label={`Open ${fullPath}`}
               >
+                <span role="img" aria-label="file" style={{marginRight:6,verticalAlign:'-1.5px',fontSize:16}}>
+                  📄
+                </span>
                 {key}
               </button>
             </li>
@@ -619,113 +625,39 @@ function GitHubEditor() {
 
   // -- Neon/minimal style for main panel --
   return (
-    <div
-      className="container fade-in"
-      style={{
-        paddingTop: 100,
-        minHeight: 610,
-        fontFamily: "'Inter', 'Roboto', 'Fira Mono', monospace",
-        color: "var(--text-color)"
-      }}
-    >
-      <h2
-        className="title"
-        style={{
-          color: "var(--accent-neon)",
-          letterSpacing: ".016em",
-          marginBottom: 11,
-          fontWeight: 800,
-          textShadow: "0 0 13px #00FF0044"
-        }}
-      >
+    <div className="container fade-in github-editor-modern-dashboard" style={{paddingTop: 100, minHeight: 610}}>
+      <h2 className="github-editor-title ge-flash-glow">
+        <span role="img" aria-label="neon-light" style={{marginRight: 7,fontSize:30,verticalAlign:'-6px', color:"#39ff14"}}>⚡</span>
         GitHub Editor Dashboard
       </h2>
-      <div
-        style={{
-          background: "#101415",
-          borderRadius: 11,
-          borderLeft: "4px solid #00FF00",
-          boxShadow: "0 0 25px #00FF0020, 0 2px 13px #00FF0016",
-          display: "flex",
-          alignItems: "flex-start",
-          gap: 0,
-          marginTop: 14,
-          marginBottom: 10,
-          minHeight: 440
-        }}
-      >
+      <div className="github-editor-pane ge-section-fade" style={{marginTop: 14, marginBottom: 10}}>
         {/* -- Sidebar: Repo picker & file tree -- */}
-        <aside
-          style={{
-            minWidth: 225,
-            maxWidth: 275,
-            background: "#12191a",
-            borderRight: "2px solid #00FF0023",
-            padding: 15,
-            height: "100%",
-            boxShadow: "0 0 8px #00FF0040",
-            borderTopLeftRadius: 11,
-            borderBottomLeftRadius: 11
-          }}
-        >
+        <aside className="ge-sidebar ge-scrollbar" style={{padding: 15}}>
           <div style={{ marginBottom: 18 }}>
-            <label
-              htmlFor="repo-select"
-              style={{
-                color: "#b0ffbc",
-                fontWeight: 700,
-                fontSize: 15.2,
-                letterSpacing: ".015em",
-                display: "block",
-                marginBottom: 6
-              }}
-            >
-              Repository
+            <label htmlFor="repo-select" className="github-editor-label">
+              <span className="ge-anim-glow-row" style={{fontWeight:800}}>Repository</span>
             </label>
             <select
               id="repo-select"
               value={selectedRepo}
               onChange={handleRepoChange}
-              style={{
-                width: "100%",
-                background: "#161b20",
-                color: "#00FF00",
-                border: "1.7px solid #00FF00",
-                borderRadius: 7,
-                fontWeight: 600,
-                fontSize: 15.5,
-                padding: "6px 10px",
-                marginBottom: 3,
-                transition: "border .15s"
-              }}
+              className="github-editor-input ge-flash-glow"
+              style={{width:"100%",marginBottom:4,fontWeight:600}}
               disabled={!githubToken || loadingRepos}
               aria-label="Choose GitHub repository"
             >
               <option value="">Select repository…</option>
               {repos.map((r) => (
-                <option
-                  key={r.full_name}
-                  value={r.full_name}
-                  style={{
-                    color: "#b0ffbc",
-                    background: "#101415"
-                  }}
+                <option key={r.full_name} value={r.full_name}
+                  style={{ color:"#20ff93", background:"#191e19", fontWeight:700}}
                 >
                   {r.full_name}
                 </option>
               ))}
             </select>
             <button
-              className="btn"
-              style={{
-                background: "transparent",
-                color: "#00FF00",
-                marginTop: 6,
-                padding: "5px 11px",
-                fontWeight: 700,
-                borderRadius: 5,
-                fontSize: 13
-              }}
+              className="github-editor-action-btn"
+              style={{marginTop:10,padding:"4px 13px",fontSize:13}}
               onClick={() => {
                 localStorage.removeItem("GITHUB_TOKEN");
                 window.location.reload();
@@ -737,26 +669,11 @@ function GitHubEditor() {
             </button>
           </div>
           <div style={{ marginBottom: 15 }}>
-            <span
-              style={{
-                color: "#b0ffbc",
-                fontWeight: 700,
-                fontSize: 15,
-                letterSpacing: ".01em"
-              }}
-            >
-              Files
-            </span>
+            <span className="github-editor-label ge-flash-glow" style={{marginRight:7}}>Files</span>
             <button
-              className="btn"
+              className="github-editor-action-btn"
               style={{
-                background: "#00FF00",
-                color: "#11161e",
-                fontWeight: 600,
-                marginLeft: 9,
-                fontSize: 13,
-                padding: "2.5px 9px",
-                borderRadius: 7
+                marginLeft: 7, fontSize: 13,padding:"3.5px 14px"
               }}
               aria-label="New file"
               onClick={handleAddFileClick}
@@ -766,15 +683,9 @@ function GitHubEditor() {
               + Add File
             </button>
             <button
-              className="btn"
+              className="github-editor-action-btn"
               style={{
-                marginLeft: 7,
-                background: "transparent",
-                color: "#00FF00",
-                fontWeight: 700,
-                fontSize: 13,
-                padding: "2px 6px",
-                border: 0
+                marginLeft: 7, background:"#1a251a", color:"#39ff14",fontWeight:700,padding:"3px 13px"
               }}
               aria-label="Refresh file tree"
               onClick={() => setSelectedRepo(selectedRepo)}
@@ -786,31 +697,27 @@ function GitHubEditor() {
           </div>
           {treeErr && (
             <div
+              className="github-editor-file-status"
               style={{
                 color: "#FF6666",
                 background: "#1a120f",
-                border: "1.4px solid #ff4545",
-                padding: "10px 6px",
-                borderRadius: 5,
-                marginBottom: 6,
-                fontSize: 12.8
+                border: "1.7px solid #ff4545",
+                padding: "9px 8px",
+                borderRadius: 7,
+                marginBottom: 7,
+                fontSize: 13.1
               }}
             >
               {treeErr}
             </div>
           )}
           {refreshingTree ? (
-            <div style={{ color: "#00FF00", marginLeft: 2, marginTop: 16 }}>
+            <div className="ge-blink-text" style={{ color: "#00FF00", marginLeft: 2, marginTop: 16 }}>
               Loading tree…
             </div>
           ) : tree ? (
-            <div
-              style={{
-                maxHeight: "48vh",
-                overflowY: "auto",
-                marginBottom: 8
-              }}
-            >
+            <div className="ge-tree-scroll ge-scrollbar" style={{marginBottom:8}}>
+              {/* --- Neon creative file tree view with effects --- */}
               <FileTreeView
                 tree={tree}
                 path=""
@@ -819,83 +726,55 @@ function GitHubEditor() {
               />
             </div>
           ) : selectedRepo ? (
-            <div style={{ color: "#b0ffbc", marginTop: 12 }}>No files found.</div>
+            <div style={{ color: "#b0ffbc", marginTop: 12, fontWeight:500, fontSize:14,opacity:0.88 }}>No files found.</div>
           ) : (
-            <div style={{ color: "#b0ffbc", opacity: 0.7 }}>Select a repo to view its files.</div>
+            <div style={{ color: "#b0ffbc", opacity: 0.7, fontWeight:500,fontSize:14 }}>Select a repo to view its files.</div>
           )}
         </aside>
         {/* -- Editor/Main view -- */}
-        <section
-          style={{
-            flex: 1,
-            padding: "23px 16px 0 26px",
-            minHeight: 420,
-            position: "relative"
-          }}
-        >
+        <section className="github-editor-main ge-section-fade">
           {!githubToken ? (
-            <div
-              style={{
-                color: "#00FF00",
-                padding: 34,
-                fontWeight: 700,
-                fontSize: 17
-              }}
-            >
-              Please supply a GitHub Personal Access Token on the Dashboard or Projects page to use this editor.
+            <div className="ge-flash-glow" style={{
+              color: "#39ff14", textShadow: "0 0 18px #39ff14c3,0 0 8px #fff4",
+              padding: 35, fontWeight: 800, fontSize: 18, borderRadius: 13,
+              background: "rgba(34,42,34,0.13)", borderLeft:"3.7px solid #39ff14"
+            }}>
+              Please supply a GitHub Personal Access Token on the <b>Dashboard</b> or <b>Projects</b> page to use this editor.
             </div>
           ) : loadingRepos ? (
-            <div style={{ color: "#b0ffbc", fontSize: 16, opacity: 0.7 }}>
+            <div className="ge-anim-glow-row" style={{ color: "#b0ffbc", fontSize: 16, opacity: 0.7 }}>
               Loading repositories…
             </div>
           ) : !selectedRepo ? (
-            <div
-              style={{
-                color: "#b0ffbc",
-                opacity: 0.77,
-                fontSize: 16.5,
-                marginTop: 30
-              }}
-            >
+            <div className="ge-anim-glow-row" style={{
+              color: "#b0ffbc",opacity:0.83,
+              fontSize: "clamp(1.04rem,2vw,1.25rem)",marginTop: 30, textShadow:"0 0 10px #0fc8"
+            }}>
               Pick a repository to browse and edit files.
             </div>
           ) : showNewFile ? (
-            <div
-              style={{
-                background: "#141922",
-                borderLeft: "3.2px solid #00FF00",
-                borderRadius: 9,
-                boxShadow: "0 0 9px #00FF0063",
-                maxWidth: 610,
-                margin: "23px auto",
-                padding: "25px 16px",
-              }}
-            >
-              <h3 style={{ color: "#00FF00", fontWeight: 800 }}>
-                New File
+            <div className="github-editor-newfile-bar ge-flash-glow" style={{
+              background: "linear-gradient(118deg,#13271aec 26%, #101922b2 100%)",
+              borderLeft: "3.7px solid #39ff14", borderRadius: 14,
+              boxShadow: "0 0 15px #39ff1466, 0 0 8px #fff6", maxWidth: 620,
+              margin: "23px auto", padding: "29px 19px"
+            }}>
+              <h3 className="github-editor-title" style={{ fontSize:"1.51rem",marginBottom:13, color:"#39ff14",textShadow:"0 0 13px #39ff1477"}}>
+                <span role="img" aria-label="new" style={{marginRight:5}}>📝</span> New File
               </h3>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleCreateFile();
-                }}
-              >
+                }}>
                 <div style={{ marginBottom: 14 }}>
                   <input
                     type="text"
                     value={newFilePath}
                     onChange={(e) => setNewFilePath(e.target.value)}
                     placeholder="Filename, e.g. src/App.js"
-                    style={{
-                      width: "97%",
-                      border: "1.7px solid #00FF00",
-                      borderRadius: 7,
-                      background: "#10181d",
-                      color: "#00FF00",
-                      fontWeight: 600,
-                      fontSize: 15.4,
-                      padding: "8px 10px 7px 14px"
-                    }}
+                    className="github-editor-filename-input"
+                    style={{ width:"97%" }}
                     disabled={creatingFile}
                   />
                 </div>
@@ -905,6 +784,7 @@ function GitHubEditor() {
                     language={guessMonacoLang(newFilePath)}
                     onChange={setNewFileContent}
                     height={220}
+                    className="github-editor-monaco-blink"
                   />
                 </div>
                 <div style={{ marginBottom: 11 }}>
@@ -913,41 +793,26 @@ function GitHubEditor() {
                     value={commitMessage}
                     onChange={(e) => setCommitMessage(e.target.value)}
                     placeholder="Commit message"
-                    style={{
-                      width: "97%",
-                      border: "1.5px solid #00FF00",
-                      borderRadius: 6,
-                      background: "#142a15",
-                      color: "#00FF00",
-                      fontWeight: 700,
-                      fontSize: 14.5,
-                      padding: "8px 14px 7px 14px"
-                    }}
+                    className="github-editor-input"
+                    style={{ width: "97%" }}
                     disabled={creatingFile}
                   />
                 </div>
                 <button
-                  className="btn btn-large"
-                  style={{
-                    background: "var(--accent-neon)",
-                    color: "#11191a",
-                    fontWeight: 700,
-                    border: 0,
-                    marginRight: 7
-                  }}
+                  className="github-editor-action-btn"
                   type="submit"
                   disabled={creatingFile}
+                  style={{marginRight:9}}
                 >
                   {creatingFile ? "Creating file…" : "Create & Commit"}
                 </button>
                 <button
-                  className="btn"
+                  className="github-editor-action-btn"
                   style={{
-                    color: "#00FF00",
+                    color: "#39ff14",
                     background: "transparent",
-                    border: 0,
-                    marginLeft: 8
-                  }}
+                    border: "2px solid #39ff14",
+                    marginLeft: 8}}
                   type="button"
                   onClick={() => setShowNewFile(false)}
                   disabled={creatingFile}
@@ -958,51 +823,49 @@ function GitHubEditor() {
             </div>
           ) : selectedFile ? (
             <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                  marginBottom: 7
-                }}
-              >
+              <div className="ge-anim-glow-row" style={{
+                display: "flex",
+                alignItems: "center", gap: 15, marginBottom: 7
+              }}>
                 <span
                   style={{
-                    color: "#00FF00",
-                    fontWeight: 800,
-                    fontSize: 18,
-                    letterSpacing: ".01em"
+                    color: "#39ff14",
+                    fontWeight: 900,
+                    fontFamily: "'Orbitron','Montserrat',monospace",
+                    fontSize: "1.17rem",
+                    textShadow: "0 0 11px #39ff147c",
+                    letterSpacing: ".013em"
                   }}
                 >
+                  <span role="img" aria-label="file" style={{marginRight:7,fontSize:20,verticalAlign:"-3px"}}>📄</span>
                   {selectedFile}
                 </span>
-                <span
-                  style={{
-                    background: editorDirty
-                      ? "#aaffb326"
-                      : "#00FF0033",
-                    color: "#00FF00",
-                    borderRadius: 7,
-                    padding: "3px 11px",
-                    fontSize: 13.2,
-                    fontWeight: 700,
-                    marginLeft: 6
-                  }}
-                >
+                <span className="github-editor-file-status" style={{
+                  background: editorDirty ? "#aaffb326":"#39ff1424",
+                  color: "#39ff14",
+                  border: "1.3px solid #39ff14a9",
+                }}>
                   {editorDirty ? "Unsaved" : "Saved"}
                 </span>
               </div>
               {loadingFile ? (
-                <div style={{ color: "#b0ffbc" }}>Loading file…</div>
+                <div className="ge-blink-text" style={{ color: "#b0ffbc", fontWeight:600 }}>
+                  Loading file…
+                </div>
               ) : (
-                <MonacoCodeEditor
-                  value={fileContent}
-                  language={guessMonacoLang(selectedFile)}
-                  onChange={handleEditorChange}
-                />
+                <div className="github-editor-monaco-blink">
+                  <MonacoCodeEditor
+                    value={fileContent}
+                    language={guessMonacoLang(selectedFile)}
+                    onChange={handleEditorChange}
+                    height={320}
+                    fontSize={17}
+                  />
+                </div>
               )}
               <form
-                style={{ marginTop: 15, display: "flex", gap: 13, alignItems: "center" }}
+                className="github-editor-commit-bar"
+                style={{ marginTop: 16 }}
                 onSubmit={e => {
                   e.preventDefault();
                   handleSaveFile();
@@ -1013,36 +876,23 @@ function GitHubEditor() {
                   value={commitMessage}
                   onChange={e => setCommitMessage(e.target.value)}
                   placeholder="Commit message"
-                  style={{
-                    flex: 1,
-                    background: "#181e14",
-                    border: "1.4px solid #00FF00",
-                    borderRadius: 7,
-                    color: "#00FF00",
-                    fontWeight: 700,
-                    fontSize: 14
-                  }}
+                  className="github-editor-input"
+                  style={{ flex: 1 }}
                   disabled={pushing}
                 />
                 <button
-                  className="btn btn-large"
-                  style={{
-                    background: "var(--accent-neon)",
-                    color: "#191e13",
-                    fontWeight: 700,
-                    border: 0
-                  }}
+                  className="github-editor-action-btn"
                   type="submit"
                   disabled={pushing || !editorDirty || !commitMessage}
                 >
                   {pushing ? "Saving…" : "Save & Commit"}
                 </button>
                 <button
-                  className="btn"
+                  className="github-editor-action-btn"
                   style={{
-                    color: "#00FF00",
+                    color: "#39ff14",
                     background: "transparent",
-                    border: 0,
+                    border: "2px solid #39ff14",
                     marginLeft: 8
                   }}
                   type="button"
@@ -1058,29 +908,28 @@ function GitHubEditor() {
               </form>
             </div>
           ) : (
-            <div
+            <div className="ge-anim-glow-row"
               style={{
-                color: "#b0ffbc",
-                opacity: 0.77,
-                fontSize: 16.5,
-                marginTop: 24
+                color: "#b0ffbc", opacity: 0.81, fontSize: 16.5,marginTop: 27, textShadow:"0 0 11px #00ffe9"
               }}
             >
-              Select a file to view or edit it, or <b>+ Add File</b>.
+              Select a file to view or edit it, or <span style={{color:"#39ff14",fontWeight:800}}>+ Add File</span>.
             </div>
           )}
         </section>
       </div>
       <div
         style={{
-          marginTop: 16,
-          color: "var(--accent-neon)",
+          marginTop: 24,
+          color: "#39ff14",
           textAlign: "right",
           fontSize: 13.2,
-          opacity: 0.61
+          opacity: 0.64,
+          fontFamily: "'Orbitron', 'Montserrat', monospace",
+          letterSpacing: ".017em"
         }}
       >
-        All file actions use the official GitHub API. Neon theme by CollabAI Hub.
+        All file actions use the official&nbsp;GitHub API. <span style={{color:"#02fcce",fontWeight:650}}>Neon theme</span> by CollabAI Hub.
       </div>
       {toast && (
         <NeonToast
