@@ -9,7 +9,16 @@ import React, { useState, useEffect, useMemo } from "react";
  * Prereq: User must have supplied a valid GitHub PAT via Dashboard or below (uses localStorage 'GITHUB_TOKEN').
  */
 
+import { useNavigate } from "react-router-dom";
+
 function ProjectCard({ project }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    // Go to Project Details page: /projects/:owner/:repo
+    if (project.owner?.login && project.name) {
+      navigate(`/projects/${encodeURIComponent(project.owner.login)}/${encodeURIComponent(project.name)}`);
+    }
+  };
   return (
     <div
       className="card fade-in"
@@ -32,6 +41,11 @@ function ProjectCard({ project }) {
         wordBreak: "break-word",
       }}
       aria-label={`Project ${project.name}`}
+      onClick={handleClick}
+      onKeyDown={e => {
+        if (e.key === "Enter" || e.key === " ") handleClick();
+      }}
+      role="button"
     >
       <div style={{ display: "flex", gap: 13, alignItems: "center" }}>
         <img
@@ -59,18 +73,16 @@ function ProjectCard({ project }) {
               textShadow: "0 0 5px #00FF0035",
             }}
           >
-            <a
-              href={project.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <span
               style={{
                 color: "#00FF00",
                 textDecoration: "none",
                 filter: "drop-shadow(0 0 6px #00FF0031)",
+                cursor: "pointer"
               }}
             >
               {project.name}
-            </a>
+            </span>
             {project.private && (
               <span
                 style={{

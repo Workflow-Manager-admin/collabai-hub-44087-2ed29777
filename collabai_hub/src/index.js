@@ -13,6 +13,7 @@ import NotFound from "./routes/NotFound";
 import GitHub from "./routes/GitHub";
 import Transcription from "./routes/Transcription";
 import Team from "./routes/Team";
+import ProjectDetails from "./routes/ProjectDetails";
 
 // Utility wrapper for Clerk route protection
 function RequireAuth({ children }) {
@@ -49,6 +50,15 @@ root.render(
             element={
               <RequireAuth>
                 <Projects />
+              </RequireAuth>
+            }
+          />
+          {/* Project Details route: /projects/:owner/:repo */}
+          <Route
+            path="projects/:owner/:repo"
+            element={
+              <RequireAuth>
+                <ProjectDetails />
               </RequireAuth>
             }
           />
