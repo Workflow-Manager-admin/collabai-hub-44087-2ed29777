@@ -7,19 +7,497 @@
 <i> [webpack-dev-server] On Your Network (IPv4): http://172.17.0.2:3000/
 <i> [webpack-dev-server] Content not from webpack is served from './public' directory
 Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
-asset bundle.js 1.39 MiB [emitted] (name: main)
+asset bundle.js 1.41 MiB [emitted] (name: main)
 asset index.html 1.92 KiB [emitted]
 runtime modules 27.5 KiB 14 modules
-modules by path ./node_modules/ 1.24 MiB 31 modules
-modules by path ./src/ 10.2 KiB
-  modules by path ./src/*.css 7.49 KiB 4 modules
-  modules by path ./src/*.js 2.75 KiB
-    ./src/index.js 530 bytes [built] [code generated]
-    ./src/App.js 2.23 KiB [built] [code generated]
-modules by path ./.ve/ 15.1 KiB
-  modules by path ./.ve/*.js 10.6 KiB 2 modules
-  modules by path ./.ve/*.css 2.93 KiB
-    ./.ve/EditorOverlay.css 2.25 KiB [built] [code generated]
-    ./node_modules/css-loader/dist/cjs.js!./.ve/EditorOverlay.css 697 bytes [built] [code generated]
-  ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 1567 ms
+cacheable modules 1.27 MiB
+  modules by path ./node_modules/ 1.24 MiB 31 modules
+  modules by path ./src/ 17.6 KiB
+    modules by path ./src/routes/*.js 4.15 KiB 6 modules
+    modules by path ./src/*.css 7.49 KiB 4 modules
+    modules by path ./src/*.js 5.95 KiB
+      ./src/index.js 2.61 KiB [built] [code generated]
+      ./src/App.js 3.34 KiB [built] [code generated]
+  modules by path ./.ve/ 15.1 KiB
+    modules by path ./.ve/*.js 10.6 KiB 2 modules
+    modules by path ./.ve/*.css 2.93 KiB 2 modules
+    ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
+
+ERROR in ./src/App.js 2:0-51
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+  Parsed request is a module
+  using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/node_modules doesn't exist or is not a directory
+      looking for modules in /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules
+        single file module
+          using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./node_modules/react-router-dom)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom.js doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom.jsx doesn't exist
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom doesn't exist
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/node_modules doesn't exist or is not a directory
+      /home/kavia/node_modules doesn't exist or is not a directory
+      /home/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+ @ ./src/index.js 6:0-24 26:37-40
+
+ERROR in ./src/index.js 4:0-64
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+  Parsed request is a module
+  using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/node_modules doesn't exist or is not a directory
+      looking for modules in /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules
+        single file module
+          using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./node_modules/react-router-dom)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom.js doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom.jsx doesn't exist
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom doesn't exist
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/node_modules doesn't exist or is not a directory
+      /home/kavia/node_modules doesn't exist or is not a directory
+      /home/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+
+webpack 5.99.9 compiled with 2 errors in 2173 ms
+assets by status 1.92 KiB [cached] 1 asset
+assets by path *.js 1.42 MiB
+  asset bundle.js 1.41 MiB [emitted] (name: main)
+  asset main.ee3061a1f1b58ced391d.hot-update.js 4.73 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.ee3061a1f1b58ced391d.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.42 MiB = bundle.js 1.41 MiB main.ee3061a1f1b58ced391d.hot-update.js 4.73 KiB
+cached modules 1.27 MiB [cached] 47 modules
+runtime modules 27.5 KiB 14 modules
+./src/routes/Auth.js 1.83 KiB [built] [code generated]
+
+ERROR in ./src/App.js 2:0-51
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+ @ ./src/index.js 6:0-24 26:37-40
+
+ERROR in ./src/index.js 4:0-64
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/routes/Auth.js 2:0-61
+Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 10:0-33 50:39-43
+
+3 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 3 errors in 80 ms
+assets by status 1.41 MiB [cached] 2 assets
+cached modules 1.27 MiB (javascript) 27.5 KiB (runtime) [cached] 62 modules
+
+LOG from webpack.FileSystemInfo
+<w> Managed item /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom isn't a directory or doesn't contain a package.json (see snapshot.managedPaths option)
++ 13 hidden lines
+
+ERROR in ./src/App.js 2:0-51
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+ @ ./src/index.js 6:0-24 26:37-40
+
+ERROR in ./src/index.js 4:0-64
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/routes/Auth.js 2:0-61
+Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 10:0-33 50:39-43
+
+3 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 3 errors in 34 ms
+assets by status 1.92 KiB [cached] 1 asset
+assets by path *.js 1.42 MiB
+  asset bundle.js 1.41 MiB [emitted] (name: main)
+  asset main.8843f139baa30c126e73.hot-update.js 13.9 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.8843f139baa30c126e73.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.42 MiB = bundle.js 1.41 MiB main.8843f139baa30c126e73.hot-update.js 13.9 KiB
+cached modules 1.27 MiB [cached] 46 modules
+runtime modules 27.5 KiB 14 modules
+javascript modules 6.33 KiB
+  ./src/index.js 2.61 KiB [code generated]
+  ./node_modules/react-router-dom/dist/index.mjs 383 bytes [built] [code generated]
+  ./src/App.js 3.34 KiB [code generated]
+
+LOG from webpack.FileSystemInfo
+<w> Managed item /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router isn't a directory or doesn't contain a package.json (see snapshot.managedPaths option)
++ 13 hidden lines
+
+WARNING in ./src/App.js 39:41-48
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 50:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 60:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 70:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 80:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 99:34-40
+export 'Outlet' (imported as 'Outlet') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/index.js 20:32-45
+export 'BrowserRouter' (imported as 'BrowserRouter') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 22:34-40
+export 'Routes' (imported as 'Routes') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 24:37-42
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 30:39-44
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 36:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 42:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 48:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 54:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 60:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+ERROR in ./src/routes/Auth.js 2:0-61
+Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 10:0-33 50:39-43
+
+ERROR in ./node_modules/react-router-dom/dist/index.mjs 13:0-66
+Module not found: Error: Can't resolve 'react-router/dom' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom/dist'
+ @ ./src/index.js 4:0-64 20:32-45 22:34-40 24:37-42 30:39-44 36:32-37 42:32-37 48:32-37 54:32-37 60:32-37
+
+ERROR in ./node_modules/react-router-dom/dist/index.mjs 14:0-29
+Module not found: Error: Can't resolve 'react-router' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/react-router-dom/dist'
+ @ ./src/index.js 4:0-64 20:32-45 22:34-40 24:37-42 30:39-44 36:32-37 42:32-37 48:32-37 54:32-37 60:32-37
+
+3 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 3 errors and 15 warnings in 60 ms
+assets by status 1.92 KiB [cached] 1 asset
+assets by path *.js 2.3 MiB
+  asset bundle.js 1.85 MiB [emitted] (name: main)
+  asset main.3dc2d3dad00e4ae98a10.hot-update.js 454 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.3dc2d3dad00e4ae98a10.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.3 MiB = bundle.js 1.85 MiB main.3dc2d3dad00e4ae98a10.hot-update.js 454 KiB
+cached modules 1.27 MiB [cached] 48 modules
+runtime modules 27.5 KiB 14 modules
+javascript modules 392 KiB
+  modules by path ./node_modules/react-router/ 385 KiB
+    ./node_modules/react-router/dist/development/dom-export.mjs 6.86 KiB [built] [code generated]
+    ./node_modules/react-router/dist/development/index.mjs 5.61 KiB [built] [code generated]
+    ./node_modules/react-router/dist/development/chunk-NL6KNZEE.mjs 365 KiB [built] [code generated]
+    ./node_modules/react-router/node_modules/cookie/dist/index.js 8.14 KiB [built] [code generated]
+  ./node_modules/react-router-dom/dist/index.mjs 383 bytes [code generated]
+  ./node_modules/set-cookie-parser/lib/set-cookie.js 6.47 KiB [built] [code generated]
+
+WARNING in ./src/App.js 39:41-48
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 50:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 60:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 70:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 80:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 99:34-40
+export 'Outlet' (imported as 'Outlet') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/index.js 20:32-45
+export 'BrowserRouter' (imported as 'BrowserRouter') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 22:34-40
+export 'Routes' (imported as 'Routes') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 24:37-42
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 30:39-44
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 36:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 42:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 48:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 54:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 60:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+ERROR in ./src/routes/Auth.js 2:0-61
+Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+  Parsed request is a module
+  using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src/routes)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/node_modules doesn't exist or is not a directory
+      looking for modules in /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules
+        single file module
+          using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./node_modules/@clerk/clerk-react)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react.js doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react.jsx doesn't exist
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react doesn't exist
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/node_modules doesn't exist or is not a directory
+      /home/kavia/node_modules doesn't exist or is not a directory
+      /home/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+ @ ./src/index.js 10:0-33 50:39-43
+
+webpack 5.99.9 compiled with 1 error and 15 warnings in 364 ms
+assets by status 1.85 MiB [cached] 2 assets
+cached modules 1.66 MiB (javascript) 27.5 KiB (runtime) [cached] 68 modules
+
+WARNING in ./src/App.js 39:41-48
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 50:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 60:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 70:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 80:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 99:34-40
+export 'Outlet' (imported as 'Outlet') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/index.js 20:32-45
+export 'BrowserRouter' (imported as 'BrowserRouter') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 22:34-40
+export 'Routes' (imported as 'Routes') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 24:37-42
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 30:39-44
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 36:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 42:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 48:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 54:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 60:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+ERROR in ./src/routes/Auth.js 2:0-61
+Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+  Parsed request is a module
+  using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src/routes)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/node_modules doesn't exist or is not a directory
+      looking for modules in /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules
+        single file module
+          using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./node_modules/@clerk/clerk-react)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react.js doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react.jsx doesn't exist
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react doesn't exist
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/node_modules doesn't exist or is not a directory
+      /home/kavia/node_modules doesn't exist or is not a directory
+      /home/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+ @ ./src/index.js 10:0-33 50:39-43
+
+webpack 5.99.9 compiled with 1 error and 15 warnings in 44 ms
+Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
+assets by path *.js 1.85 MiB
+  asset bundle.js 1.85 MiB [emitted] (name: main)
+  asset main.c0edfdc78a448ad6774a.hot-update.js 854 bytes [emitted] [immutable] [hmr] (name: main)
+asset index.html 1.92 KiB [emitted]
+asset main.c0edfdc78a448ad6774a.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.85 MiB = bundle.js 1.85 MiB main.c0edfdc78a448ad6774a.hot-update.js 854 bytes
+cached modules 1.63 MiB [cached] 43 modules
+runtime modules 27.5 KiB 14 modules
+javascript modules 23.5 KiB
+  modules by path ./src/ 11.3 KiB
+    modules by path ./src/routes/*.js 5.32 KiB
+      ./src/routes/Dashboard.js 701 bytes [built]
+      ./src/routes/Projects.js 686 bytes [built]
+      + 4 modules
+    modules by path ./src/*.js 5.95 KiB
+      ./src/index.js 2.61 KiB [built]
+      ./src/App.js 3.34 KiB [built]
+  modules by path ./.ve/ 12.2 KiB
+    ./.ve/EditorRootWrapper.js 2.68 KiB [built]
+    ./.ve/EditorOverlay.jsx 1.58 KiB [built]
+    ./.ve/SidePanel.js 7.93 KiB [built]
+
+WARNING in ./src/App.js 39:41-48
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 50:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 60:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 70:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 80:34-41
+export 'NavLink' (imported as 'NavLink') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/App.js 99:34-40
+export 'Outlet' (imported as 'Outlet') was not found in 'react-router-dom' (module has no exports)
+ @ ./src/index.js 6:0-24 26:37-40
+
+WARNING in ./src/index.js 20:32-45
+export 'BrowserRouter' (imported as 'BrowserRouter') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 22:34-40
+export 'Routes' (imported as 'Routes') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 24:37-42
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 30:39-44
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 36:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 42:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 48:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 54:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+WARNING in ./src/index.js 60:32-37
+export 'Route' (imported as 'Route') was not found in 'react-router-dom' (module has no exports)
+
+ERROR in ./src/routes/Auth.js 2:0-61
+Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+resolve '@clerk/clerk-react' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+  Parsed request is a module
+  using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src/routes)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/node_modules doesn't exist or is not a directory
+      looking for modules in /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules
+        single file module
+          using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./node_modules/@clerk/clerk-react)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react.js doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react.jsx doesn't exist
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@clerk/clerk-react doesn't exist
+      /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/code-generation/node_modules doesn't exist or is not a directory
+      /home/kavia/workspace/node_modules doesn't exist or is not a directory
+      /home/kavia/node_modules doesn't exist or is not a directory
+      /home/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+ @ ./src/index.js 10:0-33 50:39-43
+
+webpack 5.99.9 compiled with 1 error and 15 warnings in 248 ms
