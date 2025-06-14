@@ -14,8 +14,53 @@ import React, { useState, useRef } from "react";
  *   }
  */
 
-// Gemini API constants
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+/** Gemini API constants and utility functions for smart model selection */
+const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
+const GEMINI_MODEL_LIST_URL = `${GEMINI_BASE_URL}/models`;
+const GEMINI_DEFAULT_MODEL = "models/gemini-pro"; // fallback to this if available
+const GEMINI_API_URL = (model) =>
+  `${GEMINI_BASE_URL}/${model}:generateContent`;
+
+// Helper to fetch supported Gemini models for free-tier API key and endpoint
+async function fetchGeminiModels(apiKey) {
+  try {
+    const res = await fetch(`${GEMINI_MODEL_LIST_URL}?key=${apiKey}`);
+    if (res.ok) {
+      const data = await res.json();
+      return Array.isArray(data.models) ? data.models : [];
+    }
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+// Algorithm to auto-select the best available Gemini model for content generation (free-tier compatible)
+async function pickSupportedGeminiModel(apiKey) {
+  const models = await fetchGeminiModels(apiKey);
+  // Prefer a model with /generateContent method allowed, and preferably 'gemini-pro'
+  if (!Array.isArray(models) || models.length === 0) return GEMINI_DEFAULT_MODEL;
+  const lcModels = models.map((m) => ({
+    ...m,
+    id: m.name || m.id || "",
+    supportsGenerate:
+      Array.isArray(m.supportedGenerationMethods)
+        ? m.supportedGenerationMethods.includes("generateContent")
+        : false,
+  }));
+  // Prefer "gemini-pro" if present and supports generation
+  for (const m of lcModels) {
+    if (
+      (m.id.includes("gemini-pro") || m.id.includes("gemini"))
+      && m.supportsGenerate
+    ) {
+      return m.id;
+    }
+  }
+  // Otherwise, pick the first with generateContent support
+  const fallback = lcModels.find((m) => m.supportsGenerate);
+  return fallback ? fallback.id : GEMINI_DEFAULT_MODEL;
+}
 
 // Loads the Gemini API key from localStorage or (temporarily) from field
 function useGeminiApiKey() {
@@ -453,7 +498,19 @@ Date: ${c.date}`
           opacity: 0.76,
         }}
       >
-        AI answers are based on repo context (README, commit history). Provide your Gemini API key for best results.
+        {/* Try to show which model is in use for the user (best-effort, not perfect as it's async) */}
+        <span>
+          AI answers are based on repo context (README, commit history). Uses a supported free-tier Gemini model if possible.
+          {" "}
+          <a
+            href="https://ai.google.dev/docs/models/gemini"
+            style={{ color: "#00FF00", textDecoration: "underline" }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Gemini API models info
+          </a>
+        </span>
       </div>
     </div>
   );

@@ -7,13 +7,13 @@
 <i> [webpack-dev-server] On Your Network (IPv4): http://172.17.0.2:3000/
 <i> [webpack-dev-server] Content not from webpack is served from './public' directory
 Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
-asset bundle.js 2.28 MiB [emitted] (name: main)
+asset bundle.js 2.29 MiB [emitted] (name: main)
 asset index.html 1.92 KiB [emitted]
 runtime modules 27.5 KiB 14 modules
 orphan modules 12.8 KiB [orphan] 4 modules
 modules by path ./node_modules/ 1.86 MiB 87 modules
-modules by path ./src/ 110 KiB
-  modules by path ./src/routes/*.js 87.7 KiB 11 modules
+modules by path ./src/ 116 KiB
+  modules by path ./src/routes/*.js 94 KiB 11 modules
   modules by path ./src/*.css 12.3 KiB 4 modules
   modules by path ./src/*.js 10.1 KiB
     ./src/index.js 5.26 KiB [built] [code generated]
@@ -22,18 +22,24 @@ modules by path ./.ve/ 15.1 KiB
   modules by path ./.ve/*.js 10.6 KiB 2 modules
   modules by path ./.ve/*.css 2.93 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 2662 ms
+webpack 5.99.9 compiled successfully in 2611 ms
 assets by status 1.92 KiB [cached] 1 asset
 assets by path *.js 2.31 MiB
   asset bundle.js 2.29 MiB [emitted] (name: main)
-  asset main.c404c3b51f2297e9fccc.hot-update.js 19.2 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.c404c3b51f2297e9fccc.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 2.31 MiB = bundle.js 2.29 MiB main.c404c3b51f2297e9fccc.hot-update.js 19.2 KiB
+  asset main.06f9207d823ba429b7f4.hot-update.js 20.8 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.06f9207d823ba429b7f4.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.31 MiB = bundle.js 2.29 MiB main.06f9207d823ba429b7f4.hot-update.js 20.8 KiB
 cached modules 1.99 MiB [cached] 112 modules
 runtime modules 27.5 KiB 14 modules
-./src/routes/GeminiChatbot.js 14.8 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 272 ms
-assets by status 2.29 MiB [cached] 2 assets
-cached modules 1.99 MiB (javascript) 27.5 KiB (runtime) [cached] 126 modules
-./src/routes/GeminiChatbot.js 14.8 KiB [built]
-webpack 5.99.9 compiled successfully in 222 ms
+./src/routes/GeminiChatbot.js 16.4 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 318 ms
+assets by status 1.92 KiB [cached] 1 asset
+assets by path *.js 2.31 MiB
+  asset bundle.js 2.29 MiB [emitted] (name: main)
+  asset main.ebfb89513a077f3093e3.hot-update.js 21.5 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.ebfb89513a077f3093e3.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.31 MiB = bundle.js 2.29 MiB main.ebfb89513a077f3093e3.hot-update.js 21.5 KiB
+cached modules 1.99 MiB [cached] 112 modules
+runtime modules 27.5 KiB 14 modules
+./src/routes/GeminiChatbot.js 16.9 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 195 ms
