@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 /**
  * Gemini AI Chatbot for per-repo Q&A.
@@ -14,7 +14,7 @@ import React, { useState, useRef } from "react";
  *   }
  */
 
-/** Gemini API constants and utility functions for smart model selection */
+// Gemini API constants and utility functions for smart model selection
 const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 const GEMINI_MODEL_LIST_URL = `${GEMINI_BASE_URL}/models`;
 const GEMINI_DEFAULT_MODEL = "models/gemini-pro"; // fallback to this if available
@@ -38,7 +38,6 @@ async function fetchGeminiModels(apiKey) {
 // Algorithm to auto-select the best available Gemini model for content generation (free-tier compatible)
 async function pickSupportedGeminiModel(apiKey) {
   const models = await fetchGeminiModels(apiKey);
-  // Prefer a model with /generateContent method allowed, and preferably 'gemini-pro'
   if (!Array.isArray(models) || models.length === 0) return GEMINI_DEFAULT_MODEL;
   const lcModels = models.map((m) => ({
     ...m,
@@ -98,6 +97,41 @@ function GeminiChatbot({ repoInfo, style = {} }) {
   const [keyEditing, setKeyEditing] = useState(false);
   const [manualKey, setManualKey] = useState("");
 
+  // Model discovery and robust selection state
+  const [selectedModel, setSelectedModel] = useState(GEMINI_DEFAULT_MODEL);
+  const [modelError, setModelError] = useState("");
+  const [modelList, setModelList] = useState([]);
+  const [modelDisplay, setModelDisplay] = useState(null);
+
+  // On API key change or set, refresh model
+  useEffect(() => {
+    let active = true;
+    async function refreshModelList() {
+      setModelList([]);
+      setModelError("");
+      setModelDisplay(null);
+      if (!apiKey) return;
+      let models = [];
+      try {
+        models = await fetchGeminiModels(apiKey);
+        setModelList(models);
+      } catch {
+        setModelList([]);
+      }
+      let picked = await pickSupportedGeminiModel(apiKey);
+      if (active) {
+        setSelectedModel(picked);
+        setModelDisplay(
+          models.find((m) =>
+            (m.name || m.id || "").includes(picked)
+          )?.displayName || picked
+        );
+      }
+    }
+    refreshModelList();
+    return () => { active = false; };
+  }, [apiKey]);
+
   // Construct repo context for Gemini
   function buildContextPrompt() {
     let prompt = `You are an expert AI assistant helping answer questions about the following GitHub repository.
@@ -126,12 +160,74 @@ Date: ${c.date}`
     return prompt;
   }
 
+  // Helper for sending a Gemini request with a specific model
+  async function sendGeminiRequest({ prompt, model, apiKey, retryModels=[] }) {
+    try {
+      const url = `${GEMINI_BASE_URL}/${model}:generateContent?key=${apiKey}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: prompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.4,
+            maxOutputTokens: 1024,
+          },
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        let aiText = "";
+        if (
+          data?.candidates?.[0]?.content?.parts?.[0]?.text
+        ) {
+          aiText = data.candidates[0].content.parts[0].text.trim();
+        } else {
+          aiText = "[Sorry, the AI did not return a valid response.]";
+        }
+        return { success: true, aiText, raw: data };
+      } else {
+        // Try to get Gemini error for smart fallback
+        let geminiErr = null;
+        try {
+          geminiErr = await res.json();
+        } catch {}
+        // Check for model auth or not found errors ("Model '...' does not exist" or permissions)
+        if (
+          geminiErr?.error?.message &&
+          retryModels.length > 0 &&
+          (
+            geminiErr.error.message.includes("does not exist") ||
+            geminiErr.error.message.toLowerCase().includes("permission") ||
+            geminiErr.error.message.toLowerCase().includes("not authorized")
+          )
+        ) {
+          // Try next candidate model
+          const nextModel = retryModels.shift();
+          return await sendGeminiRequest({ prompt, model: nextModel, apiKey, retryModels });
+        }
+        throw new Error(
+          geminiErr?.error?.message ||
+          "Failed to query Gemini API"
+        );
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
   // PUBLIC_INTERFACE
   async function handleSend(e) {
     e.preventDefault();
     if (!input.trim() || loading || !apiKey) return;
     setError(null);
     setLoading(true);
+    setModelError("");
 
     const userMsg = { from: "user", text: input, meta: null };
     setMessages((msgs) => [...msgs, userMsg]);
@@ -151,51 +247,35 @@ Date: ${c.date}`
     const finalPrompt =
       contextMsg + "\n---\n" + chatHistory + "\n---\nAI:";
 
-    try {
-      const res = await fetch(
-        `${GEMINI_API_URL}?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: "user",
-                parts: [{ text: finalPrompt }],
-              },
-            ],
-            generationConfig: {
-              temperature: 0.4,
-              maxOutputTokens: 1024,
-            },
-          }),
-        }
+    let aiText = "";
+    let triedModels = [selectedModel];
+    // try fallback models if available
+    if (modelList.length > 0) {
+      // Preference order: selectedModel, first with 'generateContent', then others
+      const modelsWithGeneration = modelList
+        .filter((m) =>
+          Array.isArray(m.supportedGenerationMethods)
+            ? m.supportedGenerationMethods.includes("generateContent")
+            : false
+        ).map(m => m.name || m.id);
+      let uniqueModels = Array.from(
+        new Set([selectedModel, ...modelsWithGeneration])
       );
-      if (!res.ok) {
-        // Gemini error structure might give details
-        let geminiErr = null;
-        try {
-          geminiErr = await res.json();
-        } catch {}
-        throw new Error(
-          geminiErr?.error?.message ||
-            "Failed to query Gemini API"
-        );
-      }
-      const data = await res.json();
-      // Gemini structure: data.candidates[0].content.parts[0].text
-      let aiText = "";
-      if (
-        data?.candidates?.[0]?.content?.parts?.[0]?.text
-      ) {
-        aiText = data.candidates[0].content.parts[0].text.trim();
-      } else {
-        aiText = "[Sorry, the AI did not return a valid response.]";
-      }
+      triedModels = uniqueModels;
+    }
+    try {
+      const result = await sendGeminiRequest({
+        prompt: finalPrompt,
+        model: triedModels[0],
+        apiKey,
+        retryModels: triedModels.slice(1), // fallback options
+      });
+      aiText = result.aiText;
       setMessages((msgs) => [
         ...msgs,
-        { from: "ai", text: aiText, meta: null },
+        { from: "ai", text: aiText, meta: { model: triedModels[0] } },
       ]);
+      setModelDisplay(triedModels[0]);
     } catch (err) {
       setError(
         err?.message ||
@@ -209,6 +289,12 @@ Date: ${c.date}`
           meta: null,
         },
       ]);
+      if (
+        err?.message &&
+        (err.message.includes("does not exist") || err.message.toLowerCase().includes("permission"))
+      ) {
+        setModelError("Your Gemini API key may not have access to the needed model. Try a new key from Google AI Studio (or check your quota).");
+      }
     }
     setLoading(false);
   }
@@ -498,10 +584,28 @@ Date: ${c.date}`
           opacity: 0.76,
         }}
       >
-        {/* Try to show which model is in use for the user (best-effort, not perfect as it's async) */}
+        {/* Enhanced: Show active model & fallbacks */}
         <span>
-          AI answers are based on repo context (README, commit history). Uses a supported free-tier Gemini model if possible.
-          {" "}
+          AI answers use Google Gemini API, using an available free-tier model.
+          {modelError && (
+            <span style={{ color: "#ff8984", fontWeight: 700 }}> [API model access error: {modelError}]</span>
+          )}
+          <br />
+          <span>
+            Current model:
+            <span style={{ color: "#00FF00", fontWeight: 600, marginLeft: 4 }}>
+              {modelDisplay || selectedModel}
+            </span>
+            {modelList.length > 1 && (
+              <span style={{ color: "#b0ffbc", marginLeft: 8, fontStyle: "italic", opacity: 0.7 }}>
+                (candidate fallbacks: {modelList.filter(
+                  m=>((m.name||m.id)!==(modelDisplay||selectedModel)) &&
+                     Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes("generateContent")
+                ).map(m=>(m.displayName || m.name || m.id)).join(", ")})
+              </span>
+            )}
+          </span>
+          <br />
           <a
             href="https://ai.google.dev/docs/models/gemini"
             style={{ color: "#00FF00", textDecoration: "underline" }}
@@ -517,3 +621,4 @@ Date: ${c.date}`
 }
 
 export default GeminiChatbot;
+
