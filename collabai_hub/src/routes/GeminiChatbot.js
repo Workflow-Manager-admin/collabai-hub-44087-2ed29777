@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 /**
  * Gemini AI Chatbot for per-repo Q&A.
- * Uses Gemini Pro API for contextual AI discussion about the current repository.
+ * Uses Gemini free API for contextual AI discussion about the current repository.
  * 
  * Props:
  *   repoInfo: {
@@ -14,14 +14,16 @@ import React, { useState, useRef, useEffect } from "react";
  *   }
  */
 
-// Gemini API constants and utility functions for smart model selection
+// --- Gemini API Constants: Restrict to current free, non-deprecated chat models ---
 const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1";
 const GEMINI_MODEL_LIST_URL = `${GEMINI_BASE_URL}/models`;
-const GEMINI_DEFAULT_MODEL = "models/gemini-pro"; // fallback to this if available
+const GEMINI_DEFAULT_MODEL = "models/gemini-1.5-flash";
+const GEMINI_FALLBACK_MODEL = "models/gemini-2.0-flash";
+const GEMINI_ALLOWED_MODELS = [GEMINI_DEFAULT_MODEL, GEMINI_FALLBACK_MODEL];
 const GEMINI_API_URL = (model) =>
   `${GEMINI_BASE_URL}/${model}:generateContent`;
 
-// Helper to fetch supported Gemini models for free-tier API key and endpoint
+// Helper to fetch available Gemini models for API key
 async function fetchGeminiModels(apiKey) {
   try {
     const res = await fetch(`${GEMINI_MODEL_LIST_URL}?key=${apiKey}`);
@@ -35,30 +37,54 @@ async function fetchGeminiModels(apiKey) {
   }
 }
 
-// Algorithm to auto-select the best available Gemini model for content generation (free-tier compatible)
+/**
+ * Picks the allowed free Gemini model:
+ * - Prefers 'gemini-1.5-flash'
+ * - If not, uses 'gemini-2.0-flash' if supported
+ */
 async function pickSupportedGeminiModel(apiKey) {
   const models = await fetchGeminiModels(apiKey);
-  if (!Array.isArray(models) || models.length === 0) return GEMINI_DEFAULT_MODEL;
-  const lcModels = models.map((m) => ({
-    ...m,
-    id: m.name || m.id || "",
-    supportsGenerate:
-      Array.isArray(m.supportedGenerationMethods)
-        ? m.supportedGenerationMethods.includes("generateContent")
-        : false,
-  }));
-  // Prefer "gemini-pro" if present and supports generation
-  for (const m of lcModels) {
-    if (
-      (m.id.includes("gemini-pro") || m.id.includes("gemini"))
-      && m.supportsGenerate
-    ) {
-      return m.id;
-    }
+
+  // Only consider explicitly allowed free models
+  const freeModels = models
+    .filter((m) => {
+      const id = m.name || m.id || "";
+      if (!GEMINI_ALLOWED_MODELS.includes(id)) return false;
+      if (
+        !Array.isArray(m.supportedGenerationMethods) ||
+        !m.supportedGenerationMethods.includes("generateContent")
+      )
+        return false;
+      return true;
+    });
+
+  // Prioritize 1.5-flash, then 2.0-flash
+  const found15 = freeModels.find((m) => (m.name || m.id) === GEMINI_DEFAULT_MODEL);
+  if (found15) {
+    // If 2.0-flash is also available, allow as fallback
+    const has20 = freeModels.find((m) => (m.name || m.id) === GEMINI_FALLBACK_MODEL);
+    return {
+      selected: GEMINI_DEFAULT_MODEL,
+      candidates: has20
+        ? [GEMINI_DEFAULT_MODEL, GEMINI_FALLBACK_MODEL]
+        : [GEMINI_DEFAULT_MODEL],
+      modelList: freeModels,
+    };
   }
-  // Otherwise, pick the first with generateContent support
-  const fallback = lcModels.find((m) => m.supportsGenerate);
-  return fallback ? fallback.id : GEMINI_DEFAULT_MODEL;
+  const found20 = freeModels.find((m) => (m.name || m.id) === GEMINI_FALLBACK_MODEL);
+  if (found20) {
+    return {
+      selected: GEMINI_FALLBACK_MODEL,
+      candidates: [GEMINI_FALLBACK_MODEL],
+      modelList: freeModels,
+    };
+  }
+  // Neither available: just return default, UI will error
+  return {
+    selected: GEMINI_DEFAULT_MODEL,
+    candidates: [GEMINI_DEFAULT_MODEL],
+    modelList: [],
+  };
 }
 
 // Loads the Gemini API key from localStorage or (temporarily) from field
@@ -83,7 +109,7 @@ function GeminiChatbot({ repoInfo, style = {} }) {
   const [messages, setMessages] = useState([
     {
       from: "ai",
-      text: "Hi! 👋 I’m Gemini, your project AI. Ask anything about this repository—code, commits, purpose, or how to get started.",
+      text: "Hi! 👋 I’m Gemini, your project AI—ready to answer questions about this repository (code, commits, usage, and more). Only free AI models (gemini-1.5-flash, or 2.0-flash if available) are supported.",
       meta: null,
     },
   ]);
@@ -97,13 +123,13 @@ function GeminiChatbot({ repoInfo, style = {} }) {
   const [keyEditing, setKeyEditing] = useState(false);
   const [manualKey, setManualKey] = useState("");
 
-  // Model discovery and robust selection state
+  // Model selection state
   const [selectedModel, setSelectedModel] = useState(GEMINI_DEFAULT_MODEL);
   const [modelError, setModelError] = useState("");
   const [modelList, setModelList] = useState([]);
   const [modelDisplay, setModelDisplay] = useState(null);
 
-  // On API key change or set, refresh model
+  // On API key change/set, refresh allowed model list and select best
   useEffect(() => {
     let active = true;
     async function refreshModelList() {
@@ -111,21 +137,25 @@ function GeminiChatbot({ repoInfo, style = {} }) {
       setModelError("");
       setModelDisplay(null);
       if (!apiKey) return;
-      let models = [];
       try {
-        models = await fetchGeminiModels(apiKey);
-        setModelList(models);
-      } catch {
-        setModelList([]);
-      }
-      let picked = await pickSupportedGeminiModel(apiKey);
-      if (active) {
-        setSelectedModel(picked);
-        setModelDisplay(
-          models.find((m) =>
-            (m.name || m.id || "").includes(picked)
-          )?.displayName || picked
-        );
+        const { selected, candidates, modelList } = await pickSupportedGeminiModel(apiKey);
+        if (active) {
+          setSelectedModel(selected);
+          setModelList(modelList);
+          setModelDisplay(
+            modelList.find((m) => (m.name || m.id) === selected)?.displayName || selected
+          );
+          if (modelList.length === 0) {
+            setModelError(
+              "No supported Gemini free models ('gemini-1.5-flash' or 'gemini-2.0-flash') found or enabled for your API key."
+            );
+          }
+        }
+      } catch (_e) {
+        if (active) {
+          setModelError("Could not refresh Gemini free model list.");
+          setModelList([]);
+        }
       }
     }
     refreshModelList();
@@ -160,8 +190,8 @@ Date: ${c.date}`
     return prompt;
   }
 
-  // Helper for sending a Gemini request with a specific model
-  async function sendGeminiRequest({ prompt, model, apiKey, retryModels=[] }) {
+  // Helper to send Gemini request, only supports the allowed models (no paid/pro/deprecated)
+  async function sendGeminiRequest({ prompt, model, apiKey, retryModels = [] }) {
     try {
       const url = `${GEMINI_BASE_URL}/${model}:generateContent?key=${apiKey}`;
       const res = await fetch(url, {
@@ -192,12 +222,12 @@ Date: ${c.date}`
         }
         return { success: true, aiText, raw: data };
       } else {
-        // Try to get Gemini error for smart fallback
+        // Get Gemini error for fallback
         let geminiErr = null;
         try {
           geminiErr = await res.json();
-        } catch {}
-        // Check for model auth or not found errors ("Model '...' does not exist" or permissions)
+        } catch { }
+        // Retry only if allowed model fallback is available
         if (
           geminiErr?.error?.message &&
           retryModels.length > 0 &&
@@ -207,7 +237,6 @@ Date: ${c.date}`
             geminiErr.error.message.toLowerCase().includes("not authorized")
           )
         ) {
-          // Try next candidate model
           const nextModel = retryModels.shift();
           return await sendGeminiRequest({ prompt, model: nextModel, apiKey, retryModels });
         }
@@ -233,7 +262,7 @@ Date: ${c.date}`
     setMessages((msgs) => [...msgs, userMsg]);
     setInput("");
 
-    // Build prompt for Gemini: full context + chat history + current question
+    // Build prompt: repo context + chat history + question
     const contextMsg = buildContextPrompt();
     const chatHistory = messages
       .slice(1) // skip intro message
@@ -247,39 +276,36 @@ Date: ${c.date}`
     const finalPrompt =
       contextMsg + "\n---\n" + chatHistory + "\n---\nAI:";
 
-    let aiText = "";
     let triedModels = [selectedModel];
-    // try fallback models if available
+
+    // Limit fallback only to allowed models present
     if (modelList.length > 0) {
-      // Preference order: selectedModel, first with 'generateContent', then others
-      const modelsWithGeneration = modelList
-        .filter((m) =>
-          Array.isArray(m.supportedGenerationMethods)
-            ? m.supportedGenerationMethods.includes("generateContent")
-            : false
-        ).map(m => m.name || m.id);
-      let uniqueModels = Array.from(
-        new Set([selectedModel, ...modelsWithGeneration])
+      const allowedFallbacks = GEMINI_ALLOWED_MODELS;
+      triedModels = allowedFallbacks.filter((m) =>
+        modelList.some((mod) => (mod.name || mod.id) === m)
       );
-      triedModels = uniqueModels;
+      if (!triedModels.includes(selectedModel)) triedModels.unshift(selectedModel);
+      triedModels = Array.from(new Set(triedModels));
+      if (triedModels.length === 0)
+        triedModels = [selectedModel];
     }
+
     try {
       const result = await sendGeminiRequest({
         prompt: finalPrompt,
         model: triedModels[0],
         apiKey,
-        retryModels: triedModels.slice(1), // fallback options
+        retryModels: triedModels.slice(1),
       });
-      aiText = result.aiText;
       setMessages((msgs) => [
         ...msgs,
-        { from: "ai", text: aiText, meta: { model: triedModels[0] } },
+        { from: "ai", text: result.aiText, meta: { model: triedModels[0] } },
       ]);
       setModelDisplay(triedModels[0]);
     } catch (err) {
       setError(
         err?.message ||
-          "Failed to contact Gemini AI. Please check your API key/network or try again."
+        "Failed to contact Gemini AI. Please check your API key/network or try again."
       );
       setMessages((msgs) => [
         ...msgs,
@@ -293,7 +319,9 @@ Date: ${c.date}`
         err?.message &&
         (err.message.includes("does not exist") || err.message.toLowerCase().includes("permission"))
       ) {
-        setModelError("Your Gemini API key may not have access to the needed model. Try a new key from Google AI Studio (or check your quota).");
+        setModelError(
+          "Your Gemini API key may not have access to the supported free models. Only 'gemini-1.5-flash' and 'gemini-2.0-flash' are supported. Get a free-tier key from Google AI Studio."
+        );
       }
     }
     setLoading(false);
@@ -449,7 +477,7 @@ Date: ${c.date}`
           style={{
             color: "#b0ffbc",
             fontSize: 13,
-            marginLeft: "auto", // right align for small button
+            marginLeft: "auto",
             padding: "2px 7px",
             border: 0,
             background: "transparent"
@@ -584,27 +612,44 @@ Date: ${c.date}`
           opacity: 0.76,
         }}
       >
-        {/* Enhanced: Show active model & fallbacks */}
         <span>
-          AI answers use Google Gemini API, using an available free-tier model.
-          {modelError && (
-            <span style={{ color: "#ff8984", fontWeight: 700 }}> [API model access error: {modelError}]</span>
-          )}
-          <br />
+          <b>AI answers use only free Gemini models:</b>{" "}
+          <span style={{ color: "#00FF00", fontWeight: 700 }}>gemini-1.5-flash</span>
+          {modelList.find((m) => (m.name || m.id) === GEMINI_FALLBACK_MODEL)
+            ? <>{" and "}<span style={{ color: "#00FF00", fontWeight: 700 }}>gemini-2.0-flash</span></> : <></>}
+          . <br />
           <span>
-            Current model:
+            Current model:{" "}
             <span style={{ color: "#00FF00", fontWeight: 600, marginLeft: 4 }}>
               {modelDisplay || selectedModel}
             </span>
             {modelList.length > 1 && (
-              <span style={{ color: "#b0ffbc", marginLeft: 8, fontStyle: "italic", opacity: 0.7 }}>
-                (candidate fallbacks: {modelList.filter(
-                  m=>((m.name||m.id)!==(modelDisplay||selectedModel)) &&
-                     Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes("generateContent")
-                ).map(m=>(m.displayName || m.name || m.id)).join(", ")})
+              <span style={{
+                color: "#b0ffbc", marginLeft: 8, fontStyle: "italic", opacity: 0.7
+              }}>
+                (fallback:{" "}
+                {modelList
+                  .filter(
+                    m =>
+                      (m.name || m.id) !== (modelDisplay || selectedModel) &&
+                      (m.name === GEMINI_FALLBACK_MODEL || m.id === GEMINI_FALLBACK_MODEL)
+                  )
+                  .map(m => m.displayName || m.name || m.id)
+                  .join(", ")})
               </span>
             )}
           </span>
+          <br />
+          <span style={{ color: "#ff8684", fontWeight: 600 }}>
+            Only <strong>'gemini-1.5-flash'</strong> and <strong>'gemini-2.0-flash'</strong> are supported for chat. Paid, pro, vision, and other models are not available.
+          </span>
+          {modelError && (
+            <><br />
+              <span style={{ color: "#ff8984", fontWeight: 700 }}>
+                [API model access error: {modelError}]
+              </span>
+            </>
+          )}
           <br />
           <a
             href="https://ai.google.dev/docs/models/gemini"
@@ -621,4 +666,3 @@ Date: ${c.date}`
 }
 
 export default GeminiChatbot;
-
