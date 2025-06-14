@@ -181,7 +181,64 @@ body::-webkit-scrollbar-thumb {
   box-shadow: var(--shadow);
   padding: 30px 18px;
   margin: 18px 0;
+  transition: box-shadow 0.19s, border-color 0.15s, background 0.22s;
 }
+
+.card {
+  /* Neon project card customizations (for Projects.js) */
+  border: 1.7px solid var(--accent-neon);
+  box-shadow: 0 0 10px #00FF0036;
+  padding: 22px 18px;
+  border-radius: 13px;
+  position: relative;
+  word-break: break-word;
+  margin: 18px 8px;
+}
+.card:focus-within,
+.card:hover {
+  outline: none;
+  border-color: #00FF00;
+  box-shadow: 0 0 16px #00FF0070, 0 2px 18px 0 #00FF0030;
+  filter: brightness(1.08) drop-shadow(0 0 11px #00ff0030);
+  z-index: 2;
+}
+
+.project-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 0;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+@media (max-width: 920px) {
+  .project-gallery, .dashboard-gallery {
+    flex-direction: column;
+    gap: 0;
+  }
+  .card {
+    min-width: 90vw !important;
+    max-width: 99vw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-gallery {
+    flex-direction: column;
+    gap: 0;
+  }
+  .card {
+    min-width: 95vw !important;
+    max-width: 99vw !important;
+    padding: 15px 5vw;
+    font-size: 0.98rem;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
 
 section {
   border-radius: 9px;

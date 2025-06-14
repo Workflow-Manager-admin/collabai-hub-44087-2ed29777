@@ -2,20 +2,14 @@ import React, { useState, useEffect, useMemo } from "react";
 
 // PUBLIC_INTERFACE
 /**
- * Projects Page
- * Fetch and display user repositories (projects) from GitHub.
- * Features:
- * - List or gallery view of user repos (project cards)
- * - Filtering by search (name, description)
- * - Neon/dark styling, responsive, robust loading/error/empty
- * - Uses GitHub API with user's token (same as Dashboard)
- * - Prepares for expansion (select project for chat/teammates etc)
- * 
- * NOTE: User must provide a GitHub Personal Access Token (PAT) in Dashboard or here via localStorage.
+ * Projects Page: Fetch and display GitHub repositories the user has access to,
+ * styled in a neon/dark responsive grid UI, supporting search/filter,
+ * and robustly handling loading, error, and empty states.
+ *
+ * Prereq: User must have supplied a valid GitHub PAT via Dashboard or below (uses localStorage 'GITHUB_TOKEN').
  */
 
 function ProjectCard({ project }) {
-  // Single repository/project card for gallery/list
   return (
     <div
       className="card fade-in"
@@ -25,16 +19,17 @@ function ProjectCard({ project }) {
         border: "1.7px solid var(--accent-neon)",
         boxShadow: "0 0 10px #00FF0036",
         borderRadius: 13,
-        minWidth: 220,
-        maxWidth: 400,
+        minWidth: 210,
+        maxWidth: 410,
         flex: 1,
-        margin: "18px 6px",
+        margin: "18px 8px",
         padding: 22,
         transition: "transform .14s, box-shadow .19s",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
         gap: 9,
+        wordBreak: "break-word",
       }}
       aria-label={`Project ${project.name}`}
     >
@@ -80,7 +75,7 @@ function ProjectCard({ project }) {
               <span
                 style={{
                   background: "#00FF004b",
-                  color: "#190e10", // almost black
+                  color: "#190e10",
                   fontSize: 11.5,
                   marginLeft: 9,
                   padding: "1.5px 7px",
@@ -138,6 +133,15 @@ function ProjectCard({ project }) {
         >
           {project.visibility === "private" ? "Private" : "Public"}
         </span>
+        {project.language && (
+          <span style={{
+            color: "#98fa7d",
+            opacity: 0.67,
+            marginRight: 6,
+            fontWeight: 500,
+            fontSize: 13
+          }}>{project.language}</span>
+        )}
         <span style={{ color: "#68ffaa", opacity: 0.79 }}>
           Updated {new Date(project.updated_at).toLocaleDateString()}
         </span>
@@ -150,7 +154,6 @@ function ProjectCard({ project }) {
 }
 
 function LoadingSkeleton() {
-  // Neon loading cards
   return (
     <div
       role="status"
@@ -158,8 +161,7 @@ function LoadingSkeleton() {
       style={{
         width: 250,
         height: 108,
-        background:
-          "linear-gradient(90deg,#1A1F22 30%,#00FF0030 60%,#1A1F22 95%)",
+        background: "linear-gradient(90deg,#1A1F22 30%,#00FF0030 60%,#1A1F22 95%)",
         borderRadius: 13,
         margin: "18px 7px",
         animation: "fadeIn 1.1s infinite alternate",
@@ -206,7 +208,6 @@ function ErrorMessage({ error, onReset }) {
 }
 
 function FilterBar({ value, onChange, total, results }) {
-  // Search filter for project name/description
   return (
     <div style={{
       marginBottom: 18,
@@ -238,7 +239,8 @@ function FilterBar({ value, onChange, total, results }) {
         color: "#b0ff93",
         fontSize: 14,
         fontWeight: 500,
-        letterSpacing: ".04em"
+        letterSpacing: ".04em",
+        marginTop: 3
       }}>
         Showing {results} of {total} project{total === 1 ? "" : "s"}
       </span>
@@ -247,7 +249,6 @@ function FilterBar({ value, onChange, total, results }) {
 }
 
 function TokenSetupNotice({ onSet }) {
-  // Prompt user for GitHub token if missing
   const [manualToken, setManualToken] = useState("");
   return (
     <div className="dashboard-card" style={{
@@ -324,7 +325,7 @@ function Projects() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("");
 
-  // Fetch projects/repos from GitHub
+  // Fetch user's repos from GitHub API (100 per page for demo, can paginate for more)
   useEffect(() => {
     if (!githubToken) return;
     setLoading(true);
@@ -354,7 +355,7 @@ function Projects() {
       });
   }, [githubToken]);
 
-  // Filtering: projects by name and description (case-insensitive contains)
+  // Filter repos by query in name, description, or owner
   const filteredRepos = useMemo(() => {
     const q = filter.trim().toLowerCase();
     if (!q) return repos;
@@ -366,7 +367,7 @@ function Projects() {
     );
   }, [repos, filter]);
 
-  // Handle token reset (clear token, re-prompt)
+  // Token reset
   const handleResetToken = () => {
     setGitHubToken("");
     setRepos([]);
@@ -392,7 +393,7 @@ function Projects() {
         <p className="description" style={{ marginBottom: 0 }}>
           View and manage your repositories from GitHub, filter by keyword, and prepare for advanced project collaboration.<br />
           <span style={{ opacity: 0.62 }}>
-            Each card shows project visibility, description, and last update. <b>More features coming soon!</b>
+            Each card shows project visibility, language, stars, and last update. <b>More features coming soon!</b>
           </span>
         </p>
       </header>
@@ -413,20 +414,14 @@ function Projects() {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: "14px 0",
-              justifyContent: "flex-start",
+              gap: "12px 0",
+              justifyContent: filteredRepos.length <= 2 ? "flex-start" : "space-between",
               alignItems: "stretch",
               minHeight: loading ? 220 : undefined,
             }}
           >
             {loading
-              ? <>
-                <LoadingSkeleton />
-                <LoadingSkeleton />
-                <LoadingSkeleton />
-                <LoadingSkeleton />
-                <LoadingSkeleton />
-              </>
+              ? Array.from({ length: 5 }).map((_, i) => <LoadingSkeleton key={i} />)
               : filteredRepos.length === 0 ? (
                 <div style={{ color: "#ffa", margin: "40px 0 16px 4px", fontSize: 15 }}>
                   No projects found. Try adjusting your search or check your GitHub repository list.
