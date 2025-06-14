@@ -10,6 +10,9 @@ import UploadAudio from "./routes/UploadAudio";
 import Auth from "./routes/Auth";
 import Pricing from "./routes/Pricing";
 import NotFound from "./routes/NotFound";
+import GitHub from "./routes/GitHub";
+import Transcription from "./routes/Transcription";
+import Team from "./routes/Team";
 
 // Utility wrapper for Clerk route protection
 function RequireAuth({ children }) {
@@ -59,6 +62,30 @@ root.render(
           />
           <Route path="auth" element={<Auth />} />
           <Route path="pricing" element={<Pricing />} />
+          <Route
+            path="github"
+            element={
+              <RequireAuth>
+                <GitHub />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="transcription"
+            element={
+              <RequireAuth>
+                <Transcription />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="team"
+            element={
+              <RequireAuth>
+                <Team />
+              </RequireAuth>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

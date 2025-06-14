@@ -274,3 +274,4 @@ Module not found: Error: Can't resolve '@clerk/clerk-react' in '/home/kavia/work
 Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
 
 webpack 5.99.9 compiled with 3 errors in 65 ms
+<i> [webpack-dev-server] Gracefully shutting down. To force exit, press ^C again. Please wait...
