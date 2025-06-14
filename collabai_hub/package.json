@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@clerk/clerk-react": "^5.32.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.6.2",
-    "react-scripts": "^5.0.1",
-    "@clerk/clerk-react": "^4.34.5"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "cross-env EDIT_MODE=true webpack serve --config .ve/webpack.config.js --mode development",

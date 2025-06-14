@@ -4,7 +4,7 @@ import { ClerkProvider, useUser, UserButton, SignedIn, SignedOut } from "@clerk/
 import "./App.css";
 
 // Replace with your Clerk publishable key
-const CLERK_PUBLISHABLE_KEY = "clerk_publishable_key_here";
+const CLERK_PUBLISHABLE_KEY = "pk_test_Z2xhZC10b3J0b2lzZS0zMy5jbGVyay5hY2NvdW50cy5kZXYk";
 
 // Navbar with user info + auth links
 function Navbar() {
