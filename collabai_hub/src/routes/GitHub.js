@@ -10,7 +10,14 @@ import React from "react";
 function GitHub() {
   return (
     <div className="container" style={{ paddingTop: 100, minHeight: 400 }}>
-      <h2 className="title">GitHub Integration</h2>
+      <header style={{ marginBottom: 24 }}>
+        <h2 className="title" style={{ marginBottom: 4 }}>GitHub Integration</h2>
+        <p className="description">
+          Use the GitHub page to link your repositories for AI-powered collaboration. This feature enables connecting to GitHub via OAuth, reviewing commit histories, and gaining insights through code and PR Q&A.<br /><br />
+          <strong>Main sections:</strong> repository connection &amp; list, commit feed, and AI Q&amp;A.<br />
+          <strong>User flow:</strong> Connect your GitHub account, select a repository, browse commit details, and utilize AI features for code exploration—all from an intuitive interface.
+        </p>
+      </header>
       <div className="description">
         <ul style={{ marginLeft: 20 }}>
           <li><strong>Connect Repositories:</strong> OAuth repo connect, show repo list (TBD)</li>

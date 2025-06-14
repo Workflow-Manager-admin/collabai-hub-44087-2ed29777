@@ -10,7 +10,14 @@ import React from "react";
 function Team() {
   return (
     <div className="container" style={{ paddingTop: 100, minHeight: 400 }}>
-      <h2 className="title">Team Collaboration</h2>
+      <header style={{ marginBottom: 24 }}>
+        <h2 className="title" style={{ marginBottom: 4 }}>Team Collaboration</h2>
+        <p className="description">
+          The Team page helps you collaborate efficiently—create projects, invite coworkers, and share insights in real time. <br /><br />
+          <strong>Key UI Sections:</strong> project list, invite user forms, and discussion/comment areas.<br />
+          <strong>User flow:</strong> Start by creating a project or joining an invitation, add users to your team, and use the collaborative tools to exchange feedback and track project progress seamlessly.
+        </p>
+      </header>
       <div className="description">
         <ul style={{ marginLeft: 20 }}>
           <li><strong>Project Management:</strong> Create and join projects (TBD)</li>

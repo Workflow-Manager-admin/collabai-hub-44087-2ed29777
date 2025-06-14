@@ -11,15 +11,29 @@ function Auth() {
 
   return (
     <div className="container" style={{ paddingTop: 100, minHeight: 400 }}>
-      <h2 className="title">
-        {isSignedIn ? (
-          <>
-            Welcome, <span style={{ color: "var(--base-light)" }}>
-              {user?.firstName || user?.emailAddresses?.[0]?.emailAddress}
-            </span>
-          </>
-        ) : "Sign In / Sign Up"}
-      </h2>
+      <header style={{ marginBottom: 24 }}>
+        <h2 className="title" style={{ marginBottom: 4 }}>
+          {isSignedIn
+            ? <>Welcome, <span style={{ color: "var(--base-light)" }}>
+                  {user?.firstName || user?.emailAddresses?.[0]?.emailAddress}
+                </span></>
+            : "Auth Portal"}
+        </h2>
+        <p className="description">
+          {isSignedIn ? (
+            <>
+              This page provides user authentication and access management powered by Clerk. View your profile, sign out, or manage your account.
+              <br /><br />
+              <strong>User flow:</strong> All features across CollabAI Hub become available once authenticated.
+            </>
+          ) : (
+            <>
+              Sign in or sign up to access all features in CollabAI Hub. Secure authentication is handled via Clerk, offering easy onboarding and single sign-on support.<br /><br />
+              <strong>User flow:</strong> Enter your credentials (or use SSO), then proceed to the dashboard or your last visited project.
+            </>
+          )}
+        </p>
+      </header>
       <div className="description">
         <SignedOut>
           <div

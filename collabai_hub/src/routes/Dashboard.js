@@ -8,9 +8,15 @@ import React from "react";
 function Dashboard() {
   return (
     <div className="container" style={{ paddingTop: 100, minHeight: 400 }}>
-      <h2 className="title">Dashboard</h2>
-      <div className="description">Welcome to the CollabAI Hub Dashboard.</div>
-      <div style={{ marginTop: 32 }}>
+      <header style={{ marginBottom: 24 }}>
+        <h2 className="title" style={{ marginBottom: 4 }}>Dashboard</h2>
+        <p className="description">
+          The Dashboard serves as your all-in-one homepage for CollabAI Hub. From here, users can quickly access GitHub integration, project management, audio transcription features, and team collaboration tools. The main sections provide instant status updates and navigation to key areas, such as your connected repositories, recent projects, and transcription tasks.<br /><br />
+          <strong>User flow:</strong> Review feature summaries below, use sidebar or top navigation to access integrations or your workspace, and monitor notifications or credits directly on this page.
+        </p>
+      </header>
+      
+      <div style={{ marginTop: 10 }}>
         <section style={{ marginBottom: 16 }}>
           <strong>GitHub Integration:</strong> <span style={{ opacity: 0.7 }}>Connect repositories and manage code</span>
         </section>
