@@ -1,0 +1,216 @@
+.audio-pdf-upload-root {
+  min-height: 82vh;
+  background: var(--kavia-dark, #16181a);
+  padding: 2.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  animation: fadeInBg 800ms cubic-bezier(0.19,1,0.22,1);
+}
+
+@keyframes fadeInBg {
+  0% { background: #111  }
+  100% { background: var(--kavia-dark, #16181a) }
+}
+
+.ap-container {
+  background: rgba(34, 34, 37, 0.98);
+  box-shadow:
+    0 10px 20px rgba(28,14,53,0.14),
+    0 1.5px 2.5px 0 rgba(0,0,0,0.08);
+  border-radius: 22px;
+  max-width: 530px;
+  width: 97vw;
+  margin: 0 auto;
+  padding: 2.7rem 2.2rem 2.5rem 2.2rem;
+  margin-top: 30px;
+  color: var(--text-color, #fff);
+  border: 1.5px solid var(--border-color, rgba(255,255,255,0.10));
+  animation: fadeInCard 1200ms cubic-bezier(.32,1.57,.65,.98);
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(28px);}
+  to { opacity: 1; transform: none;}
+}
+
+.ap-title {
+  font-size: 1.62rem;
+  font-weight: 700;
+  margin-bottom: 7px;
+  color: var(--kavia-orange, #e87a41);
+}
+
+.ap-desc {
+  margin-bottom: 2rem;
+  color: var(--text-secondary, rgba(255,255,255,0.68));
+  font-size: 1.08rem;
+  font-weight: 400;
+}
+
+.ap-upload-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.ap-upload-btn {
+  font-size: 1.04rem;
+  padding: 0.62rem 1.19rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(92deg, var(--kavia-orange, #fd9241) 30%, #e87a41 90%);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 170ms, box-shadow 190ms;
+  box-shadow: 0 1px 8px 0 rgba(255,126,12,0.10);
+}
+.ap-upload-btn:active,
+.ap-upload-btn:focus {
+  outline: 2px solid var(--kavia-orange, #fd9241);
+  filter: brightness(0.98) drop-shadow(0 1px 3.5px #e87a4197);
+}
+
+.ap-upload-filename {
+  font-size: 0.96rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.ap-progress-bar-outer {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  background: rgba(243,155,71,0.135);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: background 350ms;
+}
+.ap-progress-bar-inner {
+  background: linear-gradient(90deg,#fd9241, #e87a41 65%);
+  height: 100%;
+  border-radius: 8px;
+  width: 0;
+  transition: width 270ms cubic-bezier(.85,.04,.6,1.03);
+  box-shadow: 0 0 12px 0 rgba(252, 195, 131, 0.12);
+}
+.ap-progress-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: var(--text-secondary, rgba(255,255,255,0.65));
+  transform: translate(-50%,-51%);
+  text-shadow: 0 1px 10px #0002;
+}
+.ap-error {
+  color: #ff6961;
+  background: #2f1818f6;
+  padding: 9px 17px;
+  margin-bottom: 7px;
+  border-radius: 7px;
+  border: 1.8px solid #fd5a5a39;
+  font-weight: 500;
+}
+
+.ap-start-btn {
+  font-size: 1.13rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(94deg, #E87A41 0%, #e37a2b 82%);
+  color: #fff;
+  padding: 0.72rem 2.2rem;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 10px 0 rgba(200,110,26, 0.13);
+  cursor: pointer;
+  opacity: 1;
+  transition: background 130ms, opacity 120ms;
+}
+.ap-start-btn:disabled {
+  background: #7e705b;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.ap-result {
+  background: rgba(38,33,30,0.86);
+  border-radius: 13px;
+  box-shadow: 0 2px 12px 0 rgba(60,40,10,0.17);
+  margin-top: 2.2rem;
+  padding: 1.18rem 1.25rem;
+  animation: fadeInCard 900ms cubic-bezier(.32,1.57,.65,.98) 40ms backwards;
+}
+.ap-section-heading {
+  font-size: 1.04rem;
+  color: #fc8f33;
+  margin-bottom: 0.36rem;
+  margin-top: 0.35rem;
+  letter-spacing: 0.015em;
+  font-weight: 600;
+}
+.ap-result-box {
+  background: #19171a;
+  color: #eef3f3;
+  padding: 0.83em 0.87em;
+  font-family: "JetBrains Mono",monospace,Consolas,"Liberation Mono",Courier;
+  border-radius: 8px;
+  font-size: 1.01rem;
+  line-height: 1.45;
+  margin-bottom: 0.4rem;
+  box-shadow: 0 1.5px 6px 0 rgba(120,40,0,0.05);
+  min-height: 2.3em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  outline: none;
+  transition: box-shadow 120ms;
+}
+.ap-result-btn-row {
+  display: flex;
+  gap: 0.56rem;
+  margin-bottom: .5rem;
+}
+.ap-copy-btn,
+.ap-export-btn {
+  background: linear-gradient(94deg, #e87a41 57%, #FFB072 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.96rem;
+  padding: 0.52em 1.06em;
+  font-weight: 550;
+  cursor: pointer;
+  box-shadow: 0 1.5px 6px 0 rgba(233,171,91,0.10);
+  outline: none;
+  transition: background 130ms, box-shadow 140ms;
+}
+.ap-copy-btn:active,
+.ap-copy-btn:focus,
+.ap-export-btn:active,
+.ap-export-btn:focus {
+  background: linear-gradient(86deg, #e08741 72%, #ffb072 98%);
+  box-shadow: 0 0 4.5px rgba(205,160,56,0.2);
+}
+
+.ap-copy-status {
+  color: #fdc972;
+  margin-left: 1em;
+  font-size: 0.92em;
+  font-weight: 500;
+  letter-spacing: .01em;
+  user-select: none;
+}
+
+@media (max-width: 650px) {
+  .ap-container {
+    padding: 1.2rem 0.7rem 1.1rem 0.85rem;
+    max-width: 99vw;
+  }
+  .ap-result { padding: 0.76rem 0.5rem; }
+}

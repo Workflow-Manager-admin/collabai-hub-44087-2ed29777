@@ -59,6 +59,14 @@ function Navbar() {
               Upload/Audio
             </NavLink>
             <NavLink
+              to="/upload-transcript"
+              className={({ isActive }) =>
+                isActive ? "btn btn-large" : "btn"
+              }
+            >
+              Audio/PDF Transcribe
+            </NavLink>
+            <NavLink
               to="/transcribe"
               className={({ isActive }) =>
                 isActive ? "btn btn-large" : "btn"

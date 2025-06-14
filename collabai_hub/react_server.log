@@ -15,21 +15,38 @@ modules by path ./node_modules/ 1.86 MiB 87 modules
 modules by path ./src/ 207 KiB
   modules by path ./src/routes/ 182 KiB 15 modules
   modules by path ./src/*.css 13.8 KiB 4 modules
-  modules by path ./src/*.js 11.2 KiB
+  modules by path ./src/*.js 11.5 KiB
     ./src/index.js 6.02 KiB [built] [code generated]
-    ./src/App.js 5.15 KiB [built] [code generated]
+    ./src/App.js 5.47 KiB [built] [code generated]
 modules by path ./.ve/ 15.1 KiB
   modules by path ./.ve/*.js 10.6 KiB 2 modules
   modules by path ./.ve/*.css 2.93 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 2224 ms
+webpack 5.99.9 compiled successfully in 2269 ms
 assets by status 588 bytes [cached] 1 asset
 assets by path *.js 2.41 MiB
   asset bundle.js 2.4 MiB [emitted] (name: main)
-  asset main.71e591e5d854753010f0.hot-update.js 9.56 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.71e591e5d854753010f0.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 2.41 MiB = bundle.js 2.4 MiB main.71e591e5d854753010f0.hot-update.js 9.56 KiB
+  asset main.8bee32c2c2c695c7321f.hot-update.js 10 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.8bee32c2c2c695c7321f.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.41 MiB = bundle.js 2.4 MiB main.8bee32c2c2c695c7321f.hot-update.js 10 KiB
 cached modules 2.09 MiB [cached] 116 modules
 runtime modules 27.5 KiB 14 modules
-./src/App.js 5.47 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 84 ms
+./src/App.js 5.82 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 91 ms
+Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
+assets by status 588 bytes [cached] 1 asset
+assets by path *.js 2.47 MiB
+  asset bundle.js 2.4 MiB [emitted] (name: main)
+  asset main.017f0cea1a3d851e43b5.hot-update.js 35 KiB [emitted] [immutable] [hmr] (name: main)
+  asset src_routes_AudioPdfTranscription_js.bundle.js 31.3 KiB [emitted]
+asset main.017f0cea1a3d851e43b5.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.44 MiB = bundle.js 2.4 MiB main.017f0cea1a3d851e43b5.hot-update.js 35 KiB
+cached modules 2.09 MiB [cached] 116 modules
+runtime modules 30.8 KiB 16 modules
+javascript modules 24.2 KiB
+  modules by path ./src/routes/*.css 7.61 KiB
+    ./src/routes/AudioPdfTranscription.modern.css 2.32 KiB [built] [code generated]
+    ./node_modules/css-loader/dist/cjs.js!./src/routes/AudioPdfTranscription.modern.css 5.29 KiB [built] [code generated]
+  ./src/index.js 4.73 KiB [built] [code generated]
+  ./src/routes/AudioPdfTranscription.js 11.8 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 238 ms

@@ -1,125 +1,49 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React, { lazy } from "react";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-import "./index.css";
 import App from "./App";
+import "./index.css";
+
+import LandingPage from "./routes/LandingPage";
+import Auth from "./routes/Auth";
 import Dashboard from "./routes/Dashboard";
 import Projects from "./routes/Projects";
-import UploadAudio from "./routes/UploadAudio";
-import Auth from "./routes/Auth";
-import Pricing from "./routes/Pricing";
-import NotFound from "./routes/NotFound";
 import GitHub from "./routes/GitHub";
-import Transcription from "./routes/Transcription";
-import Team from "./routes/Team";
-import ProjectDetails from "./routes/ProjectDetails";
 import GitHubEditor from "./routes/GitHubEditor";
+import NotFound from "./routes/NotFound";
+import Transcription from "./routes/Transcription";
+import UploadAudio from "./routes/UploadAudio";
+import Pricing from "./routes/Pricing";
+import ProjectDetails from "./routes/ProjectDetails";
+import Team from "./routes/Team";
+const AudioPdfTranscription = lazy(() => import("./routes/AudioPdfTranscription"));
 
-// Utility wrapper for Clerk route protection
-function RequireAuth({ children }) {
-  // PUBLIC_INTERFACE
-  /** Render children only when signed in, else redirect. */
-  return (
-    <>
-      <SignedIn>{children}</SignedIn>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
-    </>
-  );
-}
+const container = document.getElementById("root");
+const root = createRoot(container);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-// PUBLIC_INTERFACE
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route
-            index
-            element={
-              <RequireAuth>
-                {/*
-                  Replace Dashboard with LandingPage as the default home route after login.
-                  Dashboard can still be accessed via /dashboard if desired (set up below).
-                */}
-                {React.createElement(require("./routes/LandingPage").default)}
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="dashboard"
-            element={
-              <RequireAuth>
-                <Dashboard />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="projects"
-            element={
-              <RequireAuth>
-                <Projects />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="github-editor"
-            element={
-              <RequireAuth>
-                <GitHubEditor />
-              </RequireAuth>
-            }
-          />
-          {/* Project Details route: /projects/:owner/:repo */}
-          <Route
-            path="projects/:owner/:repo"
-            element={
-              <RequireAuth>
-                <ProjectDetails />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="upload"
-            element={
-              <RequireAuth>
-                <UploadAudio />
-              </RequireAuth>
-            }
-          />
-          <Route path="auth" element={<Auth />} />
-          <Route path="pricing" element={<Pricing />} />
-          <Route
-            path="github"
-            element={
-              <RequireAuth>
-                <GitHub />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="transcription"
-            element={
-              <RequireAuth>
-                <Transcription />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="team"
-            element={
-              <RequireAuth>
-                <Team />
-              </RequireAuth>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Dashboard />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/project/:id" element={<ProjectDetails />} />
+        <Route path="/github" element={<GitHub />} />
+        <Route path="/github-editor" element={<GitHubEditor />} />
+        <Route path="/upload" element={<UploadAudio />} />
+        <Route path="/transcribe" element={<Transcription />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/upload-transcript" element={
+          <React.Suspense fallback={<div style={{
+            color:"#e87a41", background:"#181818", borderRadius:10, padding:32, margin:32, fontWeight:600, fontSize:"1.17em"
+          }}>Loading Transcription Page...</div>}>
+            <AudioPdfTranscription />
+          </React.Suspense>
+        } />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
 );
