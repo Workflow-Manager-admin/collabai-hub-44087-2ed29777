@@ -15,7 +15,7 @@ import React, { useState, useRef, useEffect } from "react";
  */
 
 // Gemini API constants and utility functions for smart model selection
-const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
+const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1";
 const GEMINI_MODEL_LIST_URL = `${GEMINI_BASE_URL}/models`;
 const GEMINI_DEFAULT_MODEL = "models/gemini-pro"; // fallback to this if available
 const GEMINI_API_URL = (model) =>
