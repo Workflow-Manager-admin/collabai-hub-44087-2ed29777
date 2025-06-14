@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import "./index.css";
 import App from "./App";
 import Dashboard from "./routes/Dashboard";
@@ -10,6 +11,20 @@ import Auth from "./routes/Auth";
 import Pricing from "./routes/Pricing";
 import NotFound from "./routes/NotFound";
 
+// Utility wrapper for Clerk route protection
+function RequireAuth({ children }) {
+  // PUBLIC_INTERFACE
+  /** Render children only when signed in, else redirect. */
+  return (
+    <>
+      <SignedIn>{children}</SignedIn>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+    </>
+  );
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // PUBLIC_INTERFACE
@@ -18,9 +33,30 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<Dashboard />} />
-          <Route path="projects" element={<Projects />} />
-          <Route path="upload" element={<UploadAudio />} />
+          <Route
+            index
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="projects"
+            element={
+              <RequireAuth>
+                <Projects />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="upload"
+            element={
+              <RequireAuth>
+                <UploadAudio />
+              </RequireAuth>
+            }
+          />
           <Route path="auth" element={<Auth />} />
           <Route path="pricing" element={<Pricing />} />
           <Route path="*" element={<NotFound />} />
