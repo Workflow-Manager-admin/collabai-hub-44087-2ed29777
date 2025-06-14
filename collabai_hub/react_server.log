@@ -23,3 +23,37 @@ modules by path ./.ve/ 15.1 KiB
   modules by path ./.ve/*.css 2.93 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
 webpack 5.99.9 compiled successfully in 2370 ms
+assets by status 588 bytes [cached] 1 asset
+assets by path *.js 2.34 MiB
+  asset bundle.js 2.33 MiB [emitted] (name: main)
+  asset main.01003964386852e4e71b.hot-update.js 9.11 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.01003964386852e4e71b.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.34 MiB = bundle.js 2.33 MiB main.01003964386852e4e71b.hot-update.js 9.11 KiB
+cached modules 2.04 MiB [cached] 113 modules
+runtime modules 27.5 KiB 14 modules
+./src/App.js 5.15 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 186 ms
+Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
+assets by status 588 bytes [cached] 1 asset
+assets by path *.js 2.43 MiB
+  asset bundle.js 2.38 MiB [emitted] (name: main)
+  asset main.1ab53271e01b6e2d908a.hot-update.js 55.9 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.1ab53271e01b6e2d908a.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.43 MiB = bundle.js 2.38 MiB main.1ab53271e01b6e2d908a.hot-update.js 55.9 KiB
+cached modules 2.03 MiB [cached] 113 modules
+runtime modules 27.5 KiB 14 modules
+javascript modules 41.6 KiB
+  ./src/index.js 5.65 KiB [built] [code generated]
+  ./src/routes/GitHubEditor.js 35.9 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 267 ms
+Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
+assets by status 588 bytes [cached] 1 asset
+assets by path *.js 2.39 MiB
+  asset bundle.js 2.38 MiB [emitted] (name: main)
+  asset main.41146ae0848a8d625a0e.hot-update.js 13.4 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.41146ae0848a8d625a0e.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 2.39 MiB = bundle.js 2.38 MiB main.41146ae0848a8d625a0e.hot-update.js 13.4 KiB
+cached modules 2.07 MiB [cached] 114 modules
+runtime modules 27.5 KiB 14 modules
+./src/index.js 6.02 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 75 ms

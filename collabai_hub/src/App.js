@@ -43,6 +43,14 @@ function Navbar() {
               Projects
             </NavLink>
             <NavLink
+              to="/github-editor"
+              className={({ isActive }) =>
+                isActive ? "btn btn-large" : "btn"
+              }
+            >
+              GitHub Editor
+            </NavLink>
+            <NavLink
               to="/upload"
               className={({ isActive }) =>
                 isActive ? "btn btn-large" : "btn"
