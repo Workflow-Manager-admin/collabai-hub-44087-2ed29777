@@ -248,6 +248,76 @@ section {
   margin-bottom: 20px;
 }
 
+/* --- CollabAI Chatbot modern neon/professional styling --- */
+
+.collabai-assistant-chatbot-panel {
+  animation: fadeIn 0.4s cubic-bezier(.23,1.36,.69,.88);
+  transition: box-shadow 0.19s;
+}
+.collabai-assistant-chatbot-panel:focus-within {
+  box-shadow: 0 0 22px #00ff00a1, 0 2.5px 27px 0 #00FF0070;
+  outline: 2px solid #00FF00;
+}
+
+.collabai-chat-window {
+  transition: box-shadow 0.23s, background 0.12s;
+}
+
+.chat-message-row.assistant-msg,
+.assistant-msg .chat-bubble {
+  animation: fadeIn 0.27s cubic-bezier(.23,1.36,.69,.88);
+}
+
+.chat-message-row.user-msg,
+.user-msg .chat-bubble {
+  animation: fadeIn 0.19s cubic-bezier(.11,1.36,.39,.75);
+}
+
+.assistant-avatar {
+  background: linear-gradient(120deg, #151e13 70%, #00FF00 100%);
+  box-shadow: 0 0 10px #00FF006d;
+  border: 2.5px solid #00FF00;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-bubble {
+  position: relative;
+  word-break: break-word;
+  outline: none;
+}
+
+/* Responsive tweaks for bubbles & chatbot area */
+@media (max-width: 700px) {
+  .collabai-assistant-chatbot-panel {
+    max-width: 99vw !important;
+  }
+  .collabai-chat-window {
+    max-width: 97vw !important;
+    font-size: 0.97em;
+    min-width: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-radius: 9px !important;
+  }
+  .chat-bubble {
+    font-size: 1em;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 485px) {
+  .collabai-assistant-chatbot-panel {
+    max-width: 99vw !important;
+    min-width: 0;
+  }
+}
+
+
 /* Navigation highlights: visually intuitive */
 .navbar .btn,
 .navbar .btn-large {

@@ -1,18 +1,41 @@
 import React, { useState, useRef, useEffect } from "react";
 
-/**
- * Gemini AI Chatbot for per-repo Q&A.
- * Uses Gemini free API for contextual AI discussion about the current repository.
- * 
- * Props:
- *   repoInfo: {
- *     name: string,
- *     owner: { login: string },
- *     description: string,
- *     readme: string,
- *     recentCommits: array [{ message, author, date }]
- *   }
- */
+// -- CollabAI Assistant persona/profile
+const ASSISTANT_NAME = "Colby, your CollabAI Assistant";
+const ASSISTANT_AVATAR = (
+  <span
+    className="assistant-avatar"
+    role="img"
+    aria-label="Assistant Avatar"
+    style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(120deg, #151e13 70%, #00FF00 100%)',
+      borderRadius: '50%',
+      width: 38,
+      height: 38,
+      boxShadow: "0 0 8px #00FF0060, 0 1px 4px #000a",
+      border: "2.5px solid #00FF00",
+      fontSize: 21
+    }}
+  >
+    <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="16" fill="#191e14" />
+      <ellipse cx="16" cy="13.5" rx="7" ry="7" fill="#00FF00"/>
+      <ellipse cx="13" cy="12.5" rx="1.6" ry="2" fill="#151c13"/>
+      <ellipse cx="19" cy="12.5" rx="1.6" ry="2" fill="#151c13"/>
+      <rect x="12" y="17" width="8" height="3" rx="1.3" fill="#1a361a"/>
+      <ellipse cx="16" cy="19.6" rx="3" ry="1.2" fill="#0f3"/>
+    </svg>
+  </span>
+);
+
+// Returns a formatted timestamp for each message
+function formatTime(date) {
+  if (!(date instanceof Date)) date = new Date(date);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
 
 // --- Gemini API Constants: Restrict to current free, non-deprecated chat models ---
 const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1";
@@ -103,14 +126,18 @@ function useGeminiApiKey() {
   return [apiKey, saveKey, clearKey];
 }
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * Modern, professional, CollabAI-branded chatbot UI.
+*/
 function GeminiChatbot({ repoInfo, style = {} }) {
   // Conversation state
   const [messages, setMessages] = useState([
     {
       from: "ai",
-      text: "Hi! 👋 I’m Gemini, your project AI—ready to answer questions about this repository (code, commits, usage, and more). Only free AI models (gemini-1.5-flash, or 2.0-flash if available) are supported.",
+      text: `Hello! I’m ${ASSISTANT_NAME} 🤖, here to assist with your project. Ask me anything about this repo (commits, code, etc) and I’ll help using Gemini’s free AI. Tip: Your questions are private & model runs only use included context.`,
       meta: null,
+      ts: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
@@ -258,7 +285,8 @@ Date: ${c.date}`
     setLoading(true);
     setModelError("");
 
-    const userMsg = { from: "user", text: input, meta: null };
+    const tsNow = new Date();
+    const userMsg = { from: "user", text: input, meta: null, ts: tsNow };
     setMessages((msgs) => [...msgs, userMsg]);
     setInput("");
 
@@ -299,7 +327,7 @@ Date: ${c.date}`
       });
       setMessages((msgs) => [
         ...msgs,
-        { from: "ai", text: result.aiText, meta: { model: triedModels[0] } },
+        { from: "ai", text: result.aiText, meta: { model: triedModels[0] }, ts: new Date() },
       ]);
       setModelDisplay(triedModels[0]);
     } catch (err) {
@@ -313,6 +341,7 @@ Date: ${c.date}`
           from: "ai",
           text: "[Error: Could not contact Gemini AI or received invalid answer.]",
           meta: null,
+          ts: new Date(),
         },
       ]);
       if (
@@ -444,32 +473,46 @@ Date: ${c.date}`
 
   return (
     <div
-      className="dashboard-card fade-in"
+      className="collabai-assistant-chatbot-panel fade-in"
       style={{
         marginTop: 18,
-        borderLeft: "4px solid #00FF00",
-        background: "#151c17",
-        borderRadius: 10,
-        boxShadow: "0 0 8px #00FF0045",
+        marginBottom: 24,
+        background: "#12191c",
+        borderRadius: 14,
+        border: "2px solid var(--accent-neon)",
+        maxWidth: 555,
+        width: "100%",
+        boxShadow: "0 0 16px #00FF0060, 0 2px 20px 0 #202",
         ...style,
       }}
+      aria-label={`${ASSISTANT_NAME} Chat Assistant`}
+      tabIndex={0}
     >
-      <div
-        style={{
-          fontWeight: 700,
-          fontSize: 19,
-          color: "var(--accent-neon)",
-          marginBottom: 7,
-          letterSpacing: ".03em",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <span role="img" aria-label="Gemini" style={{ fontSize: 22 }}>
-          💬
-        </span>
-        Ask Gemini (AI Chatbot about this repo)
+      <header style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 13,
+        padding: "20px 18px 7px 18px",
+      }}>
+        {ASSISTANT_AVATAR}
+        <div>
+          <div style={{
+            fontWeight: 700,
+            color: "var(--accent-neon)",
+            fontSize: "1.15rem",
+            letterSpacing: ".03em",
+            textShadow: "0 0 11px #00FF0040"
+          }}>{ASSISTANT_NAME}</div>
+          <div style={{
+            fontSize: ".94rem",
+            color: "#b0ffbc",
+            opacity: 0.79,
+            lineHeight: 1.23,
+            fontWeight: 500
+          }}>
+            Your AI-powered chat assistant for project collaboration.
+          </div>
+        </div>
         <button
           className="btn"
           type="button"
@@ -478,98 +521,230 @@ Date: ${c.date}`
             color: "#b0ffbc",
             fontSize: 13,
             marginLeft: "auto",
-            padding: "2px 7px",
+            padding: "3px 13px",
             border: 0,
-            background: "transparent"
+            background: "transparent",
+            fontWeight: 600
           }}
           onClick={() => setKeyEditing(true)}
+          aria-label="Edit Gemini API Key"
         >API Key</button>
-      </div>
-      <div
+      </header>
+      {/* Chat conversation bubble area */}
+      <section
+        className="collabai-chat-window"
         style={{
-          height: 220,
-          maxHeight: 280,
-          background: "#182017",
-          borderRadius: 8,
+          background: "#161c1d",
+          borderRadius: 11,
+          minHeight: 180,
+          maxHeight: 340,
           overflowY: "auto",
-          marginBottom: 8,
-          padding: "7px 9px 9px 7px",
-          border: "1.3px solid var(--border-color)",
-          fontSize: 15.1,
-          boxShadow: "0 0 6px #00FF0022",
+          margin: "0 12px 0 12px",
+          padding: "17px 6px 10px 6px",
+          border: "1.4px solid var(--border-color)",
+          boxShadow: "0 0 8px #00FF0018",
+          fontSize: 15.3,
         }}
+        aria-live="polite"
       >
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            style={{
-              padding: "6px 0",
-              color: msg.from === "user" ? "#b5ffea" : "#00FF00",
-              textAlign: msg.from === "user" ? "right" : "left",
-              fontWeight: msg.from === "ai" ? 600 : 500,
-              letterSpacing: ".01em",
-              fontSize: msg.from === "ai" ? 15 : 14.9,
-              marginBottom: 5,
-              opacity: msg.from === "ai" ? 1 : 0.95,
-              whiteSpace: "pre-line"
-            }}
-          >
-            <span>{msg.text}</span>
-          </div>
-        ))}
-        {loading && (
-          <div
-            style={{
-              color: "#00FF00",
-              fontWeight: 700,
-              padding: "6px 0",
-              fontSize: 15,
-            }}
-          >
-            Generating answer…
-          </div>
-        )}
-      </div>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 0,
+        }}>
+          {messages.map((msg, idx) => {
+            const isAssistant = msg.from === "ai";
+            const isUser = msg.from === "user";
+            return (
+              <div
+                key={idx}
+                className={`chat-message-row ${isAssistant ? "assistant-msg" : "user-msg"}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "flex-end",
+                  justifyContent: isAssistant ? "flex-start" : "flex-end",
+                  marginBottom: 2,
+                  marginTop: 0,
+                }}
+              >
+                {/* Avatar (assistant) */}
+                {isAssistant && (
+                  <div
+                    style={{
+                      marginRight: 8,
+                      alignSelf: "flex-end"
+                    }}
+                  >
+                    {ASSISTANT_AVATAR}
+                  </div>
+                )}
+                <div
+                  className="chat-bubble"
+                  style={{
+                    minWidth: 0,
+                    maxWidth: "81vw",
+                    width: "max-content",
+                    background: isAssistant
+                      ? "linear-gradient(135deg, #112211 65%, #00FF0023 100%)"
+                      : "linear-gradient(135deg, #15253c 78%, #00FF0014 100%)",
+                    color: isAssistant ? "#00FF00" : "#bbe9ff",
+                    border: "1.7px solid " + (isAssistant ? "#00FF00" : "#257cffBB"),
+                    boxShadow: isAssistant
+                      ? "0 0 14px #00FF0065"
+                      : "0 0 7px #00cbff55",
+                    borderRadius: isAssistant
+                      ? "13px 13px 13px 2.8px"
+                      : "13px 13px 2.8px 13px",
+                    padding: "12px 15px 10px 13px",
+                    fontSize: "1.03rem",
+                    fontWeight: isAssistant ? 600 : 500,
+                    marginLeft: isAssistant ? 0 : "auto",
+                    marginRight: isAssistant ? "auto" : 0,
+                    position: "relative",
+                    letterSpacing: ".01em",
+                    wordBreak: "break-word",
+                    transition: "background .14s, color .10s",
+                    outline: idx === messages.length - 1 && isAssistant
+                      ? "1.5px solid #00FF00AA"
+                      : "none",
+                  }}
+                  tabIndex={0}
+                  aria-label={isAssistant ? `Message from ${ASSISTANT_NAME}` : "Your message"}
+                >
+                  <span style={{ whiteSpace: "pre-line" }}>{msg.text}</span>
+                  {/* Timestamp */}
+                  <span
+                    style={{
+                      position: "absolute",
+                      right: 12,
+                      bottom: 6,
+                      fontSize: "0.78em",
+                      color: isAssistant ? "#63ffa9a5" : "#a3cce9a1",
+                      marginLeft: 7,
+                      letterSpacing: ".01em",
+                      fontWeight: 400,
+                      opacity: 0.69
+                    }}
+                  >
+                    {msg.ts ? formatTime(msg.ts) : ""}
+                  </span>
+                </div>
+                {/* User avatar (optional, placeholder or blank for now) */}
+                {isUser && (
+                  <div
+                    style={{
+                      marginLeft: 8,
+                      alignSelf: "flex-end",
+                      width: 34,
+                      height: 34,
+                      borderRadius: "50%",
+                      background: "linear-gradient(125deg,#00FF0034 60%,#142c47 100%)",
+                      border: "2px solid #257cffBB",
+                      boxShadow: "0 0 8px #00cbff54",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontWeight: 800,
+                      fontSize: 16,
+                      color: "#bde2ff"
+                    }}
+                    aria-label="You"
+                  >
+                    <svg width="18" height="18" fill="#257cffBB" viewBox="0 0 20 20">
+                      <circle cx="10" cy="7" r="5" />
+                      <ellipse cx="10" cy="16" rx="7.2" ry="4" fill="#257cff40"/>
+                    </svg>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {loading && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                marginBottom: 0,
+                gap: 7,
+                marginLeft: 0
+              }}
+              className="assistant-msg"
+            >
+              {ASSISTANT_AVATAR}
+              <div className="chat-bubble"
+                style={{
+                  background: "linear-gradient(135deg, #112211 67%, #00FF0017 100%)",
+                  color: "#00FF00",
+                  border: "1.7px solid #00FF00",
+                  borderRadius: "13px 13px 13px 2.8px",
+                  boxShadow: "0 0 14px #00FF0040",
+                  padding: "12px 15px 9px 13px",
+                  fontSize: "1.03rem",
+                  fontWeight: 600,
+                  minWidth: 60,
+                  marginTop: 2,
+                }}
+              >
+                Generating answer…
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+      {/* Input area, visually separated */}
       <form
         ref={formRef}
         style={{
           display: "flex",
           alignItems: "center",
           gap: 7,
-          marginTop: 7,
+          padding: "13px 14px 15px 18px",
+          background: "#181e24",
+          borderRadius: "0 0 11px 11px",
+          marginTop: 6,
+          borderTop: "1.5px solid var(--border-color)"
         }}
         onSubmit={handleSend}
         autoComplete="off"
+        aria-label="Chatbot message input"
       >
         <input
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask a question about this repo…"
-          aria-label="Ask Gemini"
+          placeholder="Ask Colby about this repo…"
+          aria-label="Ask Colby, CollabAI Assistant"
           disabled={loading}
           style={{
             flex: 1,
-            border: "1.8px solid #00FF00",
-            borderRadius: 7,
-            padding: "9px 12px",
-            fontSize: 15.3,
-            background: "#121c19",
+            border: "2.2px solid var(--accent-neon)",
+            borderRadius: "9px",
+            padding: "13px 16px",
+            fontSize: "1.08em",
+            background: "#111a19",
             color: "#00FF00",
             outline: "none",
+            boxShadow: "0 0 6px #00FF0025",
+            fontWeight: 500
           }}
         />
         <button
           className="btn btn-large"
           type="submit"
           disabled={loading || !input.trim()}
+          aria-label="Send message"
           style={{
             background: "var(--accent-neon)",
-            color: "#0a1213",
+            color: "#120f19",
             fontWeight: 700,
             border: 0,
-            width: 77,
+            width: 74,
+            fontSize: "1.09em",
+            borderRadius: "9px",
+            alignSelf: "stretch",
+            boxShadow: "0 0 11px #00ff009f"
           }}
         >
           Send
@@ -580,24 +755,26 @@ Date: ${c.date}`
           style={{
             color: "#ff8984",
             background: "#1a120f",
-            padding: "7px 9px",
-            border: "1px solid #ff4545",
-            borderRadius: 6,
-            marginTop: 7,
-            fontSize: 13,
+            padding: "10px 14px",
+            border: "1.7px solid #ff4545",
+            borderRadius: 7,
+            margin: "16px 16px 0px 16px",
+            fontSize: 13.2,
             whiteSpace: "pre-line"
           }}
+          tabIndex={0}
+          role="alert"
         >
           {error} <br />
           <button
             className="btn"
-            style={{ color: "#00FF00", fontSize: 14, padding: "4px 9px", border: 0, marginTop: 5 }}
+            style={{ color: "#00FF00", fontSize: 14, padding: "4px 9px", border: 0, marginTop: 5, borderRadius: 7 }}
             onClick={() => setKeyEditing(true)}
           >Check API Key</button>
           {apiKey && (
             <button
               className="btn"
-              style={{ color: "#ff8984", fontSize: 13, padding: "4px 9px", border: 0, marginLeft: 4 }}
+              style={{ color: "#ff8984", fontSize: 13, padding: "4px 9px", border: 0, marginLeft: 4, borderRadius: 7 }}
               type="button"
               onClick={clearApiKey}
             >Remove Key</button>
@@ -605,21 +782,22 @@ Date: ${c.date}`
         </div>
       )}
       <div
+        className="chatbot-model-note"
         style={{
-          marginTop: 8,
-          fontSize: 12,
+          margin: "13px 0 9px 18px",
+          fontSize: 12.3,
           color: "#b0ffbc",
-          opacity: 0.76,
+          opacity: 0.76
         }}
       >
         <span>
-          <b>AI answers use only free Gemini models:</b>{" "}
+          <b>Answers powered by Gemini API (free models only):</b>{" "}
           <span style={{ color: "#00FF00", fontWeight: 700 }}>gemini-1.5-flash</span>
           {modelList.find((m) => (m.name || m.id) === GEMINI_FALLBACK_MODEL)
             ? <>{" and "}<span style={{ color: "#00FF00", fontWeight: 700 }}>gemini-2.0-flash</span></> : <></>}
           . <br />
           <span>
-            Current model:{" "}
+            Model now:{" "}
             <span style={{ color: "#00FF00", fontWeight: 600, marginLeft: 4 }}>
               {modelDisplay || selectedModel}
             </span>
@@ -641,7 +819,7 @@ Date: ${c.date}`
           </span>
           <br />
           <span style={{ color: "#ff8684", fontWeight: 600 }}>
-            Only <strong>'gemini-1.5-flash'</strong> and <strong>'gemini-2.0-flash'</strong> are supported for chat. Paid, pro, vision, and other models are not available.
+            Only <strong>'gemini-1.5-flash'</strong> and <strong>'gemini-2.0-flash'</strong> supported for chat.
           </span>
           {modelError && (
             <><br />
@@ -650,15 +828,6 @@ Date: ${c.date}`
               </span>
             </>
           )}
-          <br />
-          <a
-            href="https://ai.google.dev/docs/models/gemini"
-            style={{ color: "#00FF00", textDecoration: "underline" }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Gemini API models info
-          </a>
         </span>
       </div>
     </div>
