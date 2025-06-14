@@ -2,9 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 
 /*
   PUBLIC_INTERFACE
-  GitHub Repository File Editor/Browser
-  - Choose repo, browse files, edit/create files, commit/push via GitHub API.
-  - Modern, dark, neon-accented, production-ready.
+  GitHub Repository File Editor/Browser (Enhanced Functionality)
+  - Fast file fetching and file tree navigation.
+  - View, edit, add, delete files, and save changes via push to GitHub.
+  - Enhanced modern, dark, neon-accented UI/UX for professional appearance.
 */
 
 const MONACO_CDN = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs";
