@@ -41,6 +41,18 @@ root.render(
             index
             element={
               <RequireAuth>
+                {/*
+                  Replace Dashboard with LandingPage as the default home route after login.
+                  Dashboard can still be accessed via /dashboard if desired (set up below).
+                */}
+                {React.createElement(require("./routes/LandingPage").default)}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <RequireAuth>
                 <Dashboard />
               </RequireAuth>
             }
