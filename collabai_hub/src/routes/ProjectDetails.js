@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import GeminiChatbot from "./GeminiChatbot";
 
 /**
  * PUBLIC_INTERFACE
  * Project Details view: fetches and displays recent commits for a repo,
  * including commit message, author avatar, and date, styled with neon/dark theme.
+ * Now includes Gemini AI Chatbot for project Q&A.
  */
 function ProjectDetails() {
   const { owner, repo } = useParams();
   const [commits, setCommits] = useState([]);
   const [repoData, setRepoData] = useState(null);
+  const [readme, setReadme] = useState("");
   const [loading, setLoading] = useState(true);
   const [commitError, setCommitError] = useState("");
   const [token] = useState(() => localStorage.getItem("GITHUB_TOKEN") || "");
@@ -18,6 +21,7 @@ function ProjectDetails() {
     if (!owner || !repo) return;
     setLoading(true);
     setCommitError("");
+    setReadme("");
     // Fetch repo for details (name, description, stars, etc)
     fetch(`https://api.github.com/repos/${owner}/${repo}`, {
       headers: {
@@ -51,7 +55,36 @@ function ProjectDetails() {
         setCommitError(e.message || "Failed to fetch commits.");
         setLoading(false);
       });
+
+    // Fetch README.md (for repo context, for Gemini)
+    fetch(
+      `https://api.github.com/repos/${owner}/${repo}/readme`,
+      {
+        headers: {
+          Authorization: token ? `token ${token}` : undefined,
+          Accept: "application/vnd.github.v3.raw",
+        },
+      }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.text();
+      })
+      .then((text) => setReadme(text))
+      .catch(() => setReadme(""));
+
   }, [owner, repo, token]);
+
+  // Prepare recent commits for Gemini chatbot context (message, author, date)
+  const recentCommitContext = commits
+    .slice(0, 8)
+    .map((c) => ({
+      message: c.commit?.message?.split("\n")[0] || "",
+      author: c.commit?.author?.name || (c.author?.login || "unknown"),
+      date: c.commit?.author?.date
+        ? new Date(c.commit.author.date).toLocaleString()
+        : "",
+    }));
 
   return (
     <div className="container" style={{ paddingTop: 100, minHeight: 420 }}>
@@ -248,6 +281,20 @@ function ProjectDetails() {
           </>
         )}
       </section>
+      {/* BEGIN GEMINI CHATBOT INTEGRATION */}
+      {repoData && (
+        <GeminiChatbot
+          repoInfo={{
+            name: repoData.name,
+            owner: repoData.owner,
+            description: repoData.description,
+            readme: readme,
+            recentCommits: recentCommitContext,
+          }}
+          style={{ marginBottom: 24 }}
+        />
+      )}
+      {/* END GEMINI CHATBOT INTEGRATION */}
       <div style={{
         marginTop: 26,
         fontSize: 13.2,
