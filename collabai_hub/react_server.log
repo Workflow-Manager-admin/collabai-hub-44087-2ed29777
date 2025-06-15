@@ -8,14 +8,14 @@
 <i> [webpack-dev-server] Content not from webpack is served from './public' directory
 <i> [webpack-dev-server] 404s will fallback to '/index.html'
 Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
-asset bundle.js 5.94 MiB [emitted] (name: main)
-asset src_routes_AudioPdfTranscription_js.bundle.js 90.1 KiB [emitted]
+asset bundle.js 6.05 MiB [emitted] (name: main)
+asset src_routes_AudioPdfTranscription_js.bundle.js 40.3 KiB [emitted]
 asset index.html 647 bytes [emitted]
 runtime modules 29.6 KiB 15 modules
 orphan modules 12.8 KiB [orphan] 4 modules
 modules by path ./node_modules/ 1.86 MiB 87 modules
-modules by path ./src/ 269 KiB
-  modules by path ./src/routes/ 232 KiB 18 modules
+modules by path ./src/ 287 KiB
+  modules by path ./src/routes/ 250 KiB 18 modules
   modules by path ./src/*.css 26.6 KiB 4 modules
   modules by path ./src/*.js 9.93 KiB
     ./src/index.js 5.28 KiB [built] [code generated]
@@ -24,15 +24,4 @@ modules by path ./.ve/ 15.6 KiB
   modules by path ./.ve/*.js 10.6 KiB 2 modules
   modules by path ./.ve/*.css 3.4 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 3345 ms
-assets by status 647 bytes [cached] 1 asset
-assets by path *.js 6.2 MiB
-  asset bundle.js 6.05 MiB [emitted] (name: main)
-  asset main.7804e3233385ad69e5f1.hot-update.js 118 KiB [emitted] [immutable] [hmr] (name: main)
-  asset src_routes_AudioPdfTranscription_js.bundle.js 40.3 KiB [emitted]
-asset main.7804e3233385ad69e5f1.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.16 MiB = bundle.js 6.05 MiB main.7804e3233385ad69e5f1.hot-update.js 118 KiB
-cached modules 2.15 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 341 ms
+webpack 5.99.9 compiled successfully in 3179 ms
