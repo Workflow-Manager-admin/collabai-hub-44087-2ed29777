@@ -7,7 +7,8 @@ const DEFAULT_GEMINI_KEY = "AIzaSyD4Kusj3acrOMEaSdNRKxIMLvh5SRv8tMg";
 const ASSEMBLY_UPLOAD_URL = "https://api.assemblyai.com/v2/upload";
 const ASSEMBLY_TRANSCRIPT_URL = "https://api.assemblyai.com/v2/transcript";
 const ASSEMBLY_STATUS_URL = (id) => `https://api.assemblyai.com/v2/transcript/${id}`;
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent";
+
 
 function localGet(key, fallback) {
   try {

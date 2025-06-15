@@ -25,3 +25,33 @@ modules by path ./.ve/ 15.6 KiB
   modules by path ./.ve/*.css 3.4 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
 webpack 5.99.9 compiled successfully in 3179 ms
+assets by status 41 KiB [cached] 2 assets
+assets by status 6.11 MiB [emitted]
+  asset bundle.js 6.05 MiB [emitted] (name: main)
+  asset main.05fc518f55e4f37141d0.hot-update.js 68.3 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.05fc518f55e4f37141d0.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 6.11 MiB = bundle.js 6.05 MiB main.05fc518f55e4f37141d0.hot-update.js 68.3 KiB
+cached modules 2.15 MiB [cached] 119 modules
+runtime modules 29.6 KiB 15 modules
+./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 274 ms
+assets by status 41 KiB [cached] 2 assets
+assets by status 6.11 MiB [emitted]
+  asset bundle.js 6.05 MiB [emitted] (name: main)
+  asset main.cc943921d3e3c467e772.hot-update.js 68.3 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.cc943921d3e3c467e772.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 6.11 MiB = bundle.js 6.05 MiB main.cc943921d3e3c467e772.hot-update.js 68.3 KiB
+cached modules 2.15 MiB [cached] 119 modules
+runtime modules 29.6 KiB 15 modules
+./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 224 ms
+assets by status 41 KiB [cached] 2 assets
+assets by status 6.11 MiB [emitted]
+  asset bundle.js 6.05 MiB [emitted] (name: main)
+  asset main.9598af4536c0d8f7e528.hot-update.js 68.4 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.9598af4536c0d8f7e528.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 6.11 MiB = bundle.js 6.05 MiB main.9598af4536c0d8f7e528.hot-update.js 68.4 KiB
+cached modules 2.15 MiB [cached] 119 modules
+runtime modules 29.6 KiB 15 modules
+./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 124 ms
