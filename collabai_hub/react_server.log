@@ -8,166 +8,28 @@
 <i> [webpack-dev-server] Content not from webpack is served from './public' directory
 <i> [webpack-dev-server] 404s will fallback to '/index.html'
 Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
-asset bundle.js 6.05 MiB [emitted] (name: main)
+asset bundle.js 10.4 MiB [emitted] (name: main)
 asset src_routes_AudioPdfTranscription_js.bundle.js 40.3 KiB [emitted]
 asset index.html 647 bytes [emitted]
 runtime modules 29.6 KiB 15 modules
 orphan modules 12.8 KiB [orphan] 4 modules
-modules by path ./node_modules/ 1.86 MiB 87 modules
-modules by path ./src/ 287 KiB
-  modules by path ./src/routes/ 250 KiB 18 modules
-  modules by path ./src/*.css 26.6 KiB 4 modules
-  modules by path ./src/*.js 9.93 KiB
-    ./src/index.js 5.28 KiB [built] [code generated]
-    ./src/App.js 4.65 KiB [built] [code generated]
+modules by path ./node_modules/ 3.51 MiB 92 modules
+modules by path ./src/ 278 KiB
+  modules by path ./src/routes/ 264 KiB 19 modules
+  modules by path ./src/*.js 10.1 KiB 2 modules
+  modules by path ./src/*.css 3.77 KiB 2 modules
 modules by path ./.ve/ 15.6 KiB
   modules by path ./.ve/*.js 10.6 KiB 2 modules
   modules by path ./.ve/*.css 3.4 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 3179 ms
+webpack 5.99.9 compiled successfully in 2734 ms
 assets by status 41 KiB [cached] 2 assets
-assets by status 6.11 MiB [emitted]
-  asset bundle.js 6.05 MiB [emitted] (name: main)
-  asset main.05fc518f55e4f37141d0.hot-update.js 68.3 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.05fc518f55e4f37141d0.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.11 MiB = bundle.js 6.05 MiB main.05fc518f55e4f37141d0.hot-update.js 68.3 KiB
-cached modules 2.15 MiB [cached] 119 modules
+assets by status 10.5 MiB [emitted]
+  asset bundle.js 10.5 MiB [emitted] (name: main)
+  asset main.275fb2fa78c8843613b9.hot-update.js 43.3 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.275fb2fa78c8843613b9.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 10.5 MiB = bundle.js 10.5 MiB main.275fb2fa78c8843613b9.hot-update.js 43.3 KiB
+cached modules 3.8 MiB [cached] 123 modules
 runtime modules 29.6 KiB 15 modules
-./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 274 ms
-assets by status 41 KiB [cached] 2 assets
-assets by status 6.11 MiB [emitted]
-  asset bundle.js 6.05 MiB [emitted] (name: main)
-  asset main.cc943921d3e3c467e772.hot-update.js 68.3 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.cc943921d3e3c467e772.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.11 MiB = bundle.js 6.05 MiB main.cc943921d3e3c467e772.hot-update.js 68.3 KiB
-cached modules 2.15 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 224 ms
-assets by status 41 KiB [cached] 2 assets
-assets by status 6.11 MiB [emitted]
-  asset bundle.js 6.05 MiB [emitted] (name: main)
-  asset main.9598af4536c0d8f7e528.hot-update.js 68.4 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.9598af4536c0d8f7e528.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.11 MiB = bundle.js 6.05 MiB main.9598af4536c0d8f7e528.hot-update.js 68.4 KiB
-cached modules 2.15 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 124 ms
-assets by status 647 bytes [cached] 1 asset
-assets by path *.js 6.08 MiB
-  assets by chunk 5.94 MiB (name: main)
-    asset bundle.js 5.94 MiB [emitted] (name: main)
-    asset main.99bcbe745d3f16c5265d.hot-update.js 6.54 KiB [emitted] [immutable] [hmr] (name: main)
-  asset src_routes_AudioPdfTranscription_js.bundle.js 90.1 KiB [emitted]
-  asset src_routes_AudioPdfTranscription_js.99bcbe745d3f16c5265d.hot-update.js 50.4 KiB [emitted] [immutable] [hmr]
-asset main.99bcbe745d3f16c5265d.hot-update.json 66 bytes [emitted] [immutable] [hmr]
-Entrypoint main 5.94 MiB = bundle.js 5.94 MiB main.99bcbe745d3f16c5265d.hot-update.js 6.54 KiB
-cached modules 2.15 MiB [cached] 118 modules
-runtime modules 29.6 KiB 15 modules
-javascript modules 5.32 KiB
-  ./src/index.js 5.28 KiB [code generated]
-  ./src/routes/UploadAudio.js 39 bytes [built] [code generated] [1 error]
-
-ERROR in ./src/routes/UploadAudio.js
-Module build failed (from ./node_modules/babel-loader/lib/index.js):
-SyntaxError: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/UploadAudio.js: Unexpected token (1:0)
-
-> 1 | :root {
-    | ^
-  2 |   --primary-color: #4a6bff;
-  3 |   --primary-hover: #3a5bef;
-  4 |   --secondary-color: #2d3748;
-    at constructor (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:363:19)
-    at JSXParserMixin.raise (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:6609:19)
-    at JSXParserMixin.unexpected (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:6629:16)
-    at JSXParserMixin.parseExprAtom (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:11378:16)
-    at JSXParserMixin.parseExprAtom (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:4776:20)
-    at JSXParserMixin.parseExprSubscripts (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:11012:23)
-    at JSXParserMixin.parseUpdate (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10997:21)
-    at JSXParserMixin.parseMaybeUnary (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10977:23)
-    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10830:61)
-    at JSXParserMixin.parseExprOps (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10835:23)
-    at JSXParserMixin.parseMaybeConditional (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10812:23)
-    at JSXParserMixin.parseMaybeAssign (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10765:21)
-    at JSXParserMixin.parseExpressionBase (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10718:23)
-    at /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10714:39
-    at JSXParserMixin.allowInAnd (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:12356:16)
-    at JSXParserMixin.parseExpression (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:10714:17)
-    at JSXParserMixin.parseStatementContent (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:12814:23)
-    at JSXParserMixin.parseStatementLike (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:12685:17)
-    at JSXParserMixin.parseModuleItem (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:12662:17)
-    at JSXParserMixin.parseBlockOrModuleBlockBody (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:13235:36)
-    at JSXParserMixin.parseBlockBody (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:13228:10)
-    at JSXParserMixin.parseProgram (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:12541:10)
-    at JSXParserMixin.parseTopLevel (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:12531:25)
-    at JSXParserMixin.parse (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:14410:10)
-    at parse (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/parser/lib/index.js:14444:38)
-    at parser (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/core/lib/parser/index.js:41:34)
-    at parser.next (<anonymous>)
-    at normalizeFile (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
-    at normalizeFile.next (<anonymous>)
-    at run (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/core/lib/transformation/index.js:22:50)
-    at run.next (<anonymous>)
-    at transform (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/@babel/core/lib/transform.js:22:33)
-    at transform.next (<anonymous>)
-    at step (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/gensync/index.js:261:32)
-    at /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/gensync/index.js:273:13
-    at async.call.result.err.err (/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/node_modules/gensync/index.js:223:11)
- @ ./src/index.js 18:0-47 80:39-50
-
-webpack 5.99.9 compiled with 1 error in 119 ms
-assets by status 647 bytes [cached] 1 asset
-assets by path *.js 6.2 MiB
-  asset bundle.js 6.05 MiB [emitted] (name: main)
-  asset main.31c11afc0c677df46aa7.hot-update.js 118 KiB [emitted] [immutable] [hmr] (name: main)
-  asset src_routes_AudioPdfTranscription_js.bundle.js 40.3 KiB [emitted]
-asset main.31c11afc0c677df46aa7.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.16 MiB = bundle.js 6.05 MiB main.31c11afc0c677df46aa7.hot-update.js 118 KiB
-cached modules 2.15 MiB [cached] 118 modules
-runtime modules 29.6 KiB 15 modules
-javascript modules 25 KiB
-  ./src/index.js 5.28 KiB [code generated]
-  ./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 215 ms
-assets by status 41 KiB [cached] 2 assets
-assets by status 6.1 MiB [emitted]
-  asset bundle.js 6.04 MiB [emitted] (name: main)
-  asset main.6dd4f7b0e8bf126a6ffc.hot-update.js 60.8 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.6dd4f7b0e8bf126a6ffc.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.1 MiB = bundle.js 6.04 MiB main.6dd4f7b0e8bf126a6ffc.hot-update.js 60.8 KiB
-cached modules 2.15 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./src/routes/UploadAudio.js 19.2 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 169 ms
-assets by status 41 KiB [cached] 2 assets
-assets by status 6.13 MiB [emitted]
-  asset bundle.js 6.07 MiB [emitted] (name: main)
-  asset main.8b4d6b7318ee11618944.hot-update.js 63.8 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.8b4d6b7318ee11618944.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.13 MiB = bundle.js 6.07 MiB main.8b4d6b7318ee11618944.hot-update.js 63.8 KiB
-cached modules 2.16 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./node_modules/css-loader/dist/cjs.js!./src/routes/AudioPdfTranscription.modern.css 21.2 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 90 ms
-assets by status 41 KiB [cached] 2 assets
-assets by status 6.08 MiB [emitted]
-  asset bundle.js 6.04 MiB [emitted] (name: main)
-  asset main.0ff1b8dafc5c590d4f9f.hot-update.js 38 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.0ff1b8dafc5c590d4f9f.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.08 MiB = bundle.js 6.04 MiB main.0ff1b8dafc5c590d4f9f.hot-update.js 38 KiB
-cached modules 2.16 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./node_modules/css-loader/dist/cjs.js!./src/routes/AudioPdfTranscription.modern.css 12.6 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 78 ms
-assets by status 41 KiB [cached] 2 assets
-assets by status 6.13 MiB [emitted]
-  asset bundle.js 6.07 MiB [emitted] (name: main)
-  asset main.9e1c50e700ca360e2fb8.hot-update.js 63.8 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.9e1c50e700ca360e2fb8.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 6.13 MiB = bundle.js 6.07 MiB main.9e1c50e700ca360e2fb8.hot-update.js 63.8 KiB
-cached modules 2.16 MiB [cached] 119 modules
-runtime modules 29.6 KiB 15 modules
-./node_modules/css-loader/dist/cjs.js!./src/routes/AudioPdfTranscription.modern.css 21.2 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 66 ms
+./src/routes/Pricing.js 12.6 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 230 ms
