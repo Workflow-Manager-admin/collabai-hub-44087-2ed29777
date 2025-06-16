@@ -1,13 +1,17 @@
+
 {
   "name": "react-kavia",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@clerk/clerk-react": "^5.32.0",
+    "@stripe/stripe-js": "^7.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.2",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "stripe": "^18.2.1"
   },
   "scripts": {
     "start": "cross-env EDIT_MODE=true webpack serve --config .ve/webpack.config.js --mode development",

@@ -14,8 +14,12 @@ function NeonCard({ title, icon, children, status, footer, style, disabled = fal
         boxShadow: disabled
           ? undefined
           : "0 0 0 1.2px #00FF00AA, 0 2px 24px 0 #00FF0030",
-        marginBottom: 20,
-        marginTop: 0,
+        margin: "20px auto", // ✅ centers horizontally
+        maxWidth: 700,       // ✅ prevents full-width on large screens
+        padding: "20px 28px",
+        borderRadius: 12,    // ✅ restores rounded corners
+        background: "#0a0a0a",
+        transition: "all 0.3s ease"
       }}
       tabIndex={0}
       aria-disabled={disabled}
@@ -23,8 +27,9 @@ function NeonCard({ title, icon, children, status, footer, style, disabled = fal
       <div style={{
         display: "flex",
         alignItems: "center",
-        marginBottom: 10,
+        marginBottom: 12,
         gap: 13,
+        flexWrap: "wrap"
       }}>
         {icon}
         <span style={{
@@ -42,24 +47,33 @@ function NeonCard({ title, icon, children, status, footer, style, disabled = fal
             background: "#00FF0015",
             borderRadius: 6,
             color: "#00FF00",
-            fontSize: 12,
-            padding: "1px 7px",
+            fontSize: 12.5,
+            padding: "2px 8px",
             fontWeight: 600,
             letterSpacing: ".03em"
-          }}>{status}</span>
+          }}>
+            {status}
+          </span>
         )}
       </div>
-      <div style={{ minHeight: 30, fontSize: 15.5, color: "var(--text-secondary)" }}>
+
+      <div style={{
+        minHeight: 30,
+        fontSize: 15.5,
+        color: "var(--text-secondary)",
+        lineHeight: 1.55
+      }}>
         {children}
       </div>
+
       {footer && (
         <div style={{
-          marginTop: 16,
-          fontSize: 13.3,
+          marginTop: 18,
+          fontSize: 13.5,
           color: "var(--accent-neon)",
           borderTop: "1px solid var(--border-color)",
-          paddingTop: 8,
-          opacity: 0.84,
+          paddingTop: 10,
+          opacity: 0.9,
         }}>
           {footer}
         </div>
@@ -67,6 +81,8 @@ function NeonCard({ title, icon, children, status, footer, style, disabled = fal
     </div>
   );
 }
+
+
 
 /* --- GitHub Section: Connect, Fetch, Display --- */
 
@@ -78,26 +94,40 @@ function GitHubConnectCard() {
       icon={<span role="img" aria-label="GitHub" style={{ fontSize: 24 }}>🐙</span>}
       status="Not Connected"
       footer={
-        <a href="https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&scope=repo%20read:user"
-           className="btn btn-large"
-           rel="noopener noreferrer"
-           style={{
-             display: "inline-block",
-             marginTop: 6,
-             background: "var(--accent-neon)",
-             color: "#0a1213",
-             boxShadow: "0 0 9px #00FF0060",
-             border: "none",
-           }}>
-          Connect GitHub
-        </a>
+        <a
+  href="https://github.com/settings/tokens"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn btn-large"
+  style={{
+    display: "inline-block",
+    marginTop: 8,
+    background: "transparent",
+    color: "var(--accent-neon)",
+    border: "1.5px solid var(--accent-neon)",
+    fontWeight: 600,
+    padding: "10px 20px",
+    borderRadius: 8,
+    boxShadow: "0 0 10px #00FF0050",
+    textDecoration: "none",
+    fontSize: 15.2,
+  }}
+>
+  Connect GitHub
+</a>
+
       }
     >
-      To view your repositories and activity, connect your GitHub account.<br />
-      <span style={{ fontSize: 13.3 }}>OAuth linking required for full functionality. <br />This is a safe redirect—your tokens are never stored.</span>
+      To view your repositories and activity, connect your GitHub account.
+      <br />
+      <span style={{ fontSize: 13.3, color: "#ccc" }}>
+        OAuth linking required for full functionality. <br />This is a safe redirect—your tokens are never stored.
+      </span>
     </NeonCard>
   );
 }
+
+
 
 // Helper: Loading skeleton
 function RepoSkeleton() {

@@ -484,3 +484,19 @@
     flex-direction: column;
   }
 }
+
+.btn {
+  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
