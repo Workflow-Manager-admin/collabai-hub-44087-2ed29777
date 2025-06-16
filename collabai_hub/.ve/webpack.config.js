@@ -7,7 +7,9 @@ module.exports = (env = {}) => ({
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     clean: true,
+    publicPath: '/', // ✅ Important for Clerk & React Router
   },
+  devtool: 'eval-source-map', // ✅ Enable better error reporting
   module: {
     rules: [
       {
@@ -16,9 +18,9 @@ module.exports = (env = {}) => ({
         use: {
           loader: 'babel-loader',
           options: {
-	    presets: [
-                '@babel/preset-env',
-                ['@babel/preset-react', { runtime: 'automatic' }]
+            presets: [
+              '@babel/preset-env',
+              ['@babel/preset-react', { runtime: 'automatic' }],
             ],
             plugins: env.EDIT_MODE ? [path.resolve('./.ve/babel-plugin-jsx-editor-id.js')] : [],
           },
@@ -43,6 +45,13 @@ module.exports = (env = {}) => ({
     port: 3000,
     host: '0.0.0.0',
     allowedHosts: 'all',
+    historyApiFallback: true, // ✅ Support client-side routing (for /auth etc.)
+    client: {
+      overlay: {
+        warnings: true,
+        errors: true, // ✅ Ensure errors show in overlay
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,0 +1,448 @@
+:root {
+  --neon-primary: #39ff14;
+  --neon-cyan: #00ffe8;
+  --neon-orange: #e87a41;
+  --editor-glass: rgba(14, 22, 18, 0.40);
+  --editor-glass-blur: blur(18px);
+  --sidebar-glass: rgba(25,37,27,0.78);
+  --card-glass: rgba(19, 32, 20, 0.82);
+  --neon-ui-shadow: 0 3px 32px #00ff1a85, 0 2px 10px #00FF0075, 0 0 0 transparent;
+  --neon-focus-outline: 0 0 0 3px #39ff14a8, 0 0 13px #00ffe9ab;
+  --neon-border: 2px solid #39ff14b5;
+  --editor-scrollbar: #2efcc270;
+  --editor-font: 'Orbitron', 'Montserrat', 'Inter', 'Roboto', monospace, sans-serif;
+  --mono-font: 'Fira Mono', 'Jetbrains Mono', 'Menlo', 'Courier New', monospace;
+  --sidebar-width: 25vw;
+  --sidebar-min: 190px;
+  --sidebar-max: 295px;
+  --transition-fast: 0.13s cubic-bezier(0.41,2,0.43,0.97);
+  --transition-regular: 0.25s cubic-bezier(.77, .04, .44, 1.01);
+}
+
+@keyframes neonGlowPulse {
+  0%   { filter: drop-shadow(0 0 1px #00ffb0); }
+  22%  { filter: drop-shadow(0 0 15px #39ff14bb);}
+  64%  { filter: drop-shadow(0 0 28px #00ffe8b4);}
+  100% { filter: drop-shadow(0 0 1px #00ffb0); }
+}
+@keyframes neonFadeSlideUp {
+  0%   { opacity: 0; transform: translateY(20px) scale(0.99);}
+  40%  { opacity: 1;}
+  100% { opacity: 1; transform: translateY(0) scale(1);}
+}
+@keyframes floatY {
+  0% { transform: translateY(0);}
+  50% {transform: translateY(-4.5px);}
+  100% {transform: translateY(0);}
+}
+@keyframes bounceBtn {
+  0%, 60%, 100% {transform: scale(1);}
+  15%   {transform: scale(1.13);}
+  33%   {transform: scale(0.94);}
+  43%,65% {transform: scale(1.03);}
+}
+@keyframes glassFadeIn {
+  0% { opacity: 0; filter: blur(9px);}
+  100% { opacity: 1; filter: blur(0);}
+}
+
+/* === Layout Structure === */
+.github-editor-modern-dashboard {
+  font-family: var(--editor-font);
+  color: #eafed4;
+  background: none;
+}
+
+.github-editor-title {
+  font-family: var(--editor-font);
+  font-size: 2.35rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  color: var(--neon-primary);
+  text-shadow:
+    0 0 16px #00ffe8b1,
+    0 0 26px #39ff14b7,
+    0 0 46px #00809a40;
+  margin-bottom: 9px;
+  filter: drop-shadow(0 0 14px #39ff1480);
+  animation: neonGlowPulse 2.3s infinite cubic-bezier(.94,.01,.28,1);
+  user-select: none;
+}
+@media (max-width: 700px) {
+  .github-editor-title { font-size: 1.29rem; }
+}
+
+/* ---- Main Pane (Glassmorphism w/ Neon) ---- */
+.github-editor-pane {
+  animation: glassFadeIn 0.7s cubic-bezier(.41,1.33,.5,1.19);
+  background: linear-gradient(118deg, #111718d6 59%, #1a2e23be 100%);
+  box-shadow: var(--neon-ui-shadow);
+  border-radius: 16px;
+  border-left: 5px solid var(--neon-primary);
+  border-right: 2.9px solid #00ffe4bb;
+  display: flex;
+  position: relative;
+  min-height: 370px;
+  backdrop-filter: var(--editor-glass-blur);
+  margin-bottom: 2.5vw;
+  transition: box-shadow var(--transition-regular);
+}
+@media (max-width: 820px) {
+  .github-editor-pane {
+    flex-direction: column;
+    padding: 0;
+    min-width: 0;
+    box-shadow: 0 0 39px #0fa8;
+  }
+}
+
+/* --- Sidebar --- */
+.ge-sidebar {
+  min-width: var(--sidebar-min);
+  max-width: var(--sidebar-max);
+  background: linear-gradient(127deg, #140e1fe8 80%, #164d3e 140%);
+  box-shadow: 0 0 17px #04ffb540;
+  border-right: 2.4px solid #00ffe448;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  z-index: 2;
+  animation: floatY 2.8s linear infinite;
+  padding: 13px 0 12px 0;
+  transition: box-shadow var(--transition-fast), background .15s;
+  position: relative;
+}
+@media (max-width: 800px) {
+  .ge-sidebar { min-width: 0;max-width: none; border-radius: 0;}
+}
+
+.ge-sidebar label, .ge-sidebar span {
+  font-family: var(--editor-font);
+  font-weight: 800;
+  letter-spacing: .017em;
+  color: #b0ffec;
+  font-size: 15.8px;
+  text-shadow: 0 0 4px #00ffe860;
+  padding-bottom: 2px;
+}
+.ge-sidebar select, .ge-sidebar input, .ge-sidebar button {
+  font-family: var(--mono-font);
+  font-weight: 600;
+}
+.ge-sidebar select {
+  background: #162a22;
+  color: #54ffa9;
+  border: 1.5px solid #39ff14cf;
+  font-size: 16px;
+  border-radius: 7px;
+  box-shadow: 0 0 8px #00ffc025;
+  padding: 7px 14px 7px 9px;
+  margin-bottom: 6px;
+  outline: none;
+  transition: border .16s, box-shadow .2s;
+  animation: bounceBtn 1.5s 1;
+}
+.ge-sidebar select:focus {
+  border-color: #00ffe9;
+  box-shadow: 0 0 12px #00ffe880;
+}
+.ge-sidebar .github-editor-action-btn {
+  animation: bounceBtn 2.17s 1;
+}
+
+/* --- Neon File Tree --- */
+.ge-tree-scroll {
+  max-height: 52vh;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+.ge-tree-scroll::-webkit-scrollbar-thumb {
+  background: var(--editor-scrollbar);
+  border-radius: 6px;
+  box-shadow: 0 0 16px #39ff14ab;
+}
+.ge-tree-scroll::-webkit-scrollbar {
+  width: 9px;
+  background: #191f18;
+}
+
+.ge-filetree-folder {
+  color: #38ffa9;
+  font-weight: 800;
+  text-shadow: 0 0 5.5px #52ffc580, 0 0 21px #00ffe6a9;
+  cursor: pointer;
+  filter: drop-shadow(0 0 11px #00ffe883);
+  letter-spacing: .007em;
+  animation: floatY 2.2s infinite;
+  transition: color .12s;
+}
+.ge-filetree-folder:focus, .ge-filetree-folder:hover {
+  color: #fff;
+  filter: drop-shadow(0 0 21px #00ffc8da);
+  outline: 2px solid #19ffa279;
+}
+
+.ge-filetree-file {
+  color: #adffe0;
+  background: none;
+  border: 0;
+  font-size: 15.2px;
+  border-radius: 7px;
+  cursor: pointer;
+  padding: 5px 8px 3.5px 16px;
+  margin: 2.5px 0 0 0;
+  letter-spacing: .009em;
+  font-weight: 600;
+  transition: background .13s, color .14s, box-shadow 0.14s, outline 0.15s;
+  outline: none;
+}
+.ge-filetree-file:focus, .ge-filetree-file:hover {
+  background: linear-gradient(92deg,#00ffa9 25%,#2bff00a9 100%);
+  color: #18181e !important;
+  font-weight: 800;
+  filter: drop-shadow(0 0 8.5px #00ffcda2);
+  border-radius: 8px;
+  outline: 2.5px solid #00ffecc9;
+  box-shadow: 0 0 13px #52ffd080;
+}
+
+.ge-filetree-file.selected,
+.ge-filetree-file.selected:focus,
+.ge-filetree-file.selected:hover {
+  background: linear-gradient(92deg,#00ffa9 25%,#2bff00 90%);
+  color: #12181c !important;
+  font-weight: 900;
+  filter: drop-shadow(0 0 13px #39ff148b);
+  outline: 2.5px solid #39ff14c7;
+  box-shadow: 0 0 21px #52ff8c8e;
+}
+
+/* --- Main Editor Area --- */
+.github-editor-main {
+  flex: 1;
+  padding: 34px 11px 21px 35px;
+  min-height: 397px;
+  border-radius: 0 13px 13px 0;
+  font-family: var(--mono-font);
+  box-shadow: 0 0 11px #39ff144c;
+  transition: background .16s;
+  background: var(--card-glass);
+  position: relative;
+  animation: glassFadeIn .8s cubic-bezier(.35,1.1,.19,.91);
+}
+@media (max-width: 800px) {
+  .github-editor-main { border-radius: 0 0 13px 13px; padding: 19px 4vw 14px 5vw;}
+}
+@media (max-width: 500px) {
+  .github-editor-main { padding: 7.5px 2vw;}
+}
+
+/* --- Neon Button Styles --- */
+.github-editor-action-btn {
+  background: linear-gradient(114deg, #39ff14 67%, #00FFE4 123%);
+  border: none;
+  color: #171f11;
+  padding: 10px 25px;
+  margin-right: 7px;
+  border-radius: 7.5px;
+  font-size: 1.08rem;
+  box-shadow: 0 0 14px #39ff14a7, 0 0 8px #39ff1492;
+  font-weight: 700;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: background .19s, color .15s, box-shadow 0.17s, outline .12s;
+  outline: none;
+  animation: bounceBtn 1 .27s;
+  position: relative;
+}
+.github-editor-action-btn:focus, .github-editor-action-btn:hover {
+  background: linear-gradient(106deg, #54ffa0 55%, #b0fff8 120%);
+  color: #181f1c;
+  outline: 2.3px solid #54ffcb;
+  box-shadow: 0 0 22px #00ffe9df;
+}
+.github-editor-action-btn[disabled],
+.github-editor-action-btn:disabled {
+  filter: grayscale(80%) brightness(0.88);
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+.github-editor-action-btn.danger {
+  border: 2px solid #ff456c;
+  background: linear-gradient(85deg,#ff2e6bca 55%,#ffaee1 140%);
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 0 12px #ff2e6baa;
+}
+.github-editor-action-btn.danger:focus, .github-editor-action-btn.danger:hover {
+  background: #fff5ee;
+  color: #ff366d;
+  border: 2px solid #ff456c;
+  outline: 2.5px solid #ff9abb;
+}
+
+/* --- Input & filename input --- */
+.github-editor-input,
+.github-editor-filename-input {
+  background: #151f1b;
+  border: 1.8px solid #39ff14cc;
+  border-radius: 7.5px;
+  color: #62ffca;
+  font-size: 15.7px;
+  padding: 9px 15px 7px 16px;
+  font-family: var(--mono-font);
+  font-weight: 600;
+  margin-right: 7px;
+  box-shadow: 0 0 0 #0000;
+  transition: border .17s, background .16s, box-shadow .15s;
+}
+.github-editor-input:focus, .github-editor-filename-input:focus {
+  border-color: #defaea;
+  background: #16292d;
+  outline: 2.5px solid #39ff14af;
+  box-shadow: 0 0 12px #5dfcb7a4;
+}
+
+.github-editor-label {
+  color: #cfffec;
+  letter-spacing: .012em;
+  font-weight: 700;
+  font-size: 15.4px;
+  margin-bottom: 4px;
+  user-select: none;
+}
+
+.github-editor-file-status {
+  font-size: 14px;
+  font-family: 'Montserrat', var(--editor-font);
+  background: #222f1a;
+  color: #39ff14;
+  border-radius: 11px;
+  padding: 2.5px 13px;
+  margin-left: 18px;
+  font-weight: 900;
+  filter: drop-shadow(0 0 4.5px #00ffb6);
+  border: 1.5px solid #39ff1486;
+  text-shadow: 0 0 7px #39ff1446;
+  letter-spacing: .021em;
+  vertical-align: middle;
+  animation: glassFadeIn .55s;
+}
+
+/* --- Monaco code editor --- */
+.github-editor-main .monaco-editor,
+.github-editor-main .monaco-editor-background {
+  background: #131f18 !important;
+}
+.github-editor-monaco-blink {
+  animation:
+    glassFadeIn .65s,
+    floatY 2.8s infinite;
+}
+
+/* --- Animation/Helper Classes --- */
+.ge-flash-glow      { animation: neonGlowPulse 4.2s cubic-bezier(.91,0,.94,.36) infinite;}
+.ge-anim-glow-row   { animation: neonGlowPulse 2.1s infinite;}
+.ge-section-fade    { animation: glassFadeIn .99s cubic-bezier(.33,1.26,.38,.83);}
+.ge-blink-text      { animation: neonGlowPulse 1.5s infinite;}
+.github-editor-blink { animation: neonGlowPulse 2.7s infinite;}
+
+/* --- New File/Commit Bar --- */
+.github-editor-newfile-bar,
+.github-editor-commit-bar {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin: 16px 0 12px 0;
+  flex-wrap: wrap;
+  border-radius: 13px;
+  overflow: visible;
+}
+.github-editor-newfile-bar {
+  background: linear-gradient(120deg,#13271aec 25%, #101922b9 100%);
+  border-left: 3.7px solid #39ff14;
+  border-radius: 14px;
+  box-shadow: 0 0 15px #39ff1466, 0 0 8px #fff6;
+  padding: 29px 19px;
+  margin: 21px auto;
+  position: relative;
+  max-width: 620px;
+  animation: neonFadeSlideUp .69s;
+}
+
+/* --- Scrollbar overrides --- */
+.ge-scrollbar::-webkit-scrollbar-thumb {
+  background: #0fc;
+  border-radius: 8px;
+  box-shadow: 0 0 17px #39ff14ab;
+}
+.ge-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  background: #151f1a;
+}
+
+/* --- Misc Accessibility --- */
+.github-editor-main :focus-visible,
+.ge-sidebar :focus-visible,
+.ge-filetree-file:focus-visible,
+.ge-filetree-folder:focus-visible {
+  outline: 2.7px solid #2affcfdd;
+  outline-offset: 1.5px;
+  box-shadow: 0 0 21px #00ffd0c7;
+  z-index: 5;
+}
+input:disabled, .github-editor-input[disabled] {
+  filter: grayscale(88%);
+  opacity: 0.53;
+  background: #131910 !important;
+}
+select:disabled {
+  filter: grayscale(88%);
+  opacity: 0.58;
+  background: #1b3025 !important;
+}
+
+/* --- Status/Toast --- */
+.github-editor-file-status,
+.github-editor-main .toast,
+.github-editor-main .ge-flash-glow {
+  user-select: none;
+}
+
+/* --- Subtle section fade for focus/hover highlight (Editor, Sidebar) --- */
+.ge-section-fade,
+.github-editor-main:focus-within {
+  box-shadow: 0 0 35px #00ffe960, 0 0 13px #04fcba50;
+  filter: brightness(1.025) drop-shadow(0 0 16px #00ffc540);
+}
+
+/* --- Accessibility - reduce motion for prefers reduced --- */
+@media (prefers-reduced-motion: reduce) {
+  .github-editor-title,
+  .ge-section-fade,
+  .ge-flash-glow,
+  .github-editor-main,
+  .ge-filetree-folder,
+  .ge-filetree-file,
+  .github-editor-monaco-blink {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- Responsive: layout stack/adjust for mobile --- */
+@media (max-width: 700px) {
+  .github-editor-main { padding: 17px 4vw 13px 5vw;}
+  .ge-sidebar { min-width: 0; max-width: none;}
+}
+@media (max-width: 420px) {
+  .github-editor-main { padding: 6px 0vw;}
+  .github-editor-title { font-size: 1.1rem;}
+}
+
+::-webkit-input-placeholder, ::-moz-placeholder, :-ms-input-placeholder, ::placeholder {
+  color: #87ffd7d9;
+  opacity: 1;
+}
+
+/* --- End Modern Neon Glassmorphic GitHubEditor CSS --- */
