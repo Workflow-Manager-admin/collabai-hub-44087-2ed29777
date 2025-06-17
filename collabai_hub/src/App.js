@@ -77,7 +77,7 @@ function Navbar() {
       <div style={containerStyle}>
         <div style={logoStyle}>
           <NavLink
-            to="/dashboard"
+            to="/"
             style={{
               display: "flex",
               alignItems: "center",
