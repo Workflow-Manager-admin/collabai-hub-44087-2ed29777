@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, Routes, Route } from "react-router-dom";
 import {
   useUser,
   UserButton,
@@ -7,7 +7,7 @@ import {
   SignedOut
 } from "@clerk/clerk-react";
 import Footer from "./routes/Footer";
-
+import PricingDonation from "./routes/PricingDonation";
 // Navbar component
 function Navbar() {
   const { user } = useUser();
@@ -61,15 +61,45 @@ function Navbar() {
     background: "rgba(0,255,0,0.1)"
   };
 
+  // Neon Donate style overrides
+  const donateStyle = {
+    ...navLinkStyle,
+    color: "#00f6ff",
+    border: "1px solid #00f6ff",
+    background: "rgba(0,246,255,0.15)",
+    fontWeight: 700,
+    boxShadow: "0 0 12px 2px #00f6ffAA, 0 0 2px #fff",
+    textShadow: "0 0 8px #00f6ff, 0 0 3px #fff, 0 0 16px #0ff4",
+    position: "relative",
+    zIndex: 2
+  };
+
+  const donateActiveStyle = {
+    ...donateStyle,
+    color: "#fff",
+    border: "2px solid #00f6ff",
+    background: "rgba(0,246,255,0.21)",
+    boxShadow: "0 0 32px 6px #00f6ffCC, 0 0 8px #fff"
+  };
+
+  const donateHoverStyle = {
+    ...donateStyle,
+    color: "#fff",
+    border: "2px solid #fff",
+    background: "rgba(0,246,255,0.25)",
+    boxShadow: "0 0 48px 10px #00f6ffEE, 0 0 10px #fff"
+  };
+
   const [hovered, setHovered] = React.useState(null);
 
+  // Reference navigation
   const navLinks = [
     { to: "/", label: "Dashboard", end: true },
     { to: "/projects", label: "Projects" },
     { to: "/github-editor", label: "GitHub Editor" },
     { to: "/upload", label: "Upload/Audio" },
     { to: "/pricing", label: "Pricing" },
-    { to: "/pricing-donation", label: "Donate" },
+    { to: "/pricing-donation", label: "Donate", isDonate: true },
     { to: "/auth", label: "Auth" }
   ];
 
@@ -80,17 +110,23 @@ function Navbar() {
           <span style={{ fontSize: "2rem", marginRight: 8 }}>*</span> CollabAI Hub
         </div>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          {navLinks.map(({ to, label, end }) => (
+          {navLinks.map(({ to, label, end, isDonate }) => (
             <NavLink
               key={to}
               to={to}
               end={end}
               style={({ isActive }) =>
-                isActive
-                  ? { ...navLinkStyle, ...activeStyle }
-                  : hovered === to
-                  ? hoverStyle
-                  : navLinkStyle
+                isDonate
+                  ? (isActive
+                      ? donateActiveStyle
+                      : hovered === to
+                        ? donateHoverStyle
+                        : donateStyle)
+                  : (isActive
+                      ? { ...navLinkStyle, ...activeStyle }
+                      : hovered === to
+                        ? hoverStyle
+                        : navLinkStyle)
               }
               onMouseEnter={() => setHovered(to)}
               onMouseLeave={() => setHovered(null)}
@@ -113,7 +149,10 @@ function Navbar() {
   );
 }
 
-// App component
+/*
+  App component
+  Added direct Route for /pricing-donation for accessibility.
+*/
 function App() {
   return (
     <div
@@ -129,7 +168,13 @@ function App() {
       <Navbar />
       <main style={{ flex: 1, marginTop: 80 }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
-          <Outlet />
+          {/* Routes are now handled here for the PricingDonation page */}
+          <Routes>
+            {/* All nested routes */}
+            <Route path="/*" element={<Outlet />} />
+            {/* Dedicated donation page route */}
+            <Route path="/pricing-donation" element={<PricingDonation />} />
+          </Routes>
         </div>
       </main>
       <Footer />
