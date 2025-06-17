@@ -430,3 +430,13 @@ javascript modules 211 KiB
     ./node_modules/css-loader/dist/cjs.js!./src/routes/AudioPdfTranscription.modern.css 21.8 KiB [built]
   ./src/index.js 5.28 KiB [code generated]
 webpack 5.99.9 compiled successfully in 241 ms
+assets by status 41 KiB [cached] 2 assets
+assets by status 10.4 MiB [emitted]
+  asset bundle.js 10.4 MiB [emitted] (name: main)
+  asset main.c47e43bf59e3518a073c.hot-update.js 10.5 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.c47e43bf59e3518a073c.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 10.4 MiB = bundle.js 10.4 MiB main.c47e43bf59e3518a073c.hot-update.js 10.5 KiB
+cached modules 3.8 MiB [cached] 123 modules
+runtime modules 29.6 KiB 15 modules
+./src/routes/Footer.js 2.79 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 101 ms

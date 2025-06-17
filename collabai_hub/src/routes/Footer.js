@@ -15,22 +15,44 @@ function Footer() {
       }}
     >
       <div style={{ marginBottom: 14 }}>
-        <a href="https://github.com/yourhandle" target="_blank" rel="noreferrer" style={iconStyle}>
-          <FaGithub />
-        </a>
-        <a href="https://www.instagram.com/yourhandle" target="_blank" rel="noreferrer" style={iconStyle}>
-          <FaInstagram />
-        </a>
-        <a href="https://www.linkedin.com/in/yourhandle" target="_blank" rel="noreferrer" style={iconStyle}>
-          <FaLinkedin />
-        </a>
-        <a href="https://twitter.com/yourhandle" target="_blank" rel="noreferrer" style={iconStyle}>
-          <FaXTwitter />
-        </a>
-      </div>
-      <div style={{ fontSize: 13, opacity: 0.75 }}>
-        Built by <span style={{ color: "#00ffcc", fontWeight: "bold" }}>CyberHash</span> ⚡ Powered by <span style={{ color: "#39ff14", fontWeight: "bold" }}>Kavia AI</span>
-      </div>
+  <a
+    href="https://github.com/Cyb3rHash"
+    target="_blank"
+    rel="noreferrer"
+    style={iconStyle}
+  >
+    <FaGithub />
+  </a>
+  <a
+    href="https://www.instagram.com/liberosist_007/"
+    target="_blank"
+    rel="noreferrer"
+    style={iconStyle}
+  >
+    <FaInstagram />
+  </a>
+  <a
+    href="https://www.linkedin.com/in/harish-v-500249360"
+    target="_blank"
+    rel="noreferrer"
+    style={iconStyle}
+  >
+    <FaLinkedin />
+  </a>
+  <a
+    href="https://x.com/Cyber__Hash"
+    target="_blank"
+    rel="noreferrer"
+    style={iconStyle}
+  >
+    <FaXTwitter />
+  </a>
+</div>
+<div style={{ fontSize: 13, opacity: 0.75 }}>
+  Built by <span style={{ color: "#00ffcc", fontWeight: "bold" }}>CyberHash</span> ⚡ Powered by{" "}
+  <span style={{ color: "#39ff14", fontWeight: "bold" }}>Kavia AI</span>
+</div>
+
     </footer>
   );
 }
