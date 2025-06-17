@@ -69,6 +69,7 @@ function Navbar() {
     { to: "/github-editor", label: "GitHub Editor" },
     { to: "/upload", label: "Upload/Audio" },
     { to: "/pricing", label: "Pricing" },
+    { to: "/pricing-donation", label: "Donate" },
     { to: "/auth", label: "Auth" }
   ];
 
