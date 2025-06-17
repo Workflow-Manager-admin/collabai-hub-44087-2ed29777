@@ -1,299 +1,324 @@
 import React, { useState } from "react";
 
-/**
- * UploadAudio Component
- * Neon hacker/terminal themed audio upload page
- * Upload logic unchanged, UI restyled to fit neon/terminal theme
- */
- // PUBLIC_INTERFACE
+// PUBLIC_INTERFACE
 function UploadAudio() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState(null);
 
-  // Handle file selection (unchanged logic)
   // PUBLIC_INTERFACE
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-    setMessage("");
-    setProgress(0);
+    setStatus(null);
   };
 
   // PUBLIC_INTERFACE
-  const handleUpload = async (event) => {
-    event.preventDefault();
-    if (!selectedFile) {
-      setMessage("No file selected.");
-      return;
-    }
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    if (!selectedFile) return;
+
     setUploading(true);
-    setMessage("");
-    setProgress(0);
+    setStatus(null);
 
+    // *** DO NOT CHANGE: Simulate upload logic ***
     try {
-      // Simulate file upload logic - placeholder fetch (replace with real API as needed)
-      // For demo: upload progress animation
-      for (let p = 1; p <= 100; p += 7) {
-        await new Promise((res) => setTimeout(res, 27));
-        setProgress(p);
-      }
-      // Simulate upload completion
-      setMessage("Upload successful! 🚀");
-    } catch (error) {
-      setMessage("Upload failed. Please try again.");
+      // Demo async imitation of upload
+      await new Promise((resolve) => setTimeout(resolve, 1300));
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+    } finally {
+      setUploading(false);
     }
-    setUploading(false);
-  };
-
-  // Neon/Hacker style variables, based on App.css
-  // Example CSS variables: --kavia-orange, --kavia-dark, --text-color, etc.
-  // We’ll use typical neon green and blue as primary neon colors.
-  // Provide custom styles scoped to component.
-  const neonVars = {
-    "--neon-green": "#00FF99",
-    "--neon-blue": "#00E1FF",
-    "--neon-pink": "#ff4cf4",
-    "--neon-yellow": "#ffe913",
-    "--neon-bg": "#0a0a0a",
-    "--glow-green": "0 0 16px 2px #00FF99, 0 0 3px 2px #01b654",
-    "--glow-blue": "0 0 16px 2px #00E1FF, 0 0 3px 2px #3399ff",
-    "--glow-pink": "0 0 15px 3px #ff4cf4",
-    "--glow-red": "0 0 12px 2px #fd3e55",
-    "--glow-yellow": "0 0 12px 2px #ffe913",
-    "--font-family-terminal": "'Fira Mono', 'Roboto Mono', 'Source Code Pro', 'Menlo', monospace",
-    "--border-radius": "10px"
   };
 
   return (
     <div
+      className="container"
       style={{
-        minHeight: "calc(100vh - 160px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "var(--neon-bg, #000)",
-        fontFamily: "var(--font-family-terminal)",
-        position: "relative"
+        maxWidth: 480,
+        margin: "60px auto 0 auto",
+        background: "#0a0a0f",
+        borderRadius: "18px",
+        boxShadow: "0 0 30px 8px #00ffd044",
+        padding: "40px 32px",
+        fontFamily: "'Fira Mono', 'JetBrains Mono', 'Courier New', monospace",
+        border: "1.5px solid #00f0ff",
+        position: "relative",
+        overflow: "hidden",
+        minHeight: "500px",
       }}
-      className="neon-upload-container"
     >
-      {/* Inline style and scoped CSS for neon-hacker appearance */}
-      <style>
-        {`
-        .neon-upload-form {
-          background: linear-gradient(135deg, #111 70%, #0f222a 100%);
-          border: 2px solid var(--neon-blue, #00E1FF);
-          border-radius: var(--border-radius, 12px);
-          box-shadow: var(--glow-blue, 0 0 16px 2px #00E1FF);
-          padding: 2.5rem 2.5rem 2.0rem 2.5rem;
-          min-width: 345px;
-          max-width: 98vw;
-        }
-        .neon-hacker-title {
-          color: var(--neon-green, #00FF99);
-          text-shadow:
-            0 0 6px #00FF99,
-            0 0 2px #010,
-            0 0 10px var(--neon-green, #00FF99);
-          font-family: var(--font-family-terminal);
-          text-align: center;
-          margin-bottom: 18px;
-          font-size: 2rem;
-          letter-spacing: 0.04em;
-          font-weight: 900;
-          background: none;
-        }
-        .neon-file-input-label {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          color: var(--neon-blue, #00E1FF);
-          background: rgba(0,255,153,0.05);
-          border: 1px dashed var(--neon-green, #00FF99);
-          border-radius: var(--border-radius, 10px);
-          padding: 1.2em 1em;
-          cursor: pointer;
-          margin-bottom: 1.0em;
-          box-shadow: 0 0 11px #00FF9933, 0 0 3px 1px #00FF9933;
-          transition: border 0.18s, box-shadow 0.18s;
-        }
-        .neon-file-input-label:hover,
-        .neon-file-input-label:focus {
-          border: 1.5px solid var(--neon-pink, #ff4cf4);
-          box-shadow: var(--glow-pink);
-          background: rgba(255,76,244,0.07);
-        }
-        .neon-file-input {
-          display: none;
-        }
-        .file-chosen {
-          margin-top: 0.7em;
-          color: var(--neon-yellow, #ffe913);
-          font-size: 1.01em;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .neon-upload-btn {
-          margin-top: 0.8em;
-          font-size: 1.12em;
-          font-family: var(--font-family-terminal);
-          border-radius: var(--border-radius, 9px);
-          background: #111;
-          color: var(--neon-green, #00FF99);
-          border: 2px solid var(--neon-green, #00FF99);
-          box-shadow: var(--glow-green);
-          font-weight: bold;
-          padding: 0.7em 1.9em;
-          letter-spacing: 0.1em;
-          transition: all 0.18s, text-shadow 0.22s;
-          outline: none;
-          cursor: pointer;
-          text-shadow: 0 0 12px #00FF99aa;
-        }
-        .neon-upload-btn:active, .neon-upload-btn:focus {
-          background: #0d2229;
-          color: var(--neon-pink, #ff4cf4);
-          border-color: var(--neon-pink, #ff4cf4);
-          box-shadow: var(--glow-pink);
-          text-shadow: 0 0 9px #ff4cf499;
-        }
-        .terminal-progress-bar {
-          margin: 1.6em 0 1em 0;
-          background: #181a1b;
-          border: 1px solid var(--neon-blue, #00E1FF);
-          box-shadow: 0 0 8px #00E1FF22;
-          border-radius: var(--border-radius, 10px);
-          height: 18px;
-          width: 100%;
-          position: relative;
-          overflow: hidden;
-        }
-        .terminal-progress-inner {
-          background: linear-gradient(90deg, #00FF99 25%, #00E1FFcc 65%, #ff4cf4cc 100%);
-          box-shadow: 0 0 16px #00FF9975, 0 0 17px #01e4ff96;
-          height: 100%;
-          width: 0%;
-          transition: width 0.29s;
-        }
-        .neon-msg {
-          padding: 0.9em;
-          margin-top: 0.7em;
-          background: rgba(10,255,80,0.02);
-          border-radius: var(--border-radius, 10px);
-          color: var(--neon-green, #00FF99);
-          text-shadow: 0 0 8px #00ff9985;
-          font-family: var(--font-family-terminal);
-          text-align: center;
-        }
-        .neon-msg-error {
-          color: #fd3e55;
-          border: 1px solid #fd3e55;
-          box-shadow: var(--glow-red), 0 0 5px #fd3e5511;
-          background: rgba(253,62,85,0.061);
-        }
-        .ascii-terminal-footer {
-          margin: 1em auto 0;
-          color: #00FF99cc;
-          font-size: 1.04em;
-          font-family: var(--font-family-terminal);
-          letter-spacing: 0.05em;
-          word-spacing: 0.2em;
-          text-align: center;
-          text-shadow: 0 0 11px #00FF99aa, 0 0 6px #01b65455;
-          opacity: 0.8;
-          border-top: 1.5px dotted #00ff9911;
-          padding-top: 0.5em;
-          width: 96%;
-          user-select: none;
-          pointer-events: none;
-        }
-        `}
-      </style>
-      <form
-        className="neon-upload-form"
-        style={neonVars}
-        onSubmit={handleUpload}
-        autoComplete="off"
-        spellCheck={false}
+      <div style={{
+        position: "absolute",
+        top: -41,
+        left: -48,
+        width: 180,
+        height: 180,
+        filter: "blur(36px)",
+        background: "radial-gradient(circle at 0 0, #00fff9cc 60%, transparent 95%)",
+        zIndex: 0,
+        pointerEvents: "none"
+      }}></div>
+      <div style={{
+        position: "absolute",
+        bottom: -41,
+        right: -48,
+        width: 180,
+        height: 180,
+        filter: "blur(42px)",
+        background: "radial-gradient(circle at 100% 100%, #00ff80cc 60%, transparent 95%)",
+        zIndex: 0,
+        pointerEvents: "none"
+      }}></div>
+      <header
+        style={{
+          textAlign: "center",
+          marginBottom: 32,
+          zIndex: 1,
+          position: "relative",
+        }}
       >
-        <div className="neon-hacker-title">{'< Upload Audio >'}</div>
-        <label
-          htmlFor="audio-upload"
-          className="neon-file-input-label"
-          tabIndex="0"
+        <h1
+          className="title"
+          style={{
+            fontSize: "2.44rem",
+            color: "#00ffc6",
+            fontFamily: "'Fira Mono', 'JetBrains Mono', 'Courier New', monospace",
+            textShadow:
+              "0 0 8px #00ffd5, 0 0 16px #00ffd5, 0 0 2px #00ffd5, 0 0 1px #0ff",
+            letterSpacing: "1px",
+            margin: 0
+          }}
         >
           <span style={{
-            fontSize: "1.15em",
-            lineHeight: 1.2,
-            fontFamily: "var(--font-family-terminal)",
-            letterSpacing: "0.02em"
+            background: "linear-gradient(90deg, #00faad 20%, #00ccff 75%, #0ff 90%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
           }}>
-            Select <span style={{ color: "var(--neon-green)" }}>Audio File</span> to Upload
+            Upload Audio
+          </span>
+        </h1>
+        <p
+          style={{
+            marginTop: 14,
+            color: "#90ffef",
+            opacity: 0.74,
+            letterSpacing: 0.5,
+            fontFamily: "inherit",
+            fontSize: "1.15rem",
+            textShadow: "0 0 4px #0ff"
+          }}
+        >
+          <span
+            style={{
+              background: "rgba(0,255,128,0.07)",
+              borderRadius: 4,
+              padding: "2px 10px",
+              fontWeight: 500,
+              fontSize: "0.95rem",
+            }}
+          >
+            Accepted: MP3, WAV, M4A &middot; Max 25MB
+          </span>
+        </p>
+      </header>
+
+      <form
+        onSubmit={handleUpload}
+        className="upload-form"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 28,
+          zIndex: 1,
+          position: "relative",
+        }}
+        autoComplete="off"
+      >
+        <label
+          htmlFor="audioInput"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: 10,
+            cursor: "pointer",
+          }}
+        >
+          <span
+            style={{
+              color: "#18ffe0",
+              fontWeight: 600,
+              fontSize: "1.08rem",
+              textShadow: "0 0 8px #00ffeb",
+              fontFamily: "inherit",
+              marginBottom: 7
+            }}
+          >
+            Select your audio file
           </span>
           <input
-            className="neon-file-input"
-            id="audio-upload"
             type="file"
-            accept="audio/*"
+            id="audioInput"
+            style={{
+              display: "none",
+            }}
+            accept=".mp3,.wav,.m4a"
             onChange={handleFileChange}
-            tabIndex="-1"
           />
-          {selectedFile && (
-            <div className="file-chosen">
-              <span>🎧 {selectedFile.name}</span>
-            </div>
-          )}
+          <span
+            style={{
+              marginTop: 8,
+              minHeight: 18,
+              fontSize: "1.04rem",
+              color: selectedFile ? "#38ffe6" : "#444",
+              textShadow: selectedFile
+                ? "0 0 7px #25ffb9"
+                : "0 0 4px #013d37",
+              letterSpacing: 1.1,
+              fontFamily: "inherit",
+              transition: "color 0.2s",
+              borderBottom: selectedFile ? "1px solid #26eed6" : "1px solid #333",
+              padding: "1px 6px"
+            }}
+          >
+            {selectedFile ? selectedFile.name : "No file chosen."}
+          </span>
+          <span
+            className="btn"
+            style={{
+              display: "inline-block",
+              marginTop: 18,
+              padding: "11px 38px",
+              fontSize: "1.1rem",
+              borderRadius: "9px",
+              fontFamily: "inherit",
+              background:
+                "linear-gradient(92deg, #021d1b 60%, #063e36 100%)",
+              color: "#36f7d6",
+              border: "2px solid #25ffd9",
+              boxShadow: "0 0 18px #00ffd7, 0 0 6px #25ffd988;",
+              cursor: "pointer",
+              fontWeight: 600,
+              transition:
+                "background 0.19s, box-shadow 0.18s, transform 0.14s",
+              filter: "drop-shadow(0 0 6px #21c1d5cc)",
+              textShadow: "0 0 8px #38dac9, 0 0 6px #11c8a3",
+              outline: "none"
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("audioInput").click();
+            }}
+            tabIndex={-1}
+          >
+            Choose File
+          </span>
         </label>
+
         <button
-          className="neon-upload-btn"
+          className="btn"
           type="submit"
-          disabled={uploading}
-          aria-busy={uploading}
+          disabled={!selectedFile || uploading}
+          style={{
+            margin: "0 auto",
+            padding: "13px 58px",
+            fontFamily: "inherit",
+            borderRadius: 10,
+            background:
+              uploading
+                ? "linear-gradient(90deg, #181823 60%, #024b38 100%)"
+                : "linear-gradient(90deg, #021d1b 60%, #063e36 100%)",
+            color: uploading ? "#21e5b0" : "#00ffc7",
+            border: "2.5px solid #00ffd7",
+            boxShadow: uploading
+              ? "0 0 14px #018e75, 0 0 2px #13a396"
+              : "0 0 25px #00ffd7, 0 0 7px #38dac9",
+            cursor: uploading ? "not-allowed" : "pointer",
+            opacity: uploading ? 0.74 : 1,
+            fontWeight: 700,
+            fontSize: "1.17rem",
+            letterSpacing: "1.6px",
+            textShadow:
+              "0 0 8px #14f5cf, 0 0 4px #0f0, 0 0 2px #17f8b8",
+            transition:
+              "background 0.15s, box-shadow 0.18s, transform 0.14s, color 0.11s"
+          }}
         >
           {uploading ? (
             <span>
-              <span style={{ color: "#ffe913" }}>Uploading</span>
-              <span className="terminal-cursor" style={{
-                fontFamily: "inherit",
-                marginLeft: 4,
-                opacity: 0.85,
-                animation: "blink 1s step-end infinite"
-              }}>|</span>
+              <span className="neon-flicker" style={{
+                color: "#0ff",
+                filter: "drop-shadow(0 0 40px #00ffd4)",
+                position: "relative",
+                fontFamily: "inherit"
+              }}>
+                Uploading...
+              </span>
             </span>
-          ) : "Upload"}
+          ) : (
+            <span>Upload</span>
+          )}
         </button>
-
-        {/* Terminal-style progress bar */}
-        {uploading && (
-          <div className="terminal-progress-bar">
-            <div
-              className="terminal-progress-inner"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        )}
-
-        {/* Display message after upload */}
-        {message && (
-          <div className={`neon-msg${/failed|error/i.test(message) ? " neon-msg-error" : ""}`}>
-            <span>
-              {message}
-              {/* ASCII check or X */}
-              {/successful|done/i.test(message) && (
-                <span style={{ marginLeft: 5, color: "var(--neon-green)" }}>✔️</span>
-              )}
-              {/failed|error/i.test(message) && (
-                <span style={{ marginLeft: 5, color: "#fd3e55" }}>✖️</span>
-              )}
-            </span>
-          </div>
-        )}
-        <div className="ascii-terminal-footer">
-          {"// 100% Secure .MP3, .WAV or .M4A uploads //"}
-        </div>
       </form>
+
+      {status === "success" && (
+        <div
+          className="success-msg"
+          style={{
+            margin: "30px auto 0",
+            padding: "19px 18px 12px 18px",
+            borderRadius: 7,
+            background:
+              "linear-gradient(95deg, #013228 47%, #091d1c 100%)",
+            color: "#00ffd1",
+            fontWeight: 600,
+            fontFamily: "inherit",
+            boxShadow: "0 0 8px #13ffef60, 0 0 11px #00ffd624",
+            textShadow: "0 0 8px #13ffef, 0 0 12px #1affcd",
+            fontSize: "1.18rem",
+            textAlign: "center",
+            maxWidth: 280,
+          }}
+        >
+          <span style={{
+            marginRight: 6,
+            fontWeight: 700,
+            filter: "drop-shadow(0 0 7px #0ff)",
+            fontFamily: "inherit"
+          }}>✓</span>
+          File uploaded! (Simulated)
+        </div>
+      )}
+      {status === "error" && (
+        <div
+          className="error-msg"
+          style={{
+            margin: "30px auto 0",
+            padding: "15px 14px 8px 14px",
+            borderRadius: 6,
+            background:
+              "linear-gradient(96deg, #310012 50%, #0a0a0f 100%)",
+            color: "#f85996",
+            fontWeight: 600,
+            fontFamily: "inherit",
+            boxShadow: "0 0 8px #e5276433, 0 0 13px #ba00479c",
+            textShadow: "0 0 2px #fa378e, 0 0 12px #670028",
+            fontSize: "1.13rem",
+            textAlign: "center",
+            maxWidth: 220,
+          }}
+        >
+          <span style={{
+            marginRight: 5,
+            fontWeight: 700,
+            filter: "drop-shadow(0 0 5px #f04)",
+            fontFamily: "inherit"
+          }}>✕</span>
+          Error uploading. Try again.
+        </div>
+      )}
     </div>
   );
 }
