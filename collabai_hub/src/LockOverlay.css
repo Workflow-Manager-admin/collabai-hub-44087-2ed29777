@@ -1,0 +1,99 @@
+.lock-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: #000000;
+  color: #00FF41;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'monospace';
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+.lock-overlay-text {
+  margin-top: 2.3rem;
+  text-align: center;
+  font-size: 1.33rem;
+  color: #00FF41;
+  text-shadow: 0 0 6px #00FF41, 0 0 2px #00FF41;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  max-width: 350px;
+}
+
+.neon-lock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 0 24px #00ff41c0);
+}
+
+.neon-lock {
+  display: block;
+  filter: drop-shadow(0 0 6px #00ff41d0);
+  animation: lock-bounce 0.95s cubic-bezier(.6,-0.28,.74,.05) infinite alternate;
+}
+
+@keyframes lock-bounce {
+  0% { transform: translateY(0) }
+  100% { transform: translateY(12px) }
+}
+
+.neon-shackle {
+  stroke-dasharray: 60 100;
+  stroke-dashoffset: 0;
+  animation: shackle-appear 1.3s cubic-bezier(.61,.53,.47,1.27) alternate infinite;
+  filter: drop-shadow(0 0 12px #00ff41dd);
+}
+@keyframes shackle-appear {
+  0% { stroke-dashoffset: 60; filter: blur(6px);}
+  50% { filter: blur(2px);}
+  100% { stroke-dashoffset: 0; filter: blur(0);}
+}
+
+.neon-glow {
+  filter: drop-shadow(0 0 7px #00ff41c0);
+}
+
+.neon-keyhole {
+  filter: drop-shadow(0 0 4px #00ff41cc);
+  stroke-dasharray: 40 40;
+  stroke-dashoffset: 0;
+  animation: keyhole-pop 1.2s cubic-bezier(.41,.45,.36,.99) alternate-reverse infinite;
+}
+@keyframes keyhole-pop {
+  from { stroke-dashoffset: 40; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.neon-keyhole-blink {
+  animation: blink-keyhole 1s infinite alternate;
+  filter: drop-shadow(0 0 2px #00FF41);
+}
+
+@keyframes blink-keyhole {
+  0%, 60%  { opacity: 0; }
+  70%, 100%{ opacity: 1; }
+}
+
+.neon-lock-glow {
+  margin-top: 9px;
+  width: 62px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #00FF4188 0%, #0e220866 60%, #000 100%);
+  animation: glow-pulse 1.2s infinite alternate;
+  opacity: 0.96;
+  filter: blur(3.5px);
+}
+@keyframes glow-pulse {
+  from { opacity: 0.8; }
+  to   { opacity: 1; }
+}

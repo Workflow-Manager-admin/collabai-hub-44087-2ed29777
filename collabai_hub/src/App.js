@@ -7,6 +7,8 @@ import {
   SignedOut
 } from "@clerk/clerk-react";
 import Footer from "./routes/Footer";
+import LockOverlay from "./LockOverlay";
+import "./LockOverlay.css";
 
 // Navbar component
 function Navbar() {
@@ -124,27 +126,29 @@ function Navbar() {
   );
 }
 
-// App component
+/* App component uses LockOverlay to conditionally block UI until Clerk auth & verification */
 function App() {
   return (
-    <div
-      className="app"
-      style={{
-        backgroundColor: "#000",
-        color: "#e0e0e0",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column"
-      }}
-    >
-      <Navbar />
-      <main style={{ flex: 1, marginTop: 80 }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
-          <Outlet />
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <LockOverlay>
+      <div
+        className="app"
+        style={{
+          backgroundColor: "#000",
+          color: "#e0e0e0",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
+        <Navbar />
+        <main style={{ flex: 1, marginTop: 80 }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px" }}>
+            <Outlet />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </LockOverlay>
   );
 }
 
