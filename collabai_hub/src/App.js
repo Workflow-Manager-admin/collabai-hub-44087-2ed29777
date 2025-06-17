@@ -76,7 +76,19 @@ function Navbar() {
     <nav style={navStyle}>
       <div style={containerStyle}>
         <div style={logoStyle}>
-          <span style={{ fontSize: "2rem", marginRight: 8 }}>*</span> CollabAI Hub
+          <NavLink
+            to="/"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              color: "#0f0",
+              fontWeight: "bold"
+            }}
+            aria-label="Go to Dashboard"
+          >
+            <span style={{ fontSize: "2rem", marginRight: 8 }}>*</span> CollabAI Hub
+          </NavLink>
         </div>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           {navLinks.map(({ to, label, end }) => (
@@ -136,4 +148,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
