@@ -22,14 +22,411 @@ modules by path ./.ve/ 15.6 KiB
   modules by path ./.ve/*.js 10.6 KiB 2 modules
   modules by path ./.ve/*.css 3.4 KiB 2 modules
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 2685 ms
+webpack 5.99.9 compiled successfully in 2686 ms
 assets by status 118 KiB [cached] 2 assets
-assets by status 10.3 MiB [emitted]
-  asset bundle.js 10.3 MiB [emitted] (name: main)
-  asset main.15e6436137e8b57d5657.hot-update.js 32.7 KiB [emitted] [immutable] [hmr] (name: main)
-  asset main.15e6436137e8b57d5657.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 10.3 MiB = bundle.js 10.3 MiB main.15e6436137e8b57d5657.hot-update.js 32.7 KiB
-cached modules 3.79 MiB [cached] 123 modules
+assets by status 5.92 MiB [emitted]
+  asset bundle.js 5.9 MiB [emitted] (name: main)
+  asset main.c0ca68995cfd92cda268.hot-update.js 19 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.c0ca68995cfd92cda268.hot-update.json 284 bytes [emitted] [immutable] [hmr]
+Entrypoint main 5.92 MiB = bundle.js 5.9 MiB main.c0ca68995cfd92cda268.hot-update.js 19 KiB
+cached modules 2.15 MiB [cached] 117 modules
 runtime modules 29.6 KiB 15 modules
-./src/routes/UploadAudio.js 10.8 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 180 ms
+./src/App.js 4.84 KiB [code generated]
+
+ERROR in ./src/App.js 4:0-37
+Module not found: Error: Can't resolve './routes/Footer' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+resolve './routes/Footer' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+  using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src)
+    Field 'browser' doesn't contain a valid alias configuration
+    using description file: /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/package.json (relative path: ./src/routes/Footer)
+      no extension
+        Field 'browser' doesn't contain a valid alias configuration
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/Footer doesn't exist
+      .js
+        Field 'browser' doesn't contain a valid alias configuration
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/Footer.js doesn't exist
+      .jsx
+        Field 'browser' doesn't contain a valid alias configuration
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/Footer.jsx doesn't exist
+      as directory
+        /home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes/Footer doesn't exist
+ @ ./src/index.js 6:0-24 38:37-40
+
+webpack 5.99.9 compiled with 1 error in 132 ms
+assets by status 118 KiB [cached] 2 assets
+assets by status 5.66 MiB [emitted]
+  asset bundle.js 5.64 MiB [emitted] (name: main)
+  asset main.85e3582e25cc10769cac.hot-update.js 20.3 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.85e3582e25cc10769cac.hot-update.json 204 bytes [emitted] [immutable] [hmr]
+Entrypoint main 5.66 MiB = bundle.js 5.64 MiB main.85e3582e25cc10769cac.hot-update.js 20.3 KiB
+cached modules 2.07 MiB [cached] 111 modules
+runtime modules 29.6 KiB 15 modules
+./src/index.js 5.28 KiB [code generated]
+
+ERROR in ./src/App.js 4:0-37
+Module not found: Error: Can't resolve './routes/Footer' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+ @ ./src/index.js 6:0-24 38:37-40
+
+ERROR in ./src/index.js 13:0-41
+Module not found: Error: Can't resolve './routes/Projects' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 17:0-51
+Module not found: Error: Can't resolve './routes/Transcription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 18:0-47
+Module not found: Error: Can't resolve './routes/UploadAudio' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 20:0-53
+Module not found: Error: Can't resolve './routes/ProjectDetails' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 21:0-33
+Module not found: Error: Can't resolve './routes/Team' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+6 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 6 errors in 63 ms
+assets by status 118 KiB [cached] 2 assets
+assets by status 5.66 MiB [emitted]
+  asset bundle.js 5.64 MiB [emitted] (name: main)
+  asset main.66f4ab93cb5da27e3a80.hot-update.js 20.4 KiB [emitted] [immutable] [hmr] (name: main)
+  asset main.66f4ab93cb5da27e3a80.hot-update.json 53 bytes [emitted] [immutable] [hmr]
+Entrypoint main 5.66 MiB = bundle.js 5.64 MiB main.66f4ab93cb5da27e3a80.hot-update.js 20.4 KiB
+cached modules 2.07 MiB [cached] 110 modules
+runtime modules 29.6 KiB 15 modules
+./src/index.js 5.28 KiB [code generated]
+
+ERROR in ./src/App.js 4:0-37
+Module not found: Error: Can't resolve './routes/Footer' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+ @ ./src/index.js 6:0-24 38:37-40
+
+ERROR in ./src/index.js 13:0-41
+Module not found: Error: Can't resolve './routes/Projects' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 17:0-51
+Module not found: Error: Can't resolve './routes/Transcription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 18:0-47
+Module not found: Error: Can't resolve './routes/UploadAudio' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 19:0-39
+Module not found: Error: Can't resolve './routes/Pricing' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 20:0-53
+Module not found: Error: Can't resolve './routes/ProjectDetails' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 21:0-33
+Module not found: Error: Can't resolve './routes/Team' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+7 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 7 errors in 67 ms
+assets by status 118 KiB [cached] 2 assets
+assets by status 14.2 MiB [emitted]
+  asset bundle.js 9.74 MiB [emitted] (name: main)
+  asset main.9f3f0a837bd24283a248.hot-update.js 4.45 MiB [emitted] [immutable] [hmr] (name: main)
+  asset main.9f3f0a837bd24283a248.hot-update.json 231 bytes [emitted] [immutable] [hmr]
+Entrypoint main 14.2 MiB = bundle.js 9.74 MiB main.9f3f0a837bd24283a248.hot-update.js 4.45 MiB
+cached modules 3.61 MiB [cached] 109 modules
+runtime modules 29.6 KiB 15 modules
+javascript modules 12.9 KiB
+  ./src/index.js 5.28 KiB [code generated]
+  ./src/App.js 4.84 KiB [code generated]
+  ./src/routes/Footer.js 2.78 KiB [built]
+
+ERROR in ./src/index.js 10:0-47
+Module not found: Error: Can't resolve './routes/LandingPage' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 13:0-41
+Module not found: Error: Can't resolve './routes/Projects' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 15:0-49
+Module not found: Error: Can't resolve './routes/GitHubEditor' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 16:0-41
+Module not found: Error: Can't resolve './routes/NotFound' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 17:0-51
+Module not found: Error: Can't resolve './routes/Transcription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 18:0-47
+Module not found: Error: Can't resolve './routes/UploadAudio' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 19:0-39
+Module not found: Error: Can't resolve './routes/Pricing' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 20:0-53
+Module not found: Error: Can't resolve './routes/ProjectDetails' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 21:0-33
+Module not found: Error: Can't resolve './routes/Team' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+9 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 9 errors in 110 ms
+assets by status 647 bytes [cached] 1 asset
+assets by path *.js 9.66 MiB
+  asset bundle.js 9.62 MiB [emitted] (name: main)
+  asset main.d3f1b0d1a9d4cc8abeac.hot-update.js 40.1 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.d3f1b0d1a9d4cc8abeac.hot-update.json 314 bytes [emitted] [immutable] [hmr]
+Entrypoint main 9.66 MiB = bundle.js 9.62 MiB main.d3f1b0d1a9d4cc8abeac.hot-update.js 40.1 KiB
+cached modules 3.55 MiB [cached] 105 modules
+runtime modules 26.3 KiB 13 modules
+./src/index.js 5.28 KiB [code generated]
+
+ERROR in ./src/index.js 10:0-47
+Module not found: Error: Can't resolve './routes/LandingPage' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 11:0-33
+Module not found: Error: Can't resolve './routes/Auth' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 12:0-43
+Module not found: Error: Can't resolve './routes/Dashboard' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 13:0-41
+Module not found: Error: Can't resolve './routes/Projects' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 14:0-37
+Module not found: Error: Can't resolve './routes/GitHub' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 15:0-49
+Module not found: Error: Can't resolve './routes/GitHubEditor' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 16:0-41
+Module not found: Error: Can't resolve './routes/NotFound' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 17:0-51
+Module not found: Error: Can't resolve './routes/Transcription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 18:0-47
+Module not found: Error: Can't resolve './routes/UploadAudio' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 19:0-39
+Module not found: Error: Can't resolve './routes/Pricing' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 20:0-53
+Module not found: Error: Can't resolve './routes/ProjectDetails' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 21:0-33
+Module not found: Error: Can't resolve './routes/Team' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 23:54-94
+Module not found: Error: Can't resolve './routes/AudioPdfTranscription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+13 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 13 errors in 74 ms
+assets by status 647 bytes [cached] 1 asset
+assets by path *.js 9.79 MiB
+  asset bundle.js 9.69 MiB [emitted] (name: main)
+  asset main.593d8ec0d799bcde4c7d.hot-update.js 97.8 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.593d8ec0d799bcde4c7d.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 9.79 MiB = bundle.js 9.69 MiB main.593d8ec0d799bcde4c7d.hot-update.js 97.8 KiB
+cached modules 3.55 MiB [cached] 105 modules
+runtime modules 26.3 KiB 13 modules
+javascript modules 28.4 KiB
+  ./src/index.js 5.28 KiB [code generated]
+  ./src/routes/Transcription.js 3.43 KiB [built]
+  ./src/routes/UploadAudio.js 19.7 KiB [built] [code generated]
+
+ERROR in ./src/index.js 10:0-47
+Module not found: Error: Can't resolve './routes/LandingPage' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 11:0-33
+Module not found: Error: Can't resolve './routes/Auth' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 12:0-43
+Module not found: Error: Can't resolve './routes/Dashboard' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 13:0-41
+Module not found: Error: Can't resolve './routes/Projects' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 14:0-37
+Module not found: Error: Can't resolve './routes/GitHub' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 15:0-49
+Module not found: Error: Can't resolve './routes/GitHubEditor' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 16:0-41
+Module not found: Error: Can't resolve './routes/NotFound' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 19:0-39
+Module not found: Error: Can't resolve './routes/Pricing' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 20:0-53
+Module not found: Error: Can't resolve './routes/ProjectDetails' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 21:0-33
+Module not found: Error: Can't resolve './routes/Team' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 23:54-94
+Module not found: Error: Can't resolve './routes/AudioPdfTranscription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/routes/UploadAudio.js 2:0-44
+Module not found: Error: Can't resolve './AudioPdfTranscription.modern.css' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 18:0-47 80:39-50
+
+12 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 12 errors in 224 ms
+assets by status 647 bytes [cached] 1 asset
+assets by path *.js 9.94 MiB
+  asset bundle.js 9.81 MiB [emitted] (name: main)
+  asset main.24b6c6d1d88ee6c22910.hot-update.js 135 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.24b6c6d1d88ee6c22910.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 9.94 MiB = bundle.js 9.81 MiB main.24b6c6d1d88ee6c22910.hot-update.js 135 KiB
+cached modules 3.57 MiB [cached] 107 modules
+runtime modules 26.3 KiB 13 modules
+javascript modules 39.3 KiB
+  code generated modules 18.1 KiB [code generated]
+    ./src/index.js 5.28 KiB [code generated]
+    ./src/routes/ProjectDetails.js 12.9 KiB [built] [code generated]
+  ./src/routes/Projects.js 18 KiB [built]
+  ./src/routes/Team.js 3.19 KiB [built]
+
+ERROR in ./src/index.js 10:0-47
+Module not found: Error: Can't resolve './routes/LandingPage' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 11:0-33
+Module not found: Error: Can't resolve './routes/Auth' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 12:0-43
+Module not found: Error: Can't resolve './routes/Dashboard' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 14:0-37
+Module not found: Error: Can't resolve './routes/GitHub' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 15:0-49
+Module not found: Error: Can't resolve './routes/GitHubEditor' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 16:0-41
+Module not found: Error: Can't resolve './routes/NotFound' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 19:0-39
+Module not found: Error: Can't resolve './routes/Pricing' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 23:54-94
+Module not found: Error: Can't resolve './routes/AudioPdfTranscription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/routes/ProjectDetails.js 3:0-44
+Module not found: Error: Can't resolve './GeminiChatbot' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 20:0-53 62:39-53
+
+ERROR in ./src/routes/UploadAudio.js 2:0-44
+Module not found: Error: Can't resolve './AudioPdfTranscription.modern.css' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 18:0-47 80:39-50
+
+10 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 10 errors in 184 ms
+assets by status 647 bytes [cached] 1 asset
+assets by path *.js 9.86 MiB
+  asset bundle.js 9.82 MiB [emitted] (name: main)
+  asset main.6eba4a7a32032008ff51.hot-update.js 37.1 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.6eba4a7a32032008ff51.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 9.86 MiB = bundle.js 9.82 MiB main.6eba4a7a32032008ff51.hot-update.js 37.1 KiB
+cached modules 3.6 MiB [cached] 110 modules
+runtime modules 26.3 KiB 13 modules
+javascript modules 10.5 KiB
+  ./src/index.js 5.28 KiB [code generated]
+  ./src/routes/NotFound.js 2.31 KiB [built]
+  ./src/routes/Pricing.js 2.89 KiB [built]
+
+ERROR in ./src/index.js 10:0-47
+Module not found: Error: Can't resolve './routes/LandingPage' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 11:0-33
+Module not found: Error: Can't resolve './routes/Auth' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 12:0-43
+Module not found: Error: Can't resolve './routes/Dashboard' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 14:0-37
+Module not found: Error: Can't resolve './routes/GitHub' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 15:0-49
+Module not found: Error: Can't resolve './routes/GitHubEditor' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 23:54-94
+Module not found: Error: Can't resolve './routes/AudioPdfTranscription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/routes/ProjectDetails.js 3:0-44
+Module not found: Error: Can't resolve './GeminiChatbot' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 20:0-53 62:39-53
+
+ERROR in ./src/routes/UploadAudio.js 2:0-44
+Module not found: Error: Can't resolve './AudioPdfTranscription.modern.css' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 18:0-47 80:39-50
+
+8 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 8 errors in 72 ms
+assets by status 647 bytes [cached] 1 asset
+assets by path *.js 10.3 MiB
+  asset bundle.js 10 MiB [emitted] (name: main)
+  asset main.8118946cfdb6f01729a3.hot-update.js 237 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.8118946cfdb6f01729a3.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 10.3 MiB = bundle.js 10 MiB main.8118946cfdb6f01729a3.hot-update.js 237 KiB
+cached modules 3.61 MiB [cached] 112 modules
+runtime modules 26.3 KiB 13 modules
+javascript modules 69.9 KiB
+  code generated modules 48.1 KiB [code generated]
+    ./src/index.js 5.28 KiB [code generated]
+    ./src/routes/GitHubEditor.js 42.8 KiB [built] [code generated]
+  ./src/routes/LandingPage.js 18.5 KiB [built]
+  ./src/routes/GitHub.js 3.31 KiB [built]
+
+ERROR in ./src/index.js 11:0-33
+Module not found: Error: Can't resolve './routes/Auth' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 12:0-43
+Module not found: Error: Can't resolve './routes/Dashboard' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/index.js 23:54-94
+Module not found: Error: Can't resolve './routes/AudioPdfTranscription' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src'
+
+ERROR in ./src/routes/GitHubEditor.js 2:0-35
+Module not found: Error: Can't resolve './GitHubEditor.modern.css' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 15:0-49 74:39-51
+
+ERROR in ./src/routes/ProjectDetails.js 3:0-44
+Module not found: Error: Can't resolve './GeminiChatbot' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 20:0-53 62:39-53
+
+ERROR in ./src/routes/UploadAudio.js 2:0-44
+Module not found: Error: Can't resolve './AudioPdfTranscription.modern.css' in '/home/kavia/workspace/code-generation/collabai-hub-44087-2ed29777/collabai_hub/src/routes'
+ @ ./src/index.js 18:0-47 80:39-50
+
+6 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.99.9 compiled with 6 errors in 222 ms
+assets by status 647 bytes [cached] 1 asset
+assets by path *.js 11.1 MiB
+  asset bundle.js 10.4 MiB [emitted] (name: main)
+  asset main.b90afa842a36147b357c.hot-update.js 699 KiB [emitted] [immutable] [hmr] (name: main)
+  asset src_routes_AudioPdfTranscription_js.bundle.js 40.3 KiB [emitted]
+asset main.b90afa842a36147b357c.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 11.1 MiB = bundle.js 10.4 MiB main.b90afa842a36147b357c.hot-update.js 699 KiB
+cached modules 3.6 MiB [cached] 114 modules
+runtime modules 29.6 KiB 15 modules
+javascript modules 211 KiB
+  modules by path ./src/routes/*.js 154 KiB
+    built modules 78.8 KiB [built]
+      ./src/routes/Auth.js 6.33 KiB [built]
+      + 3 modules
+    code generated modules 75.4 KiB [code generated]
+      ./src/routes/GitHubEditor.js 42.8 KiB [code generated]
+      ./src/routes/UploadAudio.js 19.7 KiB [code generated]
+      ./src/routes/ProjectDetails.js 12.9 KiB [code generated]
+  modules by path ./src/routes/*.css 51 KiB
+    ./node_modules/css-loader/dist/cjs.js!./src/routes/GitHubEditor.modern.css 29.3 KiB [built]
+    ./node_modules/css-loader/dist/cjs.js!./src/routes/AudioPdfTranscription.modern.css 21.8 KiB [built]
+  ./src/index.js 5.28 KiB [code generated]
+webpack 5.99.9 compiled successfully in 241 ms

@@ -1,349 +1,416 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import "./AudioPdfTranscription.modern.css"; // use modern minimal styling
+
+const DEFAULT_ASSEMBLYAI_KEY = "7cf47b6c50b84a339333ae4ae567f29d";
+const DEFAULT_GEMINI_KEY = "AIzaSyD4Kusj3acrOMEaSdNRKxIMLvh5SRv8tMg";
+
+const ASSEMBLY_UPLOAD_URL = "https://api.assemblyai.com/v2/upload";
+const ASSEMBLY_TRANSCRIPT_URL = "https://api.assemblyai.com/v2/transcript";
+const ASSEMBLY_STATUS_URL = (id) => `https://api.assemblyai.com/v2/transcript/${id}`;
+const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent";
+
+
+function localGet(key, fallback) {
+  try {
+    const v = window.localStorage.getItem(key);
+    return v ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+function localSet(key, val) {
+  try {
+    window.localStorage.setItem(key, val);
+  } catch (e) { }
+}
 
 // PUBLIC_INTERFACE
 function UploadAudio() {
-  // Upload state logic (intact from original)
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadError, setUploadError] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [file, setFile] = useState(null);
+  const [transcript, setTranscript] = useState("");
+  const [summary, setSummary] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(null);
+  const [stage, setStage] = useState("ready"); // 'ready', 'uploading', 'transcribing', 'polling', 'done', 'error', 'summarizing'
+  const [error, setError] = useState("");
+  const [assemblyKey, setAssemblyKey] = useState(localGet("assemblyai_api_key", DEFAULT_ASSEMBLYAI_KEY));
+  const [geminiKey, setGeminiKey] = useState(localGet("gemini_api_key", DEFAULT_GEMINI_KEY));
+  const [showKeyEdit, setShowKeyEdit] = useState(false);
+  const [curTranscriptId, setCurTranscriptId] = useState("");
+  const [transcribeStatusMsg, setTranscribeStatusMsg] = useState("");
+  const fileInputRef = useRef();
 
-  // Handle file selection
-  // PUBLIC_INTERFACE
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setUploadError("");
-    setSuccess(false);
-  };
+  // Handlers
 
-  // Handle upload logic
   // PUBLIC_INTERFACE
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    if (!selectedFile) {
-      setUploadError("Please select an audio file.");
+  function handleFileSelected(e) {
+    setTranscript("");
+    setSummary("");
+    setUploadProgress(null);
+    setError("");
+    setCurTranscriptId("");
+    setStage("ready");
+    setTranscribeStatusMsg("");
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  }
+
+  // PUBLIC_INTERFACE
+  async function uploadAndTranscribe() {
+    setError("");
+    if (!file) {
+      setError("Please select an audio or video file.");
       return;
     }
-    setUploading(true);
-    setUploadError("");
-    setSuccess(false);
-
-    try {
-      // Simulated upload handler
-      await new Promise((resolve) => setTimeout(resolve, 1800));
-      setSuccess(true);
-    } catch (err) {
-      setUploadError("Upload failed. Try again.");
+    if (!assemblyKey) {
+      setError("Please provide AssemblyAI API Key.");
+      return;
     }
-    setUploading(false);
-  };
+    setStage("uploading");
+    setUploadProgress(0);
+
+    // 1. Upload to AssemblyAI
+    try {
+      const uploadUrl = await uploadFileToAssembly(file, assemblyKey, setUploadProgress);
+
+      setStage("transcribing");
+      setTranscribeStatusMsg("Submitting file for transcription...");
+
+      // 2. Submit transcription request
+      const transcriptID = await submitForTranscription(uploadUrl, assemblyKey);
+
+      setCurTranscriptId(transcriptID);
+      setTranscribeStatusMsg("Transcription started. Polling for completion...");
+      setStage("polling");
+
+      // 3. Poll for result
+      const fullTranscript = await pollForTranscript(transcriptID, assemblyKey, setTranscribeStatusMsg);
+
+      setTranscript(fullTranscript);
+      setStage("done");
+      setTranscribeStatusMsg("Transcription complete!");
+
+    } catch (err) {
+      setError(err.message || String(err));
+      setStage("error");
+    }
+  }
+
+  // PUBLIC_INTERFACE
+  async function summarizeTranscript() {
+    setError("");
+    setSummary("");
+    if (!geminiKey) {
+      setError("Please provide Gemini AI API Key.");
+      return;
+    }
+    if (!transcript) {
+      setError("Transcript is empty or not ready.");
+      return;
+    }
+    setStage("summarizing");
+    try {
+      const summaryOut = await summarizeWithGemini(transcript, geminiKey);
+      setSummary(summaryOut);
+      setStage("done");
+    } catch (err) {
+      setError(err.message || String(err));
+      setStage("done");
+    }
+  }
+
+  // PUBLIC_INTERFACE
+  function handleKeySubmit(e) {
+    e.preventDefault();
+    setShowKeyEdit(false);
+    localSet("assemblyai_api_key", assemblyKey);
+    localSet("gemini_api_key", geminiKey);
+  }
+
+  // PUBLIC_INTERFACE
+  function resetPage() {
+    setFile(null);
+    setTranscript("");
+    setSummary("");
+    setUploadProgress(null);
+    setError("");
+    setStage("ready");
+    setCurTranscriptId("");
+    setShowKeyEdit(false);
+    setTranscribeStatusMsg("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }
+
+  // UI Render
 
   return (
-    <div className="upload-audio-hacker-bg">
-      <div className="neon-border upload-audio-container">
-        <h1 className="neon-title">
-          <span className="code-angled">&lt;</span>
-          Upload Audio File
-          <span className="code-angled">&gt;</span>
-        </h1>
-        <p className="neon-desc">
-          Drop your <span className="neon-green">.mp3</span>, <span className="neon-blue">.wav</span> or <span className="neon-red">.m4a</span> files. No size limits.
-        </p>
+    <div className="container" style={{ maxWidth: 650, margin: "30px auto", background: "#232323", borderRadius: 12, padding: 32, boxShadow: "0 4px 18px #00000030" }}>
+      <h2 className="title" style={{ marginBottom: 3 }}>Audio Upload & Transcription</h2>
+      <p className="description" style={{ color: "var(--text-secondary)", marginBottom: 22 }}>
+        Upload an audio/video file, transcribe it using AssemblyAI, and generate a summary using Gemini AI.<br />
+        <span style={{ fontSize: 12, opacity: 0.75 }}>(Supported: mp3, wav, m4a, mp4, mov; 90 min max; privacy-respecting, done in-browser & direct to AI vendors)</span>
+      </p>
 
-        <form onSubmit={handleUpload} className="upload-form-neon" autoComplete="off">
-          <label htmlFor="audio-upload" className="neon-label">
-            Select Audio File
-          </label>
-          <input
-            id="audio-upload"
-            type="file"
-            accept="audio/*"
-            onChange={handleFileChange}
-            className="neon-input"
-            disabled={uploading}
-            style={{ fontFamily: "inherit" }}
-          />
-          <button
-            type="submit"
-            className={`neon-btn ${uploading ? "btn-disabled" : ""}`}
-            disabled={uploading}
-          >
-            {uploading ? (
-              <span>
-                <span className="glow-dot" /> Uploading...
-              </span>
-            ) : (
-              <>
-                <span className="terminal-cursor">▶</span> Upload
-              </>
-            )}
-          </button>
-        </form>
-        {uploadError && <div className="neon-error">{uploadError}</div>}
-        {success && (
-          <div className="neon-success">Upload complete! <span className="blinking-cursor">█</span></div>
+      {/* API KEY Editor */}
+      <div style={{ background: "#191919", borderRadius: 8, padding: "12px 16px", marginBottom: 20, border: "1px solid var(--border-color)" }}>
+        <span>AssemblyAI Key: <code style={{ fontSize:13 }}>{assemblyKey ? maskKey(assemblyKey) : "not set"}</code></span>
+        <br />
+        <span>Gemini Key: <code style={{ fontSize:13 }}>{geminiKey ? maskKey(geminiKey) : "not set"}</code></span>
+        <button className="btn" style={{ marginLeft: 16, background: "var(--kavia-orange)", color: "#fff", fontSize: 13 }} onClick={() => setShowKeyEdit((v) => !v)}>
+          {showKeyEdit ? "Cancel" : "Edit API Keys"}
+        </button>
+        {showKeyEdit && (
+          <form onSubmit={handleKeySubmit} style={{ marginTop: 13 }}>
+            <label>
+              AssemblyAI API Key:
+              <input type="text" value={assemblyKey} onChange={(e) => setAssemblyKey(e.target.value)} style={{ marginLeft: 8, width: 260, background: "#222", color: "#fff", border: "1px solid #393939" }} autoFocus/>
+            </label>
+            <br />
+            <label>
+              Gemini AI Key:
+              <input type="text" value={geminiKey} onChange={(e) => setGeminiKey(e.target.value)} style={{ marginLeft: 8, width: 260, background: "#222", color: "#fff", border: "1px solid #393939" }} />
+            </label>
+            <br />
+            <button type="submit" className="btn" style={{marginTop: 10, background: "var(--kavia-orange)", color: "#fff"}}>Save Keys</button>
+          </form>
         )}
-        <div className="neon-hint-row">
-          <div className="neon-mini-box neon-green-glow" />
-          <div className="neon-mini-box neon-blue-glow" />
-          <div className="neon-mini-box neon-red-glow" />
-          <span className="neon-hint">
-            Tip: Transcriptions are powered by ultra-fast AI.
-          </span>
-        </div>
       </div>
-      <style>{`
-.upload-audio-hacker-bg {
-  min-height: 100vh;
-  background: #010101;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 56px;
-  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'monospace';
-}
 
-.upload-audio-container {
-  background: rgba(10,22,15,0.97);
-  border-radius: 18px;
-  margin-top: 36px;
-  max-width: 460px;
-  width: 100%;
-  box-shadow: 0 0 24px 4px #00ff8880, 0 0 3px #000;
-  border: 2.5px solid #00fff9;
-  padding: 38px 32px 32px 32px;
-  position: relative;
-}
+      {/* File Upload */}
+      <div style={{ marginBottom: 30 }}>
+        <input
+          type="file"
+          accept="audio/mp3,audio/mpeg,audio/wav,audio/x-wav,audio/m4a,video/mp4,video/quicktime"
+          onChange={handleFileSelected}
+          ref={fileInputRef}
+          style={{ display: "block", marginBottom: 18 }}
+          disabled={stage === "uploading" || stage === "transcribing" || stage === "polling"}
+        />
+        <button
+          className="btn"
+          disabled={!file || stage === "uploading" || stage === "transcribing" || stage === "polling"}
+          onClick={uploadAndTranscribe}
+          style={{ background: "var(--kavia-orange)", color: "#fff" }}
+        >
+          {stage === "uploading" ? "Uploading..." :
+            stage === "transcribing" ? "Starting Transcription..." :
+            stage === "polling" ? "Transcribing..." :
+              "Upload & Transcribe"}
+        </button>
+        <button className="btn" onClick={resetPage} style={{marginLeft:14}}>Reset</button>
+      </div>
 
-.neon-title {
-  color: #0fff95;
-  text-shadow:
-    0 0 6px #00ffc0,
-    0 0 14px #00f6ff,
-    0 0 30px #0ff;
-  font-size: 2.2rem;
-  font-family: 'Fira Mono', 'Consolas', 'monospace';
-  text-align: center;
-  margin-bottom: 8px;
-  letter-spacing: 1.3px;
-}
+      {/* Upload/Transcribe progress */}
+      {stage === "uploading" && (
+        <div style={{marginBottom: 14}}>
+          <strong>Upload Progress:</strong> {uploadProgress !== null ? Math.round(uploadProgress * 100) + "%" : "Starting..."}
+          <ProgressBar progress={uploadProgress}/>
+        </div>
+      )}
 
-.code-angled {
-  color: #fa1fff;
-  text-shadow: 0 0 6px #d700a4, 0 0 10px #ff00e6;
-  font-size: 1.6rem;
-  margin: 0 6px;
-  font-family: inherit;
-}
+      {/* Transcription polling status */}
+      {(stage === "transcribing" || stage === "polling" || transcribeStatusMsg) && (
+        <div style={{marginBottom: 12, color: "#89f087" }}>
+          <span style={{ fontWeight: 600 }}>{transcribeStatusMsg}</span>
+        </div>
+      )}
 
-.neon-desc {
-  color: #8affea;
-  font-family: 'Fira Mono', 'Consolas', 'monospace';
-  text-align: center;
-  margin-bottom: 32px;
-  font-size: 1.1rem;
-  text-shadow: 0 0 7px #1e4856;
-}
+      {error && (
+        <div style={{ color: "var(--kavia-orange)", marginBottom: 18 }}>
+          <b>Error:</b> {error}
+        </div>
+      )}
 
-.neon-green {
-  color: #00ff6e;
-  text-shadow: 0 0 6px #2fff66, 0 0 14px #77ffb0;
-  font-weight: bold;
-}
-.neon-blue {
-  color: #06e7ff;
-  text-shadow: 0 0 8px #00d9ff, 0 0 13px #00eaff;
-  font-weight: bold;
-}
-.neon-red {
-  color: #ff176b;
-  text-shadow: 0 0 7px #e84797, 0 0 13px #ff61a6;
-  font-weight: bold;
-}
+      {/* Transcript display and copy */}
+      {transcript && (
+        <section style={{ margin: "30px 0 10px 0", background: "#181818", padding: "18px 20px", borderRadius: 10, border: "1px solid #292929" }}>
+          <h3 style={{marginTop: 0, fontWeight: 700, color: "#69d7ff"}}>Transcript</h3>
+          <TextDisplayArea value={transcript} />
+          <button className="btn" style={{ fontSize: 13, marginRight: 12, marginTop: 2 }} onClick={() => copyText(transcript)}>Copy Transcript</button>
+        </section>
+      )}
 
-.upload-form-neon {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
+      {/* Summarize */}
+      {transcript && (
+        <div style={{margin: "16px 0"}}>
+          <button className="btn" onClick={summarizeTranscript} style={{ fontWeight: 600, background: "var(--kavia-orange)", color: "#fff" }}>
+            {stage === "summarizing" ? "Summarizing..." : "Summarize Transcript with Gemini"}
+          </button>
+        </div>
+      )}
 
-.neon-label {
-  font-size: 1.02rem;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-  font-family: inherit;
-  color: #00fff9;
-  text-shadow:
-    0 0 7px #00ffa6,
-    0 0 16px #06e7ff;
-  background: transparent;
-}
+      {/* Summary display */}
+      {summary && (
+        <section style={{ margin: "10px 0 6px 0", background: "#181818", padding: "16px 20px", borderRadius: 10, border: "1px solid #292929" }}>
+          <h3 style={{marginTop: 0, fontWeight: 700, color: "#ffe45e"}}>Summary</h3>
+          <TextDisplayArea value={summary} />
+          <button className="btn" style={{ fontSize: 13, marginTop: 2, marginRight:8 }} onClick={() => copyText(summary)}>Copy Summary</button>
+        </section>
+      )}
 
-.neon-input {
-  padding: 10px 16px;
-  background: #101718;
-  border: none;
-  border-radius: 8px;
-  color: #e0ffe5;
-  outline: none;
-  font-family: inherit;
-  font-size: 1rem;
-  box-shadow: 0 0 12px #00fff960;
-  border: 1.7px solid #2be0d2;
-  margin-bottom: 3px;
-  transition: border 0.18s, box-shadow 0.16s;
-}
-.neon-input:focus {
-  border: 2.2px solid #00ffc8;
-  box-shadow: 0 0 20px #00ffcc;
-  background: #101c18;
-  color: #ffffff;
-}
-
-.neon-btn {
-  padding: 13px 0;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 700;
-  background: #000b1a;
-  color: #05ff91;
-  border: 2.2px solid #09fff6;
-  border-radius: 9px;
-  box-shadow: 0 0 16px #06e7ff;
-  cursor: pointer;
-  text-shadow: 0 0 6px #0affc0;
-  transition: all 0.15s cubic-bezier(0.7,0,0.4,1);
-  position: relative;
-  user-select: none;
-}
-.neon-btn:hover:enabled {
-  background: #001b12;
-  color: #0affbc;
-  box-shadow: 0 0 28px #00ffac, 0 0 14px #00fff9;
-  border-color: #24fae4;
-  text-shadow: 0 0 14px #09ff96;
-}
-.neon-btn:active:enabled {
-  background: #070830;
-  border-color: #ffea00;
-  color: #fff800;
-  box-shadow: 0 0 30px #e6e600;
-}
-.btn-disabled, .neon-btn:disabled {
-  opacity: 0.54;
-  pointer-events: none;
-  box-shadow: none;
-}
-
-.terminal-cursor {
-  color: #39ff14;
-  margin-right: 8px;
-  font-weight: 900;
-  text-shadow: 0 0 6px #39ff14cc, 0 0 20px #0f0;
-  font-size: 1.1em;
-}
-
-.glow-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background: #0ff;
-  box-shadow: 0 0 8px #00ffbc;
-  animation: dot-pulse 1.2s infinite alternate;
-}
-@keyframes dot-pulse {
-  to { background: #00e0a2; box-shadow: 0 0 17px #00ffbc, 0 0 7px #00fff2a0; }
-}
-
-.neon-error {
-  color: #ff1c83;
-  text-shadow: 0 0 7px #ff00a6cc, 0 0 18px #bb54a8;
-  background: #2b0819;
-  border: 1.7px solid #ff1c83;
-  border-radius: 7px;
-  margin-top: 13px;
-  font-family: inherit;
-  padding: 9px 0 9px 15px;
-  font-size: 1.04rem;
-  letter-spacing: 0.6px;
-  word-break: break-word;
-}
-.neon-success {
-  color: #08ffc7;
-  text-shadow: 0 0 7px #21ffd6cc, 0 0 23px #66eeb4;
-  background: #102720;
-  border: 1.4px solid #13ffd2;
-  border-radius: 7px;
-  margin-top: 13px;
-  font-family: inherit;
-  padding: 10px 0 10px 15px;
-  font-size: 1.07rem;
-  letter-spacing: 0.6px;
-  word-break: break-word;
-}
-
-/* Fancy blinking terminal cursor for success */
-.blinking-cursor {
-  color: #0ff;
-  animation: blink-cursor 1.1s steps(2, start) infinite;
-  font-family: 'Fira Mono', 'Consolas', 'monospace';
-}
-@keyframes blink-cursor {
-  0% { opacity: 1; }
-  49% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-.neon-hint-row {
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.neon-mini-box {
-  width: 20px;
-  height: 7px;
-  border-radius: 4px;
-  box-shadow: 0 0 6px;
-}
-.neon-green-glow { background: #00ff6e; box-shadow: 0 0 10px #00ff6e, 0 0 2px #000; }
-.neon-blue-glow { background: #06e7ff; box-shadow: 0 0 10px #06e7ff, 0 0 2px #000; }
-.neon-red-glow { background: #ff176b; box-shadow: 0 0 13px #ff176b, 0 0 2px #000; }
-.neon-hint {
-  color: #27fffa;
-  font-size: 0.97rem;
-  letter-spacing: 0.09em;
-  font-family: inherit;
-  margin-left: 8px;
-  text-shadow: 0 0 4px #11ffd055;
-}
-
-/* NEON BORDER GLOW */
-.neon-border {
-  box-shadow:
-    0 0 0 3px #00fff5 inset,
-    0 0 18px 3px #00fff550,
-    0 0 42px 4px #03e2e8bb;
-}
-
-/* Scrollbar styling for terminal chic */
-.upload-audio-container ::-webkit-scrollbar {
-  width: 9px;
-  background: #01040a;
-}
-.upload-audio-container ::-webkit-scrollbar-thumb {
-  background: #08e6c1;
-  border-radius: 9px;
-  box-shadow: 0 0 12px #01fabc;
-}
-
-    `}
-      </style>
+      <p style={{fontSize: 13, marginTop: 40, color: "#aaa", opacity: 0.8}}>
+        {curTranscriptId && (
+          <span>
+            AssemblyAI Transcript ID: <code>{curTranscriptId}</code> &nbsp; |<br />
+          </span>
+        )}
+        Powered by AssemblyAI & Gemini AI • <a style={{color: "#9cf"}} href="https://www.assemblyai.com/docs" target="_blank" rel="noopener noreferrer">Learn More</a>
+      </p>
     </div>
   );
 }
 
-export default UploadAudio;
+// --- Helper UI Components ---
+function ProgressBar({ progress }) {
+  return (
+    <div style={{ background: "#242424", borderRadius: 6, height: 16, marginTop: 7, marginBottom: 7, width: 230, boxShadow: "0 2px 4px #0002" }}>
+      <div style={{
+        width: `${Math.round((progress || 0) * 100)}%`,
+        background: "linear-gradient(90deg, #4df1b6 50%, #50dbeb 90%)",
+        height: "100%",
+        borderRadius: 6,
+        transition: "width 0.35s"
+      }} />
+    </div>
+  );
+}
+
+function TextDisplayArea({ value }) {
+  return (
+    <pre style={{
+      background: "#191919",
+      padding: 12,
+      borderRadius: 8,
+      fontSize: 14,
+      marginBottom: 7,
+      maxWidth: 550,
+      whiteSpace: "pre-wrap",
+      wordBreak: "break-word"
+    }}>{value}</pre>
+  );
+}
+
+// --- Core Logic Functions ---
+
+// PUBLIC_INTERFACE
+async function uploadFileToAssembly(file, apiKey, progressCb) {
+  // Upload directly to AssemblyAI /upload endpoint in small chunks for progress
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", ASSEMBLY_UPLOAD_URL, true);
+    xhr.setRequestHeader("authorization", apiKey);
+    xhr.responseType = "json";
+    xhr.upload.onprogress = (evt) => {
+      if (evt.lengthComputable && progressCb)
+        progressCb(evt.loaded / evt.total);
+    };
+    xhr.onload = () => {
+      if (xhr.status === 200 && xhr.response && xhr.response.upload_url) {
+        progressCb && progressCb(1);
+        resolve(xhr.response.upload_url);
+      } else {
+        reject(new Error("Upload failed: " + (xhr.response ? JSON.stringify(xhr.response) : `status ${xhr.status}`)));
+      }
+    };
+    xhr.onerror = () => {
+      reject(new Error("Network error during upload"));
+    };
+    xhr.send(file);
+  });
+}
+
+// PUBLIC_INTERFACE
+async function submitForTranscription(uploadUrl, apiKey) {
+  const body = JSON.stringify({
+    audio_url: uploadUrl,
+    speaker_labels: false,
+    language_detection: true,
+    auto_highlights: true
+  });
+  const resp = await fetch(ASSEMBLY_TRANSCRIPT_URL, {
+    method: "POST",
+    headers: {
+      authorization: apiKey,
+      "content-type": "application/json",
+    },
+    body
+  });
+  if (!resp.ok) {
+    const err = await resp.text();
+    throw new Error(`Transcription submit error: ${err}`);
+  }
+  const data = await resp.json();
+  return data.id;
+}
+
+// PUBLIC_INTERFACE
+async function pollForTranscript(transcriptId, apiKey, statusCb) {
+  let attempts = 0;
+  let lastStatus = "--";
+  return new Promise((resolve, reject) => {
+    async function poll() {
+      attempts += 1;
+      const resp = await fetch(ASSEMBLY_STATUS_URL(transcriptId), {
+        headers: { authorization: apiKey },
+      });
+      const data = await resp.json();
+      lastStatus = data.status;
+      if (statusCb) statusCb("Transcription status: " + (data.status || "--"));
+      if (data.status === "completed") {
+        resolve(data.text);
+      } else if (data.status === "failed") {
+        reject(new Error("Transcription failed: " + (data.error || "unknown error")));
+      } else if (attempts > 120) {
+        reject(new Error("Transcription timed out (over 5 minutes)."));
+      } else {
+        setTimeout(poll, attempts < 10 ? 2300 : 5000); // first fast then slower
+      }
+    }
+    poll();
+  });
+}
+
+// PUBLIC_INTERFACE
+async function summarizeWithGemini(text, apiKey) {
+  // call Google's Gemini API (client-side CORS is supported)
+  const prompt = [
+    {
+      role: "user",
+      parts: [
+        { text: "Summarize the following transcript into key points and a paragraph. Transcript:\n" + text }
+      ]
+    }
+  ];
+  const resp = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ contents: prompt })
+  });
+  if (!resp.ok) {
+    throw new Error("Gemini call failed: " + await resp.text());
+  }
+  const data = await resp.json();
+  let output = "";
+  if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
+    output = data.candidates[0].content.parts.map(p => p.text).join("\n");
+    return output.trim();
+  }
+  throw new Error("Gemini response parse error.");
+}
+
+// PUBLIC_INTERFACE
+function copyText(val) {
+  if (!val) return;
+  navigator.clipboard.writeText(val);
+}
+
+// PUBLIC_INTERFACE
+function maskKey(key) {
+  if (!key) return "";
+  if (key.length < 7) return "******";
+  return key.slice(0, 3) + "****" + key.slice(key.length - 3);
+}
+
+export default UploadAudio; 
